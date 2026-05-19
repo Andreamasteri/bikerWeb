@@ -1,0 +1,127 @@
+{
+  "theme": "dark",
+  "archetype": "2 (The Performance Pro)",
+  "vibe": "Adrenaline, Speed, Safety, Community",
+  "typography": {
+    "heading_font": "Barlow Condensed",
+    "body_font": "Manrope",
+    "notes": "Use uppercase Barlow Condensed for all section headers and giant numbers (like Race Mode stats). Keep it heavily tracked (tracking-wide or tracking-tight depending on size). Manrope for body text for clean readability.",
+    "hierarchy": {
+      "h1": "text-5xl md:text-6xl+ font-black uppercase tracking-tighter leading-none",
+      "h2": "text-4xl md:text-5xl font-bold uppercase tracking-tight",
+      "h3": "text-2xl md:text-3xl font-bold uppercase",
+      "h4": "text-xl font-semibold",
+      "body": "text-base md:text-lg text-white/70 leading-relaxed",
+      "small": "text-sm text-white/50 uppercase tracking-[0.2em]"
+    }
+  },
+  "colors": {
+    "background": "#0A0A0A",
+    "surface": "#121212",
+    "surface_glass": "bg-black/60 backdrop-blur-xl border-white/10",
+    "primary": "#FF3B30",
+    "primary_hover": "#FF6A00",
+    "text": {
+      "main": "#FFFFFF",
+      "muted": "#A1A1AA"
+    },
+    "accents": {
+      "racing_orange": "#FF6A00",
+      "danger_red": "#EF4444",
+      "success_green": "#22C55E"
+    }
+  },
+  "layout_spacing": {
+    "general_padding": "p-6 md:p-12 lg:p-24",
+    "container": "max-w-7xl mx-auto",
+    "section_gap": "gap-24 md:gap-32",
+    "bento_grid": "grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8"
+  },
+  "components": {
+    "buttons": {
+      "primary": "bg-gradient-to-r from-[#FF3B30] to-[#FF6A00] text-white font-bold uppercase tracking-wider px-8 py-4 rounded-none border border-transparent hover:border-white/20 transition-all shadow-[0_0_20px_rgba(255,59,48,0.3)]",
+      "secondary": "bg-transparent text-white border-2 border-white/20 px-8 py-4 uppercase font-bold tracking-wider hover:bg-white/5 transition-colors"
+    },
+    "cards": {
+      "style": "bg-[#121212] border border-white/10 rounded-xl p-8 shadow-2xl relative overflow-hidden",
+      "hover": "hover:border-[#FF3B30]/50 transition-colors duration-300",
+      "glass": "bg-white/5 backdrop-blur-md border border-white/10"
+    }
+  },
+  "sections_and_content": [
+    {
+      "name": "Navigation",
+      "type": "Header",
+      "instructions": "Sticky glassmorphism header (bg-black/60, backdrop-blur-xl). Left: Logo 'BikerLink'. Middle: Links (Mappa, Proposte, Match, Club, Chat). Right: IT/EN Language Toggle and 'Scarica App' CTA. Include data-testid for all links."
+    },
+    {
+      "name": "Hero Cinematic",
+      "type": "Hero",
+      "instructions": "Full viewport height (min-h-screen). Background image of racing motorcycle overlaid with bg-gradient-to-r from-black/90 via-black/50 to-transparent. Left-aligned text. H1: 'CONNETTI LA TUA PASSIONE'. Subtitle: 'Piattaforma social e di utilità per la community motociclistica italiana.' Dual CTAs: App Store and Google Play (using Lucide icons).",
+      "image_url": "https://static.prod-images.emergentagent.com/jobs/c52ae50d-f554-4341-a9ff-4380f336dee8/images/fa5dc6135c710f905507df1a70778da0274116679ca00dfd33b6c3b498f22db3.png"
+    },
+    {
+      "name": "User Types (Chi Sei?)",
+      "type": "Bento Grid",
+      "instructions": "Bento layout (12 cols). Show 3 cards. 1. Biker (col-span-1 md:col-span-4). 2. Zavorrine (col-span-1 md:col-span-4). 3. Coppie (col-span-1 md:col-span-4). Use background images for each card with a heavy bottom-to-top dark gradient (bg-gradient-to-t from-black via-black/60 to-transparent). Text placed at the bottom inside the card."
+    },
+    {
+      "name": "Core Features (Control Room)",
+      "type": "Grid",
+      "instructions": "Dense, technical grid. Features to highlight: Mappa Real-Time, Matching Engine (18 tipi di match), Route Planning (Curvy Roads), Hands-Off System. Use 'Tracing Beam' or glowing border effect on hover. Use Lucide icons (Map, Zap, Users, ShieldAlert)."
+    },
+    {
+      "name": "Safety & Privacy",
+      "type": "Section",
+      "instructions": "High contrast section with deep red accents. Highlight 'SOS Biker' (100km radius), 'Privacy' (blurred coordinates), and 'Hands-Off' (UI block over 50km/h). Minimalist layout, use large iconography."
+    },
+    {
+      "name": "Race Mode",
+      "type": "Showcase",
+      "instructions": "Adrenaline-fueled section. Background: deep black. Show massive typography for metrics: 'Velocità', '0-100', 'Angolo di Piega'. Use the dashboard image on one side, and huge glowing red numbers on the other. It should feel like looking at a telemetry screen.",
+      "image_url": "https://static.prod-images.emergentagent.com/jobs/c52ae50d-f554-4341-a9ff-4380f336dee8/images/7c093e67604bc6c4d54808463c031df425c11810b8cc798b93cc18f6244ab229.png"
+    },
+    {
+      "name": "MotoClub & Community",
+      "type": "Feature",
+      "instructions": "Highlight group rides, group chats (SSE), and proposals (Proposte). Use the motorcycle group image. Warm, brotherhood vibe but maintaining the dark/racing aesthetic.",
+      "image_url": "https://images.unsplash.com/photo-1489731007795-388eee095ff6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NjZ8MHwxfHNlYXJjaHwyfHxtb3RvcmN5Y2xlJTIwZ3JvdXAlMjByaWRlcnN8ZW58MHx8fHwxNzc5MTUyNTgxfDA&ixlib=rb-4.1.0&q=85"
+    },
+    {
+      "name": "Pic! Contest",
+      "type": "Carousel",
+      "instructions": "Weekly photo contest section. Show a sleek slider/carousel of biker photos. Use Shadcn Carousel if applicable, or a grid of images. Subtitle: 'Vota la foto della settimana'."
+    },
+    {
+      "name": "FAQ",
+      "type": "Accordion",
+      "instructions": "Use Shadcn Accordion. Dark, flat surfaces with 1px border. Highlight questions about Privacy, App cost, and SOS coverage."
+    },
+    {
+      "name": "Footer",
+      "type": "Footer",
+      "instructions": "Massive typography 'BIKERLINK' at the bottom. Columns for Socials, App Store / Play Store links, Legal/Privacy. Very generous top padding (py-32)."
+    }
+  ],
+  "image_assets": {
+    "hero_background": "https://static.prod-images.emergentagent.com/jobs/c52ae50d-f554-4341-a9ff-4380f336dee8/images/fa5dc6135c710f905507df1a70778da0274116679ca00dfd33b6c3b498f22db3.png",
+    "user_biker": "https://images.unsplash.com/photo-1768507109219-4408445c8762?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHw0fHxtb3RvcmN5Y2xlJTIwcmlkZXIlMjBkYXJrJTIwcm9hZHxlbnwwfHx8fDE3NzkxNTI1NjR8MA&ixlib=rb-4.1.0&q=85",
+    "user_zavorrina": "https://images.unsplash.com/photo-1591259966748-4e4b9916858f?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA2MTJ8MHwxfHNlYXJjaHwxfHxtb3RvcmN5Y2xlJTIwcmlkZXIlMjBkYXJrJTIwcm9hZHxlbnwwfHx8fDE3NzkxNTI1NjR8MA&ixlib=rb-4.1.0&q=85",
+    "user_coppie": "https://static.prod-images.emergentagent.com/jobs/c52ae50d-f554-4341-a9ff-4380f336dee8/images/121db819839f9d1268e1a48fd6a2cd9cca693c8349a94887d700a35a8b26aa05.png",
+    "race_mode_ui": "https://static.prod-images.emergentagent.com/jobs/c52ae50d-f554-4341-a9ff-4380f336dee8/images/7c093e67604bc6c4d54808463c031df425c11810b8cc798b93cc18f6244ab229.png",
+    "route_planning": "https://static.prod-images.emergentagent.com/jobs/c52ae50d-f554-4341-a9ff-4380f336dee8/images/76fd9f634c2fc89413274e5a1e5086da4fa114bb35424dbd0921a5aa4f008858.png",
+    "motoclub_group": "https://images.unsplash.com/photo-1489731007795-388eee095ff6?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NjZ8MHwxfHNlYXJjaHwyfHxtb3RvcmN5Y2xlJTIwZ3JvdXAlMjByaWRlcnN8ZW58MHx8fHwxNzc5MTUyNTgxfDA&ixlib=rb-4.1.0&q=85"
+  },
+  "icon_strategy": {
+    "library": "lucide-react",
+    "style": "Use stroke-width 1.5. Colors: white for standard, #FF3B30 for active or safety-related icons (like ShieldAlert for SOS)."
+  },
+  "animation_motion": {
+    "scroll": "Smooth scrolling mandatory (framer-motion).",
+    "interactions": "Hover states on cards should translate-y-[-4px] and increase border opacity. Buttons should have a subtle scale effect (scale-105) on hover."
+  },
+  "accessibility": {
+    "contrast": "Ensure white text on #0A0A0A passes APCA. For orange/red buttons, use white text and heavy font weight to ensure legibility.",
+    "testing": "MANDATORY: Add data-testid to ALL links, buttons, and interactive elements."
+  }
+}
