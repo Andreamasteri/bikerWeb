@@ -1,6 +1,6 @@
 # API_BEFORE — baseline BikerLink prima della pubblicazione
 
-- Acquisizione: `2026-11-19T11:12:49Z` UTC.
+- Acquisizione: `2026-11-19T12:20:56Z` UTC.
 - Origini confrontate: `https://biker-link.net` e `https://bikerlink-production.up.railway.app`.
 - Revisione attesa e ricevuta: `aedfb278f487105a10567c9efa4c090705b3d801`.
 - Suite: [`scripts/cloudflare-migration/api_probe.py`](../../scripts/cloudflare-migration/api_probe.py); supporta output JSON e confronto automatico `--compare` sui codici, schema, headers selezionati, cookie (solo attributi), redirect, hash/dimensione body e revisione; le latenze sono riportate per revisione operativa.
@@ -10,8 +10,8 @@
 
 | Destinazione | Prove | PASS | FAIL | Latenza mediana | Revisione |
 | --- | ---: | ---: | ---: | ---: | --- |
-| Dominio pubblico apex | 37 | 37 | 0 | 156 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
-| Hostname origine Railway | 37 | 37 | 0 | 184 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
+| Dominio pubblico apex | 37 | 37 | 0 | 146 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
+| Hostname origine Railway | 37 | 37 | 0 | 185 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
 
 ### GET — API e servizi applicativi
 
@@ -74,8 +74,8 @@ La suite verifica il byte-range `0-15` (HTTP 206, 16 byte, `Content-Range: bytes
 
 | Controllo | Atteso | Apex/Railway | Latenza apex/Railway |
 | --- | ---: | ---: | ---: |
-| `ws_admin_notifications` | 401 | 401/401 | 156/403 ms |
-| `ws_diagnostic` | 401 | 401/401 | 391/413 ms |
+| `ws_admin_notifications` | 401 | 401/401 | 375/205 ms |
+| `ws_diagnostic` | 401 | 401/401 | 163/429 ms |
 
 ## Prova dello strumento di confronto
 

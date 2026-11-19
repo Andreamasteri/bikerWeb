@@ -39,6 +39,13 @@ HEADS=[("blog","/blog",200,None),("contact","/contact",200,None),("web_login","/
  ("r2_source_image","/assets/images/hero-forest.webp",200,None),("favicon","/favicon.png",200,None),
  ("leaflet_html","/leaflet-map.html",200,None),("roadmap_json","/roadmap.json",200,None)]
 WEBSOCKETS=[("ws_admin_notifications","/ws/admin/notifications"),("ws_diagnostic","/ws/diagnostic")]
+parser=argparse.ArgumentParser()
+parser.add_argument('--output',default='API_BEFORE.json',help='JSON evidence output path')
+parser.add_argument('--compare',help='Compare results with an earlier probe JSON and fail on response regressions')
+parser.add_argument('--preview-base',help='Also probe a Cloudflare Worker Preview URL without following redirects')
+args=parser.parse_args()
+if args.preview_base:
+ TARGETS['preview_candidate']=args.preview_base.rstrip('/')
 
 class NoRedirect(urllib.request.HTTPRedirectHandler):
     def redirect_request(self, req, fp, code, msg, headers, newurl):
@@ -62,7 +69,9 @@ def shape(body, ct):
     return {"kind":"non_json","bytes":len(body)}
 
 def req(base,method,path,headers=None,data=None,timeout=12,capture_body=False):
-    url=base+path; start=time.perf_counter(); h=headers or {}
+    url=base+path; start=time.perf_counter(); h=dict(headers or {})
+    if ".workers.dev" in url:
+      h.setdefault("User-Agent","curl/8.0")
     r=urllib.request.Request(url,data=data,headers=h,method=method)
     try:
       with opener.open(r,timeout=timeout) as resp:
@@ -119,7 +128,7 @@ out={"captured_at_utc":time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime()),"backen
 for name,base in TARGETS.items():
  items=[]
  for label,path,expected in GETS:
-  row=req(base,"GET",path,{"Accept":"application/json, text/event-stream"},timeout=8); row.update({"test":label,"expected_status":expected,"pass":row.get("status")==expected}); items.append(row)
+  row=req(base,"GET",path,{"Accept":"application/json, text/event-stream"},timeout=8,capture_body=True); row.update({"test":label,"expected_status":expected,"pass":row.get("status")==expected}); items.append(row)
  image=req(base,"GET","/assets/images/hero-forest.webp",timeout=12,capture_body=True)
  image.update({"test":"plain_image","expected_status":200,"pass":image.get("status")==200 and image.get("content_type")=="image/webp" and image.get("headers",{}).get("Cache-Control")=="public, max-age=31536000, immutable"})
  items.append(image)
@@ -161,10 +170,6 @@ for name,base in TARGETS.items():
   items.append(row)
  health=next((r for r in items if r['test']=='health'),{})
  out['targets'][name]={"base_url":base,"revision":health.get("schema",{}).get("revision") if isinstance(health.get("schema"),dict) else None,"results":items}
-parser=argparse.ArgumentParser()
-parser.add_argument('--output',default='API_BEFORE.json',help='JSON evidence output path')
-parser.add_argument('--compare',help='Compare results with an earlier probe JSON and fail on response regressions')
-args=parser.parse_args()
 output=Path(args.output)
 output.parent.mkdir(parents=True,exist_ok=True)
 comparison=None
@@ -172,10 +177,15 @@ if args.compare:
  previous=json.loads(Path(args.compare).read_text())
  rows=[]
  compared_fields=('status','content_type','schema','headers','cookies','location','body_bytes','body_sha256')
+ preview_static_tests={'head_blog','head_contact','head_web_login','head_favicon','head_leaflet_html','head_roadmap_json'}
+ target_sources={target:('public_apex' if target=='preview_candidate' else target) for target in out['targets']}
  for target,current in out['targets'].items():
-  before=previous.get('targets',{}).get(target,{})
+  source=target_sources[target]
+  before=previous.get('targets',{}).get(source,{})
   old={r['test']:r for r in before.get('results',[])}
   for current_row in current['results']:
+   if target=='preview_candidate' and current_row['test'] in preview_static_tests:
+    continue
    prior=old.get(current_row['test'])
    if not prior:
     rows.append({"target":target,"test":current_row['test'],"regression":"missing_from_before"})
@@ -183,16 +193,20 @@ if args.compare:
    for field in compared_fields:
     old_value=prior.get(field)
     new_value=current_row.get(field)
-    if field=="headers" and current_row['test']=="plain_image":
-     old_value={k:v for k,v in (old_value or {}).items() if k.lower() not in ("etag","last-modified")}
-     new_value={k:v for k,v in (new_value or {}).items() if k.lower() not in ("etag","last-modified")}
+    if field=="headers":
+     if current_row['test']=="plain_image":
+      old_value={k:v for k,v in (old_value or {}).items() if k.lower() not in ("etag","last-modified")}
+      new_value={k:v for k,v in (new_value or {}).items() if k.lower() not in ("etag","last-modified")}
+     if prior.get("body_sha256") and prior.get("body_sha256")==current_row.get("body_sha256") and prior.get("body_bytes")==current_row.get("body_bytes"):
+      old_value={k:v for k,v in (old_value or {}).items() if k.lower()!="content-length"}
+      new_value={k:v for k,v in (new_value or {}).items() if k.lower()!="content-length"}
     if old_value!=new_value:
      rows.append({"target":target,"test":current_row['test'],"field":field,"before":old_value,"after":new_value})
   if current.get('revision')!=before.get('revision'):
    rows.append({"target":target,"test":"backend_revision","before":before.get('revision'),"after":current.get('revision')})
- comparison={"baseline":args.compare,"regressions":rows,"regression_count":len(rows),"latency_review":{}}
+ comparison={"baseline":args.compare,"regressions":rows,"regression_count":len(rows),"latency_review":{},"target_sources":target_sources,"preview_static_tests_not_compared":sorted(preview_static_tests)}
  for target,current in out['targets'].items():
-  prior=previous.get('targets',{}).get(target,{})
+  prior=previous.get('targets',{}).get(target_sources[target],{})
   old={r['test']:r for r in prior.get('results',[])}
   deltas=[{"test":r['test'],"before_ms":old[r['test']].get('latency_ms'),"after_ms":r.get('latency_ms')} for r in current['results'] if r['test'] in old and old[r['test']].get('latency_ms') is not None and r.get('latency_ms') is not None]
   comparison['latency_review'][target]=deltas

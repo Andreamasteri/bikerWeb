@@ -1,0 +1,3430 @@
+{
+  "captured_at_utc": "2026-11-19T12:21:09Z",
+  "backend_revision_expected": "aedfb278f487105a10567c9efa4c090705b3d801",
+  "targets": {
+    "public_apex": {
+      "base_url": "https://biker-link.net",
+      "revision": "aedfb278f487105a10567c9efa4c090705b3d801",
+      "results": [
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/health",
+          "status": 200,
+          "latency_ms": 138,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "dbCircuit",
+              "degraded",
+              "degradedReasons",
+              "initializing",
+              "redisTunnel",
+              "revision",
+              "slices",
+              "state",
+              "status"
+            ],
+            "revision": "aedfb278f487105a10567c9efa4c090705b3d801",
+            "state": "READY",
+            "degraded": false
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2c7-n9Fl6o8cc8QZ0or+8N9XdMCphwM\"",
+            "Content-Length": "711"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 711,
+          "body_sha256": "d9defe8a32a9a0c90499c7cc932a1653b50c8cd3d2170d358484dd9acc571bee",
+          "test": "health",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/healthz",
+          "status": 200,
+          "latency_ms": 120,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2-eoX0dku9ba8cNUXvu/DyeabcC+s\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 2,
+          "body_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+          "test": "readiness",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/auth/me",
+          "status": 401,
+          "latency_ms": 131,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "auth_session",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/users/me",
+          "status": 401,
+          "latency_ms": 131,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "profile",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/chat/conversations",
+          "status": 401,
+          "latency_ms": 124,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/chat/stream",
+          "status": 401,
+          "latency_ms": 130,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/auth/session-events",
+          "status": 401,
+          "latency_ms": 143,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "session_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/notifications",
+          "status": 401,
+          "latency_ms": 136,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/ai/assistant/config",
+          "status": 401,
+          "latency_ms": 133,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "ai_config",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/download/apk/status",
+          "status": 200,
+          "latency_ms": 141,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "available"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"12-Aimy5TBnYW7WAzHpRLoSkMxmC1Y\"",
+            "Content-Length": "18"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 18,
+          "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+          "test": "apk_status",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/config",
+          "status": 200,
+          "latency_ms": 133,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "maintenance_enabled",
+              "maintenance_message",
+              "play_store_url",
+              "website_url"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5f-KZR94ZMPm0KJsKO83314T/Lawcg\"",
+            "Content-Length": "95"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 95,
+          "body_sha256": "7428e6e3b3808be770a7747e71e19131d669cb28d00f09cee91c2e1194d44ee6",
+          "test": "app_config",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/api/community/stats",
+          "status": 200,
+          "latency_ms": 129,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "countries",
+              "total"
+            ]
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"59-I5j93TL6M/ptLRFQK/4nqAMHJ50\"",
+            "Content-Length": "89"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 89,
+          "body_sha256": "0057b0aa429a422a3a514750f53672a1344c5c92fc059c7de67c706cffb40b53",
+          "test": "community_stats",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 136,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "plain_image",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/auth/register",
+          "status": 200,
+          "latency_ms": 132,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_registration",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/auth/login",
+          "status": 200,
+          "latency_ms": 135,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_login",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/sos",
+          "status": 200,
+          "latency_ms": 137,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_sos",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/chat/conversations",
+          "status": 200,
+          "latency_ms": 136,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_chat_write",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/telemetry/batch",
+          "status": 200,
+          "latency_ms": 129,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_telemetry_write",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/users/me/photos",
+          "status": 200,
+          "latency_ms": 133,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_image_upload",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://biker-link.net/api/admin/media/upload",
+          "status": 200,
+          "latency_ms": 133,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_media_upload",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/blog",
+          "status": 200,
+          "latency_ms": 130,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"313cf-Hd262/y3WBJyiYGUsTb+zs+fBaA\"",
+            "Content-Length": "201679"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_blog",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/contact",
+          "status": 200,
+          "latency_ms": 138,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"316d6-KP5ECSvS87cNi4orxFGrI/CAc3E\"",
+            "Content-Length": "202454"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_contact",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/accedi",
+          "status": 200,
+          "latency_ms": 135,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "no-store",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"1d35c-7Otqg2yZuoD9dKUP3C+wbQt00C8\"",
+            "Content-Length": "119644"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_web_login",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/admin/diagnostics/live",
+          "status": 302,
+          "latency_ms": 134,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "58"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/admin/diagnostics/live",
+          "test": "head_web_admin_diagnostics",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/admin/diagnostics/live",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/privacy-policy",
+          "status": 301,
+          "latency_ms": 123,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "42"
+          },
+          "cookies": [],
+          "location": "/privacy",
+          "test": "head_privacy_policy_redirect",
+          "expected_status": 301,
+          "expected_location": "/privacy",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/pianifica",
+          "status": 302,
+          "latency_ms": 120,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/pianifica",
+          "test": "head_planner_redirect",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/pianifica",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/api/download/apk/latest",
+          "status": 302,
+          "latency_ms": 126,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "102"
+          },
+          "cookies": [],
+          "location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "test": "head_apk_latest_redirect",
+          "expected_status": 302,
+          "expected_location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 136,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_r2_source_image",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/favicon.png",
+          "status": 200,
+          "latency_ms": 136,
+          "content_type": "image/png",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=604800",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"469-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "1129",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_favicon",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/leaflet-map.html",
+          "status": 200,
+          "latency_ms": 134,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=3600",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"3099a-EBfiSQDHwzvXwXRLuFxENKWqjeg\"",
+            "Content-Length": "199066"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_leaflet_html",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://biker-link.net/roadmap.json",
+          "status": 200,
+          "latency_ms": 145,
+          "content_type": "application/json",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"ab9-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "2745",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_roadmap_json",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 132,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_none_match",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 121,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_modified_since",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 206,
+          "latency_ms": 135,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 16
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "16",
+            "Accept-Ranges": "bytes",
+            "Content-Range": "bytes 0-15/337534"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 16,
+          "body_sha256": "8a6cc95f3f2a214880eb75d8d95420a8815ddb208fb9dfda5c3bbbfd87bcedbe",
+          "test": "image_range",
+          "expected_status": 206,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 143,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "image_if_range_stale",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/ws/admin/notifications",
+          "status": 401,
+          "latency_ms": 393,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_admin_notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/ws/diagnostic",
+          "status": 401,
+          "latency_ms": 344,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_diagnostic",
+          "expected_status": 401,
+          "pass": true
+        }
+      ]
+    },
+    "railway_origin": {
+      "base_url": "https://bikerlink-production.up.railway.app",
+      "revision": "aedfb278f487105a10567c9efa4c090705b3d801",
+      "results": [
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/health",
+          "status": 200,
+          "latency_ms": 180,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "dbCircuit",
+              "degraded",
+              "degradedReasons",
+              "initializing",
+              "redisTunnel",
+              "revision",
+              "slices",
+              "state",
+              "status"
+            ],
+            "revision": "aedfb278f487105a10567c9efa4c090705b3d801",
+            "state": "READY",
+            "degraded": false
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2c7-n9Fl6o8cc8QZ0or+8N9XdMCphwM\"",
+            "Content-Length": "711"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 711,
+          "body_sha256": "d9defe8a32a9a0c90499c7cc932a1653b50c8cd3d2170d358484dd9acc571bee",
+          "test": "health",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/healthz",
+          "status": 200,
+          "latency_ms": 187,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2-eoX0dku9ba8cNUXvu/DyeabcC+s\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 2,
+          "body_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+          "test": "readiness",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/auth/me",
+          "status": 401,
+          "latency_ms": 172,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "auth_session",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/users/me",
+          "status": 401,
+          "latency_ms": 193,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "profile",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/chat/conversations",
+          "status": 401,
+          "latency_ms": 182,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/chat/stream",
+          "status": 401,
+          "latency_ms": 192,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/auth/session-events",
+          "status": 401,
+          "latency_ms": 188,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "session_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/notifications",
+          "status": 401,
+          "latency_ms": 172,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/ai/assistant/config",
+          "status": 401,
+          "latency_ms": 181,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "ai_config",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/download/apk/status",
+          "status": 200,
+          "latency_ms": 181,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "available"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"12-Aimy5TBnYW7WAzHpRLoSkMxmC1Y\"",
+            "Content-Length": "18"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 18,
+          "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+          "test": "apk_status",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/config",
+          "status": 200,
+          "latency_ms": 174,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "maintenance_enabled",
+              "maintenance_message",
+              "play_store_url",
+              "website_url"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5f-KZR94ZMPm0KJsKO83314T/Lawcg\"",
+            "Content-Length": "95"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 95,
+          "body_sha256": "7428e6e3b3808be770a7747e71e19131d669cb28d00f09cee91c2e1194d44ee6",
+          "test": "app_config",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/api/community/stats",
+          "status": 200,
+          "latency_ms": 187,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "countries",
+              "total"
+            ]
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"59-I5j93TL6M/ptLRFQK/4nqAMHJ50\"",
+            "Content-Length": "89"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 89,
+          "body_sha256": "0057b0aa429a422a3a514750f53672a1344c5c92fc059c7de67c706cffb40b53",
+          "test": "community_stats",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 188,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "plain_image",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/auth/register",
+          "status": 200,
+          "latency_ms": 190,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_registration",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/auth/login",
+          "status": 200,
+          "latency_ms": 179,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_login",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/sos",
+          "status": 200,
+          "latency_ms": 180,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_sos",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/chat/conversations",
+          "status": 200,
+          "latency_ms": 177,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_chat_write",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/telemetry/batch",
+          "status": 200,
+          "latency_ms": 170,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_telemetry_write",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/users/me/photos",
+          "status": 200,
+          "latency_ms": 187,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_image_upload",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-production.up.railway.app/api/admin/media/upload",
+          "status": 200,
+          "latency_ms": 189,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_media_upload",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/blog",
+          "status": 200,
+          "latency_ms": 199,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"31462-y68uKcMN/MlnvHiFPmgLaM/x84o\"",
+            "Content-Length": "201826"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_blog",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/contact",
+          "status": 200,
+          "latency_ms": 188,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"31769-u8JB5cId5RFqxYvtSytO1HAYsk0\"",
+            "Content-Length": "202601"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_contact",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/accedi",
+          "status": 200,
+          "latency_ms": 189,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "no-store",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"1d35c-7Otqg2yZuoD9dKUP3C+wbQt00C8\"",
+            "Content-Length": "119644"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_web_login",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/admin/diagnostics/live",
+          "status": 302,
+          "latency_ms": 166,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "58"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/admin/diagnostics/live",
+          "test": "head_web_admin_diagnostics",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/admin/diagnostics/live",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/privacy-policy",
+          "status": 301,
+          "latency_ms": 175,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "42"
+          },
+          "cookies": [],
+          "location": "/privacy",
+          "test": "head_privacy_policy_redirect",
+          "expected_status": 301,
+          "expected_location": "/privacy",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/pianifica",
+          "status": 302,
+          "latency_ms": 184,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/pianifica",
+          "test": "head_planner_redirect",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/pianifica",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/api/download/apk/latest",
+          "status": 302,
+          "latency_ms": 196,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "102"
+          },
+          "cookies": [],
+          "location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "test": "head_apk_latest_redirect",
+          "expected_status": 302,
+          "expected_location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 183,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_r2_source_image",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/favicon.png",
+          "status": 200,
+          "latency_ms": 176,
+          "content_type": "image/png",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=604800",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"469-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "1129",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_favicon",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/leaflet-map.html",
+          "status": 200,
+          "latency_ms": 191,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=3600",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"3099a-EBfiSQDHwzvXwXRLuFxENKWqjeg\"",
+            "Content-Length": "199066"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_leaflet_html",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-production.up.railway.app/roadmap.json",
+          "status": 200,
+          "latency_ms": 184,
+          "content_type": "application/json",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"ab9-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "2745",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_roadmap_json",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 192,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_none_match",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 193,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_modified_since",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
+          "status": 206,
+          "latency_ms": 173,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 16
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "16",
+            "Accept-Ranges": "bytes",
+            "Content-Range": "bytes 0-15/337534"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 16,
+          "body_sha256": "8a6cc95f3f2a214880eb75d8d95420a8815ddb208fb9dfda5c3bbbfd87bcedbe",
+          "test": "image_range",
+          "expected_status": 206,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 191,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "image_if_range_stale",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/ws/admin/notifications",
+          "status": 401,
+          "latency_ms": 421,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_admin_notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/ws/diagnostic",
+          "status": 401,
+          "latency_ms": 404,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_diagnostic",
+          "expected_status": 401,
+          "pass": true
+        }
+      ]
+    },
+    "preview_candidate": {
+      "base_url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev",
+      "revision": "aedfb278f487105a10567c9efa4c090705b3d801",
+      "results": [
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/health",
+          "status": 200,
+          "latency_ms": 599,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "dbCircuit",
+              "degraded",
+              "degradedReasons",
+              "initializing",
+              "redisTunnel",
+              "revision",
+              "slices",
+              "state",
+              "status"
+            ],
+            "revision": "aedfb278f487105a10567c9efa4c090705b3d801",
+            "state": "READY",
+            "degraded": false
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2c7-n9Fl6o8cc8QZ0or+8N9XdMCphwM\""
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 711,
+          "body_sha256": "d9defe8a32a9a0c90499c7cc932a1653b50c8cd3d2170d358484dd9acc571bee",
+          "test": "health",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/healthz",
+          "status": 200,
+          "latency_ms": 340,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2-eoX0dku9ba8cNUXvu/DyeabcC+s\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 2,
+          "body_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+          "test": "readiness",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/me",
+          "status": 401,
+          "latency_ms": 204,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "auth_session",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/users/me",
+          "status": 401,
+          "latency_ms": 204,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "profile",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/chat/conversations",
+          "status": 401,
+          "latency_ms": 332,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/chat/stream",
+          "status": 401,
+          "latency_ms": 198,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/session-events",
+          "status": 401,
+          "latency_ms": 168,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "session_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/notifications",
+          "status": 401,
+          "latency_ms": 169,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/ai/assistant/config",
+          "status": 401,
+          "latency_ms": 176,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "ai_config",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/download/apk/status",
+          "status": 200,
+          "latency_ms": 169,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "available"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"12-Aimy5TBnYW7WAzHpRLoSkMxmC1Y\"",
+            "Content-Length": "18"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 18,
+          "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+          "test": "apk_status",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/config",
+          "status": 200,
+          "latency_ms": 177,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "maintenance_enabled",
+              "maintenance_message",
+              "play_store_url",
+              "website_url"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5f-KZR94ZMPm0KJsKO83314T/Lawcg\"",
+            "Content-Length": "95"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 95,
+          "body_sha256": "7428e6e3b3808be770a7747e71e19131d669cb28d00f09cee91c2e1194d44ee6",
+          "test": "app_config",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/community/stats",
+          "status": 200,
+          "latency_ms": 185,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "countries",
+              "total"
+            ]
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"59-I5j93TL6M/ptLRFQK/4nqAMHJ50\"",
+            "Content-Length": "89"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 89,
+          "body_sha256": "0057b0aa429a422a3a514750f53672a1344c5c92fc059c7de67c706cffb40b53",
+          "test": "community_stats",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 341,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "\"cdb62fd62bd5ecd18f22e936902a19af\"",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "plain_image",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/register",
+          "status": 200,
+          "latency_ms": 200,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_registration",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/login",
+          "status": 200,
+          "latency_ms": 208,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_login",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/sos",
+          "status": 200,
+          "latency_ms": 157,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_sos",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/chat/conversations",
+          "status": 200,
+          "latency_ms": 206,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_chat_write",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/telemetry/batch",
+          "status": 200,
+          "latency_ms": 143,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_telemetry_write",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/users/me/photos",
+          "status": 200,
+          "latency_ms": 251,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_image_upload",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/admin/media/upload",
+          "status": 200,
+          "latency_ms": 154,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Access-Control-Allow-Origin": "https://biker-link.net",
+            "Access-Control-Allow-Credentials": "true",
+            "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+            "Access-Control-Allow-Headers": "Content-Type, Authorization",
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_media_upload",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/blog",
+          "status": 200,
+          "latency_ms": 202,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_blog",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/contact",
+          "status": 200,
+          "latency_ms": 175,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_contact",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/accedi",
+          "status": 200,
+          "latency_ms": 183,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "no-store",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_web_login",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/admin/diagnostics/live",
+          "status": 302,
+          "latency_ms": 178,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "58"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/admin/diagnostics/live",
+          "test": "head_web_admin_diagnostics",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/admin/diagnostics/live",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/privacy-policy",
+          "status": 301,
+          "latency_ms": 207,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "42"
+          },
+          "cookies": [],
+          "location": "/privacy",
+          "test": "head_privacy_policy_redirect",
+          "expected_status": 301,
+          "expected_location": "/privacy",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/pianifica",
+          "status": 302,
+          "latency_ms": 201,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/pianifica",
+          "test": "head_planner_redirect",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/pianifica",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/download/apk/latest",
+          "status": 302,
+          "latency_ms": 159,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "102"
+          },
+          "cookies": [],
+          "location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "test": "head_apk_latest_redirect",
+          "expected_status": 302,
+          "expected_location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 69,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_r2_source_image",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/favicon.png",
+          "status": 200,
+          "latency_ms": 48,
+          "content_type": "image/png",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=604800",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"469-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "1129",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_favicon",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/leaflet-map.html",
+          "status": 200,
+          "latency_ms": 163,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=3600",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_leaflet_html",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/roadmap.json",
+          "status": 200,
+          "latency_ms": 146,
+          "content_type": "application/json",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"ab9-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "2745",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_roadmap_json",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 68,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_none_match",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 55,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_modified_since",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-forest.webp",
+          "status": 206,
+          "latency_ms": 52,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 16
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "16",
+            "Accept-Ranges": "bytes",
+            "Content-Range": "bytes 0-15/337534"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 16,
+          "body_sha256": "8a6cc95f3f2a214880eb75d8d95420a8815ddb208fb9dfda5c3bbbfd87bcedbe",
+          "test": "image_range",
+          "expected_status": 206,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 78,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1f090c188\"",
+            "Last-Modified": "Wed, 18 Nov 2026 21:29:41 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "image_if_range_stale",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/ws/admin/notifications",
+          "status": 401,
+          "latency_ms": 614,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_admin_notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/ws/diagnostic",
+          "status": 401,
+          "latency_ms": 256,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_diagnostic",
+          "expected_status": 401,
+          "pass": true
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "No authenticated user credentials or session cookie were used.",
+    "No writes, SOS activation, notifications, uploads, or external callbacks were issued.",
+    "SSE endpoints were checked only for their anonymous response; no authenticated stream was opened.",
+    "WebSocket checks were anonymous handshakes expected to be rejected with HTTP 401; they do not validate an authenticated persistent session."
+  ],
+  "comparison": {
+    "baseline": "docs/cloudflare-migration/API_BEFORE.json",
+    "regressions": [],
+    "regression_count": 0,
+    "latency_review": {
+      "public_apex": [
+        {
+          "test": "health",
+          "before_ms": 280,
+          "after_ms": 138
+        },
+        {
+          "test": "readiness",
+          "before_ms": 260,
+          "after_ms": 120
+        },
+        {
+          "test": "auth_session",
+          "before_ms": 247,
+          "after_ms": 131
+        },
+        {
+          "test": "profile",
+          "before_ms": 166,
+          "after_ms": 131
+        },
+        {
+          "test": "chat",
+          "before_ms": 191,
+          "after_ms": 124
+        },
+        {
+          "test": "chat_sse",
+          "before_ms": 223,
+          "after_ms": 130
+        },
+        {
+          "test": "session_sse",
+          "before_ms": 173,
+          "after_ms": 143
+        },
+        {
+          "test": "notifications",
+          "before_ms": 195,
+          "after_ms": 136
+        },
+        {
+          "test": "ai_config",
+          "before_ms": 127,
+          "after_ms": 133
+        },
+        {
+          "test": "apk_status",
+          "before_ms": 200,
+          "after_ms": 141
+        },
+        {
+          "test": "app_config",
+          "before_ms": 286,
+          "after_ms": 133
+        },
+        {
+          "test": "community_stats",
+          "before_ms": 157,
+          "after_ms": 129
+        },
+        {
+          "test": "plain_image",
+          "before_ms": 137,
+          "after_ms": 136
+        },
+        {
+          "test": "cors_registration",
+          "before_ms": 128,
+          "after_ms": 132
+        },
+        {
+          "test": "cors_login",
+          "before_ms": 142,
+          "after_ms": 135
+        },
+        {
+          "test": "cors_sos",
+          "before_ms": 179,
+          "after_ms": 137
+        },
+        {
+          "test": "cors_chat_write",
+          "before_ms": 308,
+          "after_ms": 136
+        },
+        {
+          "test": "cors_telemetry_write",
+          "before_ms": 137,
+          "after_ms": 129
+        },
+        {
+          "test": "cors_image_upload",
+          "before_ms": 140,
+          "after_ms": 133
+        },
+        {
+          "test": "cors_media_upload",
+          "before_ms": 146,
+          "after_ms": 133
+        },
+        {
+          "test": "head_blog",
+          "before_ms": 137,
+          "after_ms": 130
+        },
+        {
+          "test": "head_contact",
+          "before_ms": 143,
+          "after_ms": 138
+        },
+        {
+          "test": "head_web_login",
+          "before_ms": 141,
+          "after_ms": 135
+        },
+        {
+          "test": "head_web_admin_diagnostics",
+          "before_ms": 147,
+          "after_ms": 134
+        },
+        {
+          "test": "head_privacy_policy_redirect",
+          "before_ms": 145,
+          "after_ms": 123
+        },
+        {
+          "test": "head_planner_redirect",
+          "before_ms": 125,
+          "after_ms": 120
+        },
+        {
+          "test": "head_apk_latest_redirect",
+          "before_ms": 135,
+          "after_ms": 126
+        },
+        {
+          "test": "head_r2_source_image",
+          "before_ms": 158,
+          "after_ms": 136
+        },
+        {
+          "test": "head_favicon",
+          "before_ms": 132,
+          "after_ms": 136
+        },
+        {
+          "test": "head_leaflet_html",
+          "before_ms": 146,
+          "after_ms": 134
+        },
+        {
+          "test": "head_roadmap_json",
+          "before_ms": 133,
+          "after_ms": 145
+        },
+        {
+          "test": "image_if_none_match",
+          "before_ms": 125,
+          "after_ms": 132
+        },
+        {
+          "test": "image_if_modified_since",
+          "before_ms": 135,
+          "after_ms": 121
+        },
+        {
+          "test": "image_range",
+          "before_ms": 144,
+          "after_ms": 135
+        },
+        {
+          "test": "image_if_range_stale",
+          "before_ms": 135,
+          "after_ms": 143
+        },
+        {
+          "test": "ws_admin_notifications",
+          "before_ms": 375,
+          "after_ms": 393
+        },
+        {
+          "test": "ws_diagnostic",
+          "before_ms": 163,
+          "after_ms": 344
+        }
+      ],
+      "railway_origin": [
+        {
+          "test": "health",
+          "before_ms": 233,
+          "after_ms": 180
+        },
+        {
+          "test": "readiness",
+          "before_ms": 191,
+          "after_ms": 187
+        },
+        {
+          "test": "auth_session",
+          "before_ms": 179,
+          "after_ms": 172
+        },
+        {
+          "test": "profile",
+          "before_ms": 189,
+          "after_ms": 193
+        },
+        {
+          "test": "chat",
+          "before_ms": 176,
+          "after_ms": 182
+        },
+        {
+          "test": "chat_sse",
+          "before_ms": 185,
+          "after_ms": 192
+        },
+        {
+          "test": "session_sse",
+          "before_ms": 189,
+          "after_ms": 188
+        },
+        {
+          "test": "notifications",
+          "before_ms": 182,
+          "after_ms": 172
+        },
+        {
+          "test": "ai_config",
+          "before_ms": 184,
+          "after_ms": 181
+        },
+        {
+          "test": "apk_status",
+          "before_ms": 178,
+          "after_ms": 181
+        },
+        {
+          "test": "app_config",
+          "before_ms": 191,
+          "after_ms": 174
+        },
+        {
+          "test": "community_stats",
+          "before_ms": 187,
+          "after_ms": 187
+        },
+        {
+          "test": "plain_image",
+          "before_ms": 193,
+          "after_ms": 188
+        },
+        {
+          "test": "cors_registration",
+          "before_ms": 190,
+          "after_ms": 190
+        },
+        {
+          "test": "cors_login",
+          "before_ms": 193,
+          "after_ms": 179
+        },
+        {
+          "test": "cors_sos",
+          "before_ms": 173,
+          "after_ms": 180
+        },
+        {
+          "test": "cors_chat_write",
+          "before_ms": 195,
+          "after_ms": 177
+        },
+        {
+          "test": "cors_telemetry_write",
+          "before_ms": 183,
+          "after_ms": 170
+        },
+        {
+          "test": "cors_image_upload",
+          "before_ms": 182,
+          "after_ms": 187
+        },
+        {
+          "test": "cors_media_upload",
+          "before_ms": 175,
+          "after_ms": 189
+        },
+        {
+          "test": "head_blog",
+          "before_ms": 181,
+          "after_ms": 199
+        },
+        {
+          "test": "head_contact",
+          "before_ms": 195,
+          "after_ms": 188
+        },
+        {
+          "test": "head_web_login",
+          "before_ms": 200,
+          "after_ms": 189
+        },
+        {
+          "test": "head_web_admin_diagnostics",
+          "before_ms": 183,
+          "after_ms": 166
+        },
+        {
+          "test": "head_privacy_policy_redirect",
+          "before_ms": 177,
+          "after_ms": 175
+        },
+        {
+          "test": "head_planner_redirect",
+          "before_ms": 197,
+          "after_ms": 184
+        },
+        {
+          "test": "head_apk_latest_redirect",
+          "before_ms": 186,
+          "after_ms": 196
+        },
+        {
+          "test": "head_r2_source_image",
+          "before_ms": 183,
+          "after_ms": 183
+        },
+        {
+          "test": "head_favicon",
+          "before_ms": 171,
+          "after_ms": 176
+        },
+        {
+          "test": "head_leaflet_html",
+          "before_ms": 181,
+          "after_ms": 191
+        },
+        {
+          "test": "head_roadmap_json",
+          "before_ms": 204,
+          "after_ms": 184
+        },
+        {
+          "test": "image_if_none_match",
+          "before_ms": 175,
+          "after_ms": 192
+        },
+        {
+          "test": "image_if_modified_since",
+          "before_ms": 183,
+          "after_ms": 193
+        },
+        {
+          "test": "image_range",
+          "before_ms": 179,
+          "after_ms": 173
+        },
+        {
+          "test": "image_if_range_stale",
+          "before_ms": 185,
+          "after_ms": 191
+        },
+        {
+          "test": "ws_admin_notifications",
+          "before_ms": 205,
+          "after_ms": 421
+        },
+        {
+          "test": "ws_diagnostic",
+          "before_ms": 429,
+          "after_ms": 404
+        }
+      ],
+      "preview_candidate": [
+        {
+          "test": "health",
+          "before_ms": 280,
+          "after_ms": 599
+        },
+        {
+          "test": "readiness",
+          "before_ms": 260,
+          "after_ms": 340
+        },
+        {
+          "test": "auth_session",
+          "before_ms": 247,
+          "after_ms": 204
+        },
+        {
+          "test": "profile",
+          "before_ms": 166,
+          "after_ms": 204
+        },
+        {
+          "test": "chat",
+          "before_ms": 191,
+          "after_ms": 332
+        },
+        {
+          "test": "chat_sse",
+          "before_ms": 223,
+          "after_ms": 198
+        },
+        {
+          "test": "session_sse",
+          "before_ms": 173,
+          "after_ms": 168
+        },
+        {
+          "test": "notifications",
+          "before_ms": 195,
+          "after_ms": 169
+        },
+        {
+          "test": "ai_config",
+          "before_ms": 127,
+          "after_ms": 176
+        },
+        {
+          "test": "apk_status",
+          "before_ms": 200,
+          "after_ms": 169
+        },
+        {
+          "test": "app_config",
+          "before_ms": 286,
+          "after_ms": 177
+        },
+        {
+          "test": "community_stats",
+          "before_ms": 157,
+          "after_ms": 185
+        },
+        {
+          "test": "plain_image",
+          "before_ms": 137,
+          "after_ms": 341
+        },
+        {
+          "test": "cors_registration",
+          "before_ms": 128,
+          "after_ms": 200
+        },
+        {
+          "test": "cors_login",
+          "before_ms": 142,
+          "after_ms": 208
+        },
+        {
+          "test": "cors_sos",
+          "before_ms": 179,
+          "after_ms": 157
+        },
+        {
+          "test": "cors_chat_write",
+          "before_ms": 308,
+          "after_ms": 206
+        },
+        {
+          "test": "cors_telemetry_write",
+          "before_ms": 137,
+          "after_ms": 143
+        },
+        {
+          "test": "cors_image_upload",
+          "before_ms": 140,
+          "after_ms": 251
+        },
+        {
+          "test": "cors_media_upload",
+          "before_ms": 146,
+          "after_ms": 154
+        },
+        {
+          "test": "head_blog",
+          "before_ms": 137,
+          "after_ms": 202
+        },
+        {
+          "test": "head_contact",
+          "before_ms": 143,
+          "after_ms": 175
+        },
+        {
+          "test": "head_web_login",
+          "before_ms": 141,
+          "after_ms": 183
+        },
+        {
+          "test": "head_web_admin_diagnostics",
+          "before_ms": 147,
+          "after_ms": 178
+        },
+        {
+          "test": "head_privacy_policy_redirect",
+          "before_ms": 145,
+          "after_ms": 207
+        },
+        {
+          "test": "head_planner_redirect",
+          "before_ms": 125,
+          "after_ms": 201
+        },
+        {
+          "test": "head_apk_latest_redirect",
+          "before_ms": 135,
+          "after_ms": 159
+        },
+        {
+          "test": "head_r2_source_image",
+          "before_ms": 158,
+          "after_ms": 69
+        },
+        {
+          "test": "head_favicon",
+          "before_ms": 132,
+          "after_ms": 48
+        },
+        {
+          "test": "head_leaflet_html",
+          "before_ms": 146,
+          "after_ms": 163
+        },
+        {
+          "test": "head_roadmap_json",
+          "before_ms": 133,
+          "after_ms": 146
+        },
+        {
+          "test": "image_if_none_match",
+          "before_ms": 125,
+          "after_ms": 68
+        },
+        {
+          "test": "image_if_modified_since",
+          "before_ms": 135,
+          "after_ms": 55
+        },
+        {
+          "test": "image_range",
+          "before_ms": 144,
+          "after_ms": 52
+        },
+        {
+          "test": "image_if_range_stale",
+          "before_ms": 135,
+          "after_ms": 78
+        },
+        {
+          "test": "ws_admin_notifications",
+          "before_ms": 375,
+          "after_ms": 614
+        },
+        {
+          "test": "ws_diagnostic",
+          "before_ms": 163,
+          "after_ms": 256
+        }
+      ]
+    },
+    "target_sources": {
+      "public_apex": "public_apex",
+      "railway_origin": "railway_origin",
+      "preview_candidate": "public_apex"
+    },
+    "preview_static_tests_not_compared": [
+      "head_blog",
+      "head_contact",
+      "head_favicon",
+      "head_leaflet_html",
+      "head_roadmap_json",
+      "head_web_login"
+    ]
+  }
+}

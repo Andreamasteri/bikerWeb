@@ -154,10 +154,34 @@ function envRequest(request, path) {
   return new Request(url, request);
 }
 
+function withSecurityHeaders(response) {
+  const headers = new Headers(response.headers);
+  if (!headers.has("x-content-type-options")) headers.set("x-content-type-options", "nosniff");
+  if (!headers.has("referrer-policy")) headers.set("referrer-policy", "strict-origin-when-cross-origin");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 function notFound() {
-  return new Response("Not Found", {
+  return withSecurityHeaders(new Response("Not Found", {
     status: 404,
     headers: { "content-type": "text/plain; charset=utf-8" },
+  }));
+}
+
+async function proxyImageToRailway(request, env) {
+  const response = await proxyToRailway(request, env);
+  const headers = new Headers(response.headers);
+  if ([200, 206, 304, 412, 416].includes(response.status) && !headers.has("accept-ranges")) {
+    headers.set("accept-ranges", "bytes");
+  }
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
   });
 }
 
@@ -179,6 +203,8 @@ async function serveR2Image(request, env, pathname) {
   object.writeHttpMetadata(headers);
   headers.set("etag", object.httpEtag);
   headers.set("accept-ranges", "bytes");
+  headers.set("x-content-type-options", "nosniff");
+  headers.set("referrer-policy", "strict-origin-when-cross-origin");
   if (!headers.has("content-type")) {
     headers.set("content-type", "application/octet-stream");
   }
@@ -235,23 +261,23 @@ export default {
       if (method !== "GET" && method !== "HEAD") return notFound();
       const image = await serveR2Image(request, env, pathname);
       if (image) return image;
-      return proxyToRailway(request, env);
+      return proxyImageToRailway(request, env);
     }
     if (pathname === "/favicon.png" || pathname === "/favicon.ico") {
       if (method !== "GET" && method !== "HEAD") return notFound();
       const image = await serveR2Image(request, env, "/assets/images/favicon.png");
       if (image) return image;
-      return proxyToRailway(request, env);
+      return proxyImageToRailway(request, env);
     }
 
     if (STATIC_FILES.has(pathname) && (method === "GET" || method === "HEAD")) {
       const file = pathname;
-      return env.ASSETS.fetch(assetRequest(request, file));
+      return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, file)));
     }
 
     if (STATIC_PAGES.has(pathname) && (method === "GET" || method === "HEAD")) {
       const file = pathname === "/" ? "/index.html" : `${pathname}/index.html`;
-      return env.ASSETS.fetch(assetRequest(request, file));
+      return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, file)));
     }
 
     return notFound();

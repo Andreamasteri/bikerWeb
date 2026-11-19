@@ -1,7 +1,7 @@
 # BikerWeb → Cloudflare migration report
 
 **Data verifica:** 19 novembre 2026 (UTC)  
-**Esito:** preparazione e audit completati; pubblicazione fermata prima del cambio DNS. Il frontend ufficiale è ancora servito da Railway. Il backend e i database non sono stati modificati.
+**Esito:** candidate e Preview Cloudflare creati e verificati; pubblicazione del dominio fermata perché Gate 1 resta bloccato. Il frontend ufficiale è ancora servito da Railway. Il backend e i database non sono stati modificati.
 
 ## Architettura e stato live
 
@@ -11,11 +11,11 @@
 | Backend Railway | Operativo su `bikerlink-production.up.railway.app`; `/api/health` risponde 200 con revisione `aedfb278f487105a10567c9efa4c090705b3d801`. Nessun deploy backend eseguito. |
 | DNS apex | CNAME `biker-link.net` → `bikerlink-production.up.railway.app`, `proxied:false`, TTL API `1` (Auto), record ID `f4b67198cdea0c5f2f61d65e53ce6841`. Nessuna modifica ai record email o agli altri hostname. |
 | Worker BikerTest | `bikerlink-website-test` esiste e resta separato. Deployment attivo `1ad4855e-c80c-4f1b-9911-726b8b25a4fd`, versione `bf2414b5-9ead-4012-a6cd-99afc5a96498`, quota 100%; `https://bikertest.biker-link.net/` risponde 200. |
-| Worker produzione | `bikerlink-website-production` non risulta ancora creato/caricato in Cloudflare; nessun deployment ID. |
+| Worker/Preview candidato | Preview Cloudflare separato disponibile su `https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev`; Preview ID `fa7a694ccc584f439a2cef32f65be791`, deployment verificato `bf714146-cf10-4b69-8b4a-b254ca82303b`. Nessun deployment production o custom domain apex creato. |
 | Cloudflare R2 | Bucket dedicato `bikerlink-website-assets`: 49 oggetti, 6.044.133 byte. Dimensioni e MD5 coincidono con il manifest generato dagli asset del commit Railway sorgente. |
 | TLS e WebSocket zona | Stato osservato: modalità SSL `Full`, WebSockets `on`. Non sono state cambiate impostazioni della zona. Il Worker candidato usa HTTPS verso l’hostname Railway, non il dominio pubblico, evitando il loop. |
 
-Il Worker candidato è configurato per Workers Static Assets in `workers/bikerlink-website-production/`. La variabile non segreta `RAILWAY_ORIGIN=https://bikerlink-production.up.railway.app` è dichiarata nel file Wrangler e validata prima del proxy. Il binding `SITE_ASSETS` punta al bucket R2 dedicato. Queste impostazioni sono versionate ma non sono ancora state applicate a un Worker Cloudflare remoto.
+Il Worker candidato è configurato per Workers Static Assets in `workers/bikerlink-website-production/`. La variabile non segreta `RAILWAY_ORIGIN=https://bikerlink-production.up.railway.app` è dichiarata nel file Wrangler e validata prima del proxy. Il binding `SITE_ASSETS` punta al bucket R2 dedicato. Le impostazioni sono state applicate soltanto al Preview Cloudflare del branch; nessun Worker production o route del dominio ufficiale è stato creato.
 
 ## Audit e routing candidato
 
@@ -51,27 +51,28 @@ La verifica d’integrità e di ripristino dei sorgenti è PASS. Nessuna procedu
 
 La baseline è registrata in [`docs/cloudflare-migration/API_BEFORE.json`](docs/cloudflare-migration/API_BEFORE.json) e [`docs/cloudflare-migration/API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md). È ripetibile con [`scripts/cloudflare-migration/api_probe.py`](scripts/cloudflare-migration/api_probe.py).
 
-- Acquisizione: `2026-11-19T11:12:49Z`.
-- Dominio apex: **37/37 PASS**, mediana `156 ms`.
-- Hostname Railway: **37/37 PASS**, mediana `184 ms`.
+- Acquisizione aggiornata prima del Preview: `2026-11-19T12:20:56Z`.
+- Dominio apex: **37/37 PASS**, mediana `146 ms`.
+- Hostname Railway: **37/37 PASS**, mediana `185 ms`.
 - Entrambi restituiscono la revisione backend `aedfb278f487105a10567c9efa4c090705b3d801`.
 - Sono stati controllati health/readiness, risposte anonime auth/profile/chat/notifications/AI, CORS preflight, redirect, HEAD di pagine/asset, SSE anonimi e handshake WebSocket anonimi. Include hash e dimensione immagine, `If-None-Match`/`If-Modified-Since` (304), Range (206) e fallback `If-Range` stale (200). Le API protette hanno restituito i `401` attesi; i due handshake WebSocket anonimi hanno restituito `401`.
 - La suite non ha eseguito login, scritture, upload, SOS, notifiche o callback. Non è stata usata una sessione autorizzata: gli endpoint SSE sono stati verificati solo per il rifiuto anonimo e i WebSocket autenticati non sono stati aperti.
 
-**Gate 1: BLOCKED, non PASS.** Mancano prove autenticate non distruttive per sessione/cookie, profilo, matching, telemetria, community, chat, notifiche, media/upload, AI e stream persistenti. La suite può confrontare in automatico status, schema, headers, cookie, redirect, body e revisione; un’autocomparazione sul servizio pre-cutover alle `2026-11-19T11:13:12Z` ha dato zero differenze (solo verifica del comparatore, non Gate 2). In base al piano vincolante non si può pubblicare finché il gate non è PASS.
+**Gate 1: BLOCKED, non PASS.** Mancano prove autenticate non distruttive per sessione/cookie, profilo, matching, telemetria, community, chat, notifiche, media/upload, AI e stream persistenti. Il confronto reale del Preview con la baseline del dominio, acquisito alle `2026-11-19T12:21:09Z`, ha dato zero differenze nei controlli anonimi confrontabili; restano esclusi i flussi autenticati. L’autocomparazione sul solo servizio pre-cutover alle `2026-11-19T11:13:12Z` era una verifica del comparatore, non un gate. In base al piano vincolante non si può pubblicare finché il Gate 1 non è PASS.
 
 ## Candidate e validazioni
 
 Il candidate è stato validato localmente e isolatamente; questo non sostituisce un test live su Cloudflare:
 
 - Sintassi Worker e configurazione Wrangler: PASS.
-- Harness locale delle rotte: **26/26 PASS**; include priorità API, forwarding di headers/cookie/query, path SSE/WebSocket, R2, asset statici, redirect privacy, Range/validator/HEAD verso Railway, rifiuto di path/metodi non mappati e configurazione origin mancante. Non prova il runtime Cloudflare o un canale persistente autenticato.
+- Harness locale delle rotte: **30/30 PASS**; include priorità API, forwarding di headers/cookie/query, path SSE/WebSocket, R2, asset statici, header di sicurezza, Range/validator/HEAD verso Railway, rifiuto di path/metodi non mappati e configurazione origin mancante. È versionato e ripetibile con `npm run test:routing` dalla directory del Worker.
 - Audit SEO statico: 18 pagine, 19 URL in sitemap, zero problemi rilevati per canonical, robots, noindex e hostname BikerTest.
-- Non sono stati eseguiti test visuali desktop/Android, né verifiche live di cache, immagini R2, JavaScript e routing sul Worker candidato: non esiste ancora un preview remoto del candidate.
+- Preview remoto verificato: [`API_PREVIEW_REPORT.md`](docs/cloudflare-migration/API_PREVIEW_REPORT.md) e [`API_PREVIEW.json`](docs/cloudflare-migration/API_PREVIEW.json). La suite ha dato 37/37 PASS sul Preview e il confronto automatico con la baseline pre-cutover ha rilevato zero differenze nei test confrontabili.
+- Smoke test Playwright desktop 1365×900 e Pixel 7 emulato 412 px: homepage, navigazione Matching/Blog, immagini R2 13/13, menu mobile, canonical/robots e zero errori console; nessun metodo di scrittura eseguito. Non è stato usato un dispositivo Android fisico.
 - Preparazione del deploy nell’ambiente attivato il 19 novembre 2026: Wrangler `4.165.0` installato e fissato come dipendenza dev con lockfile in `workers/bikerlink-website-production/`; `npm run dry-run` PASS, legge 37 file statici e risolve i binding `SITE_ASSETS`, `ASSETS` e `RAILWAY_ORIGIN`. La procedura Preview è documentata in [`workers/bikerlink-website-production/DEPLOYMENT.md`](workers/bikerlink-website-production/DEPLOYMENT.md).
-- L’API Workers Builds mostra zero build token configurati e non esiste ancora lo script production. Il connettore Cloudflare non espone l’header JWT della sessione di upload Static Assets; per questo si è avviato il flusso OAuth Device di Wrangler con permessi minimi (`account:read`, `user:read`, `workers_scripts:write`, `workers_routes:write`, `zone:read`). L’approvazione interattiva è ancora necessaria prima di poter creare il Preview remoto. Un precedente tentativo di trasferire la JWT temporanea a Forge era stato bloccato dall’auto-review; nessun bypass è stato tentato.
+- Wrangler `4.165.0` è autenticato tramite OAuth Device con scope limitati (`account:read`, `user:read`, `workers_scripts:write`, `workers_routes:write`, `zone:read`); il token resta fuori dal repository. Non è stato necessario usare Workers Builds o trasferire JWT al connettore Cloudflare.
 
-Di conseguenza il candidate non è stato deployato su un hostname di verifica; **Gate 2 e Gate 3: NOT RUN**. Non esistono `API_AFTER.json` né risultati post-cutover, perché non c’è stata pubblicazione.
+La route di verifica è un Preview Workers separato su `workers.dev`; il Worker candidate non è stato promosso a production. **Gate 2 e Gate 3: NOT RUN** e non esistono `API_AFTER.json` o risultati post-cutover, perché non c’è stata pubblicazione.
 
 ## GitHub e CI
 
@@ -84,6 +85,6 @@ Di conseguenza il candidate non è stato deployato su un hostname di verifica; *
 
 ## Pubblicazione e decisione
 
-Nessun record DNS, Worker, servizio Railway, database, servizio matching/telemetria, email o ambiente BikerTest è stato modificato. Il frontend ufficiale è ancora su Railway e le API sono operative.
+Nessun record DNS, Worker BikerTest, servizio Railway, database, servizio matching/telemetria o email è stato modificato. È stato creato soltanto il Preview del branch su `workers.dev`, senza route apex; il frontend ufficiale è ancora su Railway e le API sono operative.
 
-Per continuare servono due prerequisiti: completare l’autenticazione Device di Wrangler già avviata nell’ambiente e disporre di un backend/account sandbox isolato per Gate 1 (l’origine attuale è Railway production; non effettuerò scritture sul database live). Non inviare password, cookie o token in chat. Dopo l’autenticazione si potrà creare il Preview isolato e verificare le parti anonime; la pubblicazione del dominio resta bloccata finché i test autenticati sandbox non sono PASS.
+Il Preview anonimo è pronto e verificato. Per Gate 1 serve ancora un backend/account sandbox isolato per i flussi autenticati non distruttivi (l’origine attuale è Railway production; non effettuerò scritture sul database live). Il cambio DNS e il deploy production restano bloccati finché quei controlli non sono PASS. Nessuna credenziale deve essere inviata in chat.
