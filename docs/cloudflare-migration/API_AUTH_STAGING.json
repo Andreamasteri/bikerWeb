@@ -1,0 +1,67 @@
+{
+  "captured_at": "2026-11-19T21:57:52.815Z",
+  "target": {
+    "project": "Bikerlink",
+    "railway_environment": "staging",
+    "service": "Bikerlink-Staging",
+    "deployment_id": "cb72516b-3224-4dbf-a103-28bb5ed06063",
+    "backend_revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+    "base_url": "https://bikerlink-staging-staging.up.railway.app"
+  },
+  "database_target_evidence": {
+    "source": "Operator-provided Railway CLI output",
+    "command_scope": "railway run --environment staging --service Bikerlink-Staging",
+    "effective_hostname": "postgres.railway.internal",
+    "matching_staging_service": "Postgres",
+    "staging_postgres_volume_mb": 500,
+    "status": "verified"
+  },
+  "checks": [
+    {
+      "timestamp": "2026-11-19T21:57:49.190Z",
+      "target": "https://bikerlink-production.up.railway.app/api/auth/staging-admin-verify",
+      "method": "POST",
+      "status": 204,
+      "credential_source": "Secure Infisical vault; BIKERLINK_ADMIN_PASSWORD; value withheld",
+      "effect": "Read-only credential verification"
+    },
+    {
+      "timestamp": "2026-11-19T21:57:51.265Z",
+      "target": "/api/auth/login",
+      "method": "POST",
+      "status": 200,
+      "role": "admin",
+      "session_token_returned": true,
+      "token_persisted": false
+    },
+    {
+      "timestamp": "2026-11-19T21:57:52.121Z",
+      "target": "/api/auth/me",
+      "method": "GET",
+      "status": 200
+    },
+    {
+      "timestamp": "2026-11-19T21:57:52.815Z",
+      "target": "/api/auth/logout",
+      "method": "POST",
+      "status": 200,
+      "effect": "Session destroyed"
+    }
+  ],
+  "preflight_failure": {
+    "timestamp": "2026-11-19T21:57:50.387Z",
+    "production_verifier_status": 401,
+    "staging_login_status": 401,
+    "protected_admin_endpoint_status": 401,
+    "protected_admin_endpoint_reason": "no-session",
+    "interpretation": "The fixed preflight's identifier/password pair was rejected by the production verifier, while its protected admin request had no session. The helper does not expose its submitted identity, so the mismatched field cannot be isolated. The normal staging login path succeeded with the canonical credential."
+  },
+  "side_effects": {
+    "new_users_created": 0,
+    "staging_session": "created_then_destroyed",
+    "staging_login_bookkeeping": "performed by normal application login/logout",
+    "production_database_writes": 0,
+    "secret_values_or_session_tokens_recorded": false
+  },
+  "gate1": "BLOCKED: authenticated API coverage beyond /api/auth/me remains incomplete"
+}
