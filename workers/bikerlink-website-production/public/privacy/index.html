@@ -1,1136 +1,626 @@
-<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><meta name="description" content="La tua presenza, la tua posizione, le tue regole. Una community può creare connessioni senza pretendere che tu renda pubblica tutta la tua vita."><meta name="theme-color" content="#11191a"><title>03 / PRIVACY E LIBERTÀ — BikerLink</title><link rel="icon" href="/favicon.png"><link rel="alternate" hreflang="it" href="https://biker-link.net/privacy"><link rel="alternate" hreflang="en" href="https://biker-link.net/en/privacy"><style>
-.mag {--o:#d88748;--cream:#efeae0;--ink:#141a1c;color:var(--ink);font-family:system-ui,-apple-system,sans-serif;background:var(--cream);overflow:hidden}
-.mag *{box-sizing:border-box}.mag a{text-decoration:none}
-.mag .wrap{width:min(1170px,calc(100% - 48px));margin:auto}
-.mag .eyebrow{font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:900;color:#b46732}
-.mag .title{font:900 clamp(46px,6vw,96px)/.98 Impact,'Arial Narrow',sans-serif;letter-spacing:.005em;text-transform:uppercase;margin:17px 0 25px}
-.mag .title em{font:italic .82em Georgia,serif;text-transform:none;letter-spacing:-.06em}
-.mag .lead{font-size:clamp(16px,1.45vw,20px);line-height:1.65;max-width:680px;color:#525a58}
-.mag .button{display:inline-flex;align-items:center;justify-content:center;min-height:47px;padding:12px 20px;margin:14px 12px 0 0;border:1px solid currentColor;color:inherit;font-weight:850;letter-spacing:.1em;text-transform:uppercase;font-size:11px}
-.mag .button.filled{background:var(--o);border-color:var(--o);color:#172021}
-.mag .photo{width:100%;height:480px;object-fit:cover;background:#30383b}
-.mag .hero{position:relative;min-height:690px;display:flex;align-items:flex-end;background:#131a1c;color:#fff;isolation:isolate}
-.mag .hero::before{position:absolute;inset:0;z-index:-1;content:'';background:linear-gradient(90deg,rgba(0,0,0,.83),rgba(0,0,0,.2)),linear-gradient(0deg,#111a1d,transparent 70%),url('/assets/images/hero-forest.webp') center/cover}
-.mag .hero .wrap{padding:100px 0 65px}
-.mag .hero .eyebrow{color:#f1a366}.mag .hero .title{font-size:clamp(58px,8.5vw,136px);max-width:1000px}
-.mag .hero .title b{color:#e59c5b}.mag .hero .lead{color:#eee6dc;max-width:690px}
-.mag .slogan{text-transform:uppercase;letter-spacing:.22em;font-weight:900;font-size:12px;margin:28px 0;color:#eeb17e}
-.mag .quicknav{background:#1b2425;color:#f7f0e3}.mag .quicknav .wrap{display:grid;grid-template-columns:repeat(4,1fr)}
-.mag .quicknav a{color:inherit;padding:24px 18px;border-right:1px solid #ffffff26;font-weight:800;font-size:15px;line-height:1.3}.mag .quicknav a:first-child{border-left:1px solid #ffffff26}
-.mag .quicknav span{display:block;color:#dd9356;font-size:10px;letter-spacing:.14em;margin-bottom:7px}
-.mag section.chapter{padding:100px 0}.mag section.chapter.dark{background:#192124;color:#f5f1e7}.mag .dark .lead{color:#c0c6c4}
-.mag .split{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:65px}
-.mag .chapter.alt{background:#e0d9cb}.mag .alt .photo{height:500px}
-.mag .chips{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:44px}
-.mag .chip{padding:26px;background:#f8f4ec;border-top:3px solid #cd8752}
-.mag .chip strong{display:block;font:900 24px/1.2 Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin-bottom:10px}
-.mag .chip p{font-size:14px;line-height:1.6;color:#636562}
-.mag .privacy .title{font-size:clamp(52px,7vw,116px)}.mag .privacy .lead{max-width:830px}
-.mag .privacy .privacy-options{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:40px}
-.mag .privacy-options div{border-top:2px solid #ab9e8e;padding-top:16px}.mag .privacy-options strong{display:block;font-weight:900;margin-bottom:8px}.mag .privacy-options p{line-height:1.6;font-size:14px;color:#65635b}
-.mag .sos{background:#dad4c9}.mag .sos .photo{filter:saturate(.65)}.mag .sos .note{border-left:4px solid #c64532;padding:14px 18px;background:#faf6ee;font-size:13px;line-height:1.6;margin-top:20px}
-.mag .ecosystem{background:#192124;color:#f5f1e7}.mag .ecosystem .lead{color:#c0c6c4}
-.mag .products{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:40px}
-.mag .product{border-top:3px solid #d88748;padding-top:16px}.mag .product img{width:100%;height:230px;object-fit:cover;background:#343c40}
-.mag .product h3{font:900 32px/1 Impact,sans-serif;text-transform:uppercase;margin:19px 0 8px}
-.mag .product p{font-size:14px;line-height:1.65;color:#c4c9c6}.mag .product a{color:#f0b884;font-weight:850;letter-spacing:.08em;font-size:12px}
-.mag .free{background:#ce864a;text-align:center;padding:90px 0}.mag .free h2{font:900 clamp(110px,18vw,260px)/.8 Impact,sans-serif;margin:30px 0}
-.mag .free p{font:italic clamp(26px,4vw,48px)/1.2 Georgia,serif;margin:28px auto;max-width:800px}
-.mag .finish{text-align:center;padding:100px 0;background:#101719;color:#fff}
-.mag .finish .title{max-width:1050px;margin:20px auto}.mag .finish p{max-width:650px;margin:auto;line-height:1.8;color:#ccd1cd}
-.mag .fine{font-size:12px;line-height:1.6;color:#827d77}
-@media(max-width:850px){.mag .split{grid-template-columns:1fr;gap:35px}.mag .quicknav .wrap{grid-template-columns:repeat(2,1fr)}.mag .chips,.mag .products{grid-template-columns:repeat(2,1fr)}.mag .photo{height:350px}}
-@media(max-width:520px){.mag .wrap{width:calc(100% - 34px)}.mag .hero{min-height:650px}.mag section.chapter{padding:70px 0}.mag .chips,.mag .products,.mag .privacy .privacy-options{grid-template-columns:1fr}.mag .quicknav a{padding:18px 12px;font-size:12px}.mag .hero .title{font-size:clamp(54px,13vw,80px)}.mag .title{font-size:clamp(45px,12vw,75px)}.mag .slogan{letter-spacing:.1em}}
+<!doctype html>
+<html lang="it">
+  <head>
+    <title>Privacy Policy — BikerLink</title>
+    <meta charset="utf-8" />
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Privacy Policy di BikerLink — come raccogliamo, usiamo e proteggiamo i tuoi dati personali. Informativa completa ai sensi del GDPR." />
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: #0D0D0D;
+        color: #E8E8E8;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .header {
+        width: 100%;
+        max-width: 760px;
+        padding: 32px 24px 16px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1px solid #1E1E2E;
+      }
+      .logo { font-size: 22px; color: #D4A017; font-weight: 800; letter-spacing: -0.5px; }
+      .back-link {
+        color: #D4A017;
+        text-decoration: none;
+        font-size: 14px;
+        font-weight: 600;
+        margin-left: auto;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+      .back-link:hover { opacity: 0.8; }
+      .content {
+        width: 100%;
+        max-width: 760px;
+        padding: 32px 24px 80px;
+      }
+      h1 { font-size: 26px; font-weight: 800; color: #D4A017; margin-bottom: 6px; }
+      .subtitle { font-size: 13px; color: #666; margin-bottom: 36px; }
+      h2 {
+        font-size: 15px;
+        font-weight: 700;
+        color: #D4A017;
+        margin-top: 36px;
+        margin-bottom: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        padding-bottom: 6px;
+        border-bottom: 1px solid #1E1E2E;
+      }
+      h3 {
+        font-size: 13px;
+        font-weight: 700;
+        color: #BBBBBB;
+        margin-top: 20px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.3px;
+      }
+      p { font-size: 14px; line-height: 1.75; color: #C0C0C0; margin-bottom: 12px; }
+      ul { padding-left: 20px; margin-bottom: 14px; }
+      ul li { font-size: 14px; line-height: 1.75; color: #C0C0C0; margin-bottom: 4px; }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0 24px;
+        font-size: 13px;
+      }
+      th {
+        background: #1A1A2E;
+        color: #D4A017;
+        text-align: left;
+        padding: 10px 12px;
+        font-weight: 700;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      td { padding: 9px 12px; border-bottom: 1px solid #1A1A2E; color: #C0C0C0; vertical-align: top; }
+      tr:hover td { background: #111120; }
+      .tag {
+        display: inline-block;
+        background: #1A1A2E;
+        color: #D4A017;
+        border-radius: 4px;
+        padding: 2px 7px;
+        font-size: 11px;
+        font-weight: 700;
+        margin-right: 4px;
+      }
+      .callout {
+        background: #0F1A2E;
+        border-left: 3px solid #D4A017;
+        padding: 12px 16px;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .callout p { margin: 0; font-size: 13px; }
+      .footer {
+        width: 100%;
+        max-width: 760px;
+        padding: 24px;
+        text-align: center;
+        color: #444;
+        font-size: 12px;
+        border-top: 1px solid #1E1E2E;
+      }
+      .footer a { color: #D4A017; text-decoration: underline; }
+      a { color: #D4A017; }
+    </style>
+  <link rel="canonical" href="https://biker-link.net/privacy" />
+<meta property="og:title" content="Privacy Policy — BikerLink" />
+<meta property="og:description" content="Privacy Policy di BikerLink — come raccogliamo, usiamo e proteggiamo i tuoi dati personali. Informativa completa ai sensi del GDPR." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://biker-link.net/privacy" />
+<meta property="og:site_name" content="BikerLink" />
+<meta property="og:locale" content="it_IT" />
+<meta property="og:image" content="https://biker-link.net/assets/images/playstore-feature-graphic.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Privacy Policy — BikerLink" />
+<meta name="twitter:description" content="Privacy Policy di BikerLink — come raccogliamo, usiamo e proteggiamo i tuoi dati personali. Informativa completa ai sensi del GDPR." />
+<meta name="twitter:image" content="https://biker-link.net/assets/images/playstore-feature-graphic.png" />
+<link rel="icon" type="image/png" href="/favicon.png" />
+</head>
+  <body>
+    <a href="#main" style="position:absolute;left:-9999px;top:0" class="skip-link" onfocus="this.style.left='8px';this.style.top='8px';this.style.background='#FF3B30';this.style.color='#fff';this.style.padding='8px 14px';this.style.zIndex='9999'" data-i18n="legal.skip">Salta al contenuto</a>
+    <main id="main" role="main">
+    <div class="header">
+      <span class="logo">BikerLink</span>
+      <a href="/" class="back-link" data-i18n="legal.back">&#8592; Home</a>
+    </div>
 
-body{margin:0;background:#11191a;color:#ede9df}
-a:focus-visible,summary:focus-visible{outline:3px solid #e3a168;outline-offset:3px}
-.preview-bar{background:#b77a42;color:#141716;text-align:center;font:900 10px/1.4 system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;padding:7px 10px}
-.testnav{background:#121b1c;color:#fff;position:sticky;top:0;z-index:90;border-bottom:1px solid #ffffff26}
-.testnav .wrap{display:flex;align-items:center;gap:19px;justify-content:space-between;min-height:76px}
-.testlogo{font:900 24px/1 system-ui,sans-serif;letter-spacing:-1px;color:#fff;white-space:nowrap}
-.testlogo i{font-style:normal;color:#e59b56}
-.testlogo small{display:block;font-size:8px;letter-spacing:.18em;font-weight:900;color:#bdbcb3;margin-top:7px}
-.testlinks{display:flex;align-items:center;gap:clamp(8px,1.2vw,22px)}
-.testlinks a{font:850 11px/1.3 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.07em;white-space:nowrap}
-.testlinks a:hover,.testlinks a[aria-current=page]{color:#ebb17c}
-.testmenu{display:none;position:relative}
-.testmenu summary{list-style:none;cursor:pointer;color:#fff;padding:9px 12px;border:1px solid #ffffff5a;font-size:12px;text-transform:uppercase;font-weight:850}
-.testmenu summary::-webkit-details-marker{display:none}
-.testmenu nav{position:absolute;right:0;top:40px;display:grid;min-width:240px;background:#101719;padding:12px;box-shadow:0 18px 36px #0008}
-.testmenu nav a{padding:11px 13px;border-bottom:1px solid #ffffff25}
-.mag .mag-real{background:#e5dfd4;color:#151a1b}
-.mag .mag-real .wrap{width:min(1170px,calc(100% - 48px));margin:auto}
-.mag .mag-shots{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:25px;margin-top:38px}
-.mag .mag-shot{margin:0;text-align:center;min-width:0}
-.mag .mag-shot img{height:460px;max-height:55vw;max-width:100%;width:auto;object-fit:contain;filter:drop-shadow(0 15px 25px #0004)}
-.mag .mag-shot figcaption{font:900 12px/1.3 system-ui,sans-serif;letter-spacing:.16em;margin:15px;color:#93613f}
-.mag .mag-photosection{background:#ede5d9;color:#1b1e1c;padding:90px 0}
-.mag .mag-photos{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:13px;margin:33px 0}
-.mag .mag-photos img{width:100%;height:280px;object-fit:cover}
-.mag .mag-photosection .lead{max-width:850px}
-.mag .mag-pagehero{position:relative;isolation:isolate;min-height:490px;display:flex;align-items:flex-end;color:#fff;background:#172021}
-.mag .mag-pagehero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#101718ed,#10171898 70%,#10171850),linear-gradient(0deg,#101718,transparent 70%),var(--hero) center/cover}
-.mag .mag-pagehero .wrap{padding:80px 0 70px}
-.mag .mag-pagehero .title{max-width:1100px;font-size:clamp(50px,7vw,105px)}
-.mag .mag-pagehero .lead{color:#e7e3db;max-width:810px}
-.mag .mag-pagecontent{padding:82px 0;background:#ede8de;color:#1b1c1b}
-.mag .mag-pagecontent .lead{max-width:870px}
-.mag .mag-details{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px;margin-top:38px}
-.mag .mag-detail{padding:28px;background:#faf7ef;border-top:4px solid #cc8c58}
-.mag .mag-detail small{font:900 11px system-ui,sans-serif;color:#ae693d;letter-spacing:.15em}
-.mag .mag-detail h2{font:900 26px/1.05 Impact,sans-serif;text-transform:uppercase;margin:15px 0}
-.mag .mag-detail p{font-size:15px;line-height:1.6;color:#565c56}
-.mag .mag-pageclosing{padding:85px 0;background:#162023;color:#f4efe6}
-.mag .mag-pageclosing .lead{color:#c4c8c5}
-.mag .mag-pageclosing .title{max-width:1100px}
-.mag .mag-warning{border-left:4px solid #c24738;background:#f4e6da;color:#3f2d27;padding:17px 20px;margin-top:30px;font-size:14px}
-.mag .mag-pagecontent .mag-warning{margin-bottom:0}
-.testfooter{background:#0d1415;color:#d4cfc2;padding:50px 0 25px;font:14px/1.65 system-ui,sans-serif}
-.testfooter .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:25px}
-.testfooter .footnav{display:flex;flex-wrap:wrap;gap:11px 20px;max-width:660px}
-.testfooter .footnav a{font-size:12px}
-.testfooter .copyright{flex-basis:100%;border-top:1px solid #ffffff27;padding-top:14px;font-size:11px;color:#979991;margin-top:15px}
-@media(max-width:1050px){.testlinks{display:none}.testmenu{display:block}}
-@media(max-width:600px){.testnav .wrap{min-height:68px}.mag .mag-shots{gap:9px}.mag .mag-shot img{max-height:60vw}.mag .mag-detail{padding:23px}.mag .mag-details{grid-template-columns:1fr}.mag .mag-photos{gap:7px}.mag .mag-photos img{height:140px}.mag .mag-pagehero{min-height:480px}.mag .mag-pagehero .wrap{padding:58px 0}.mag .mag-pagecontent,.mag .mag-pageclosing{padding:62px 0}.mag .mag-pagehero .title{font-size:clamp(44px,10vw,72px)}}
-@media(prefers-reduced-motion:reduce){.mag{scroll-behavior:auto}}
+    <div class="content">
+      <h1 data-i18n="legal.privacy.h1">Informativa sulla Privacy</h1>
+      <p class="subtitle" data-i18n="legal.privacy.subtitle">Ultima modifica: 19 aprile 2026 &nbsp;|&nbsp; Versione 2.0</p>
 
-/* BikerLink visual refinement: magazine remains sharp in hierarchy, softer in surfaces. */
-.mag .button{border-radius:11px;transition:transform .18s,box-shadow .18s}
-.mag .button:hover{transform:translateY(-2px);box-shadow:0 7px 19px #0002}
-.mag .photo,.mag .mag-photos img{border-radius:18px}
-.mag .chip,.mag .mag-detail,.mag .mag-warning{border-radius:14px}
-.mag .mag-real .mag-shot img{border-radius:13px}
-.mag .mag-shot img{filter:drop-shadow(0 14px 24px #0003)}
-.mag .mag-pagehero:before{background:linear-gradient(90deg,#101718e9,#10171894 72%,#10171850),linear-gradient(0deg,#101718e7,transparent 73%),var(--hero) center/cover}
-.mag .mag-pagehero .wrap{position:relative}
-.mag .mag-shots{gap:22px}
-.testnav .testmenu summary{border-radius:9px}
-.testmenu nav{border-radius:12px;overflow:hidden}
-.mag .download-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:20px;align-items:stretch;margin-top:36px}
-.mag .download-choice{border:1px solid #d2c6b7;background:#fbf8f1;border-radius:18px;padding:32px;display:flex;flex-direction:column;gap:9px;min-width:0}
-.mag .download-choice.primary{background:#202a2b;color:#f7f1e7;border-color:#202a2b}
-.mag .download-choice .eyebrow{color:#ba804e}
-.mag .download-choice h2{font:900 clamp(30px,3vw,47px)/1.05 Impact,'Arial Narrow',sans-serif;text-transform:uppercase;margin:9px 0}
-.mag .download-choice p{font-size:16px;line-height:1.65;margin-bottom:14px}
-.mag .download-choice .button{margin-top:auto;align-self:flex-start}
-.mag .download-icon{display:inline-grid;place-items:center;width:50px;height:50px;background:#c57c42;color:#141817;border-radius:14px;font-size:25px;font-weight:900}
-.mag .download-note{margin-top:24px;padding:20px 24px;border:1px solid #d2c7b8;background:#eee7dc;border-radius:14px}
-.mag .download-note h3{margin:0 0 7px;font-size:16px}
-.mag .download-note p{margin:0;font-size:14px;color:#586059}
-.mag .download-ios{margin-top:20px;padding:22px 24px;border-radius:14px;background:#e5dbce}
-.mag .download-ios h3{font-size:17px;margin:0 0 6px}
-.mag .download-ios p{font-size:14px;margin:0;color:#565b56}
-@media(max-width:760px){.mag .download-layout{grid-template-columns:1fr}.mag .download-choice{padding:25px}.mag .mag-shots{gap:10px}}
-@media(prefers-reduced-motion:reduce){.mag .button{transition:none}.mag .button:hover{transform:none}}
+      <!-- ─── 1. TITOLARE ─── -->
+      <h2 data-i18n="legal.privacy.s1">1. Titolare del Trattamento</h2>
+      <p data-i18n-html="legal.privacy.s1.p">
+        Il titolare del trattamento dei dati personali è <strong>BikerLink</strong>.<br>
+        Per qualsiasi domanda o per esercitare i tuoi diritti, scrivi a:
+        <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a>
+      </p>
 
+      <!-- ─── 2. DATI RACCOLTI ─── -->
+      <h2 data-i18n="legal.privacy.s2">2. Dati Raccolti</h2>
+      <p data-i18n="legal.privacy.s2.lead">BikerLink raccoglie le seguenti categorie di dati personali:</p>
 
-/* BikerLink editorial refinement 2026-11-18: no hard color cuts, softer surface language. */
-.mag {
-  --test-paper:#e8e2d8;
-  --test-paper-light:#eee9e1;
-  --test-accent:#b88968;
-}
-.mag .mag-pagehero {
-  min-height:720px;
-  background:#26302e;
-}
-.mag .mag-pagehero:before {
-  background:
-    linear-gradient(92deg,rgba(16,23,23,.86),rgba(16,23,23,.56) 64%,rgba(16,23,23,.30)),
-    var(--hero) center/cover;
-}
-.mag .mag-pagehero .wrap {
-  position:relative;
-  z-index:2;
-  padding-top:100px;
-  padding-bottom:292px;
-}
-.mag .mag-pagehero::after {
-  content:"";
-  position:absolute;
-  inset:auto 0 -1px;
-  z-index:1;
-  height:445px;
-  pointer-events:none;
-  background:linear-gradient(to bottom,
-    rgba(24,32,31,0) 0%,
-    rgba(73,77,72,.07) 14%,
-    rgba(126,122,109,.23) 31%,
-    rgba(174,165,149,.50) 52%,
-    rgba(214,205,190,.83) 78%,
-    #e8e2d8 100%);
-}
-.mag .mag-pagecontent {
-  background:linear-gradient(to bottom,
-    #e8e2d8 0%,
-    #ebe5db 48%,
-    #ede8de 100%);
-  padding-top:72px;
-}
-.mag .mag-pagecontent .mag-details {
-  gap:22px;
-  margin-top:43px;
-}
-.mag .mag-detail {
-  position:relative;
-  padding:42px 35px 32px;
-  background:linear-gradient(145deg,
-    rgba(250,247,241,.58),
-    rgba(243,237,229,.42));
-  border:1px solid rgba(122,103,85,.12);
-  border-radius:24px;
-  box-shadow:0 13px 28px rgba(60,48,40,.035);
-}
-.mag .mag-detail::before {
-  content:"";
-  position:absolute;
-  top:23px;
-  left:35px;
-  width:43px;
-  height:3px;
-  border-radius:5px;
-  background:var(--test-accent);
-  opacity:.68;
-}
-.mag .mag-detail small {color:#986b4d;}
-.mag .mag-detail h2 {margin:18px 0 12px;}
-.mag .mag-detail p {color:#5b605b;line-height:1.7;}
-/* The same understated surfaces are used on the homepage and download page. */
-.mag .chip {
-  background:linear-gradient(145deg,rgba(250,247,241,.58),rgba(241,236,228,.45));
-  border:1px solid rgba(122,103,85,.12);
-  border-radius:22px;
-  box-shadow:0 12px 25px rgba(55,45,37,.035);
-}
-.mag .mag-shot img,.mag .mag-photos img,.mag .photo {border-radius:22px;}
-.mag .button {border-radius:13px;}
-.mag .download-choice,
-.mag .download-choice.primary {
-  color:#2b302d;
-  border:1px solid rgba(122,103,85,.14);
-  background:linear-gradient(145deg,rgba(250,247,241,.71),rgba(240,234,225,.54));
-  border-radius:24px;
-  box-shadow:0 15px 34px rgba(50,41,34,.04);
-}
-.mag .download-choice.primary {
-  border-color:rgba(180,121,77,.30);
-  background:linear-gradient(135deg,rgba(245,237,226,.82),rgba(234,224,212,.65));
-}
-.mag .download-choice .eyebrow {color:#956c4d;}
-.mag .download-icon {
-  background:#d8b18c;
-  color:#34271e;
-  border-radius:15px;
-}
-.mag .download-note,.mag .download-ios {
-  background:rgba(240,233,223,.75);
-  border-color:rgba(122,103,85,.14);
-  border-radius:20px;
-}
-.mag .download-note h3,.mag .download-ios h3 {color:#323b36;}
-@media(max-width:600px){
-  .mag .mag-pagehero {min-height:685px;}
-  .mag .mag-pagehero .wrap {
-    padding-top:70px;
-    padding-bottom:260px;
-  }
-  .mag .mag-pagehero::after {height:420px;}
-  .mag .mag-pagecontent {padding-top:52px;}
-  .mag .mag-detail {padding:39px 24px 27px;border-radius:21px;}
-  .mag .mag-detail::before {left:24px;top:20px;}
-  .mag .mag-pagecontent .mag-details {gap:16px;}
-  .mag .download-choice {border-radius:21px;}
-}
+      <h3 data-i18n="legal.privacy.s2.1">2.1 Profilo e Registrazione</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.1.li1">Nickname (nome visualizzato pubblicamente)</li>
+        <li data-i18n="legal.privacy.s2.1.li2">Indirizzo email (con verifica tramite link)</li>
+        <li data-i18n="legal.privacy.s2.1.li3">Numero di telefono (opzionale)</li>
+        <li data-i18n="legal.privacy.s2.1.li4">Anno di nascita e sesso</li>
+        <li data-i18n="legal.privacy.s2.1.li6">Tipo di utente (biker, zavorrina, officina, ecc.)</li>
+        <li data-i18n="legal.privacy.s2.1.li7">Bio / descrizione personale, lingue parlate</li>
+        <li data-i18n="legal.privacy.s2.1.li8">Regione e paese di residenza</li>
+        <li data-i18n="legal.privacy.s2.1.li9">Preferenze UI: tema, stile mappa, impostazioni widget</li>
+        <li data-i18n="legal.privacy.s2.1.li10">Statistiche aggregate: km totali, numero di giri registrati, easter egg sbloccati</li>
+      </ul>
 
-/* BikerLink Amber Smoke Typography v1 */
-.mag {
-  --amber-smoke:#cba284;
-  --terracotta:#b8744c;
-  --warm-sand:#d7b69d;
-  --rich-charcoal:#1b2928;
-  --text-ink:#302b27;
-  --head-font:"Bahnschrift SemiCondensed","Bahnschrift","Franklin Gothic Medium","Arial Narrow",sans-serif;
-  --body-font:"Segoe UI Variable Text","Segoe UI","Trebuchet MS",sans-serif;
-  --serif-font:"Palatino Linotype","Book Antiqua",Palatino,Georgia,serif;
-  --micro-font:"Consolas","Lucida Console",monospace;
-  background:#cfaa8c;
-  font-family:var(--body-font);
-  color:var(--text-ink);
-}
-.mag p {font-family:var(--body-font);letter-spacing:.003em}
-.mag .title {
-  font-family:var(--head-font);
-  font-stretch:condensed;
-  font-size:clamp(43px,5vw,79px);
-  font-weight:770;
-  line-height:1.075;
-  letter-spacing:-.039em;
-  text-transform:uppercase;
-  margin:18px 0 25px;
-}
-.mag .title em {
-  font-family:var(--serif-font);
-  font-size:.90em;
-  font-style:italic;
-  line-height:1.07;
-  letter-spacing:-.068em;
-  font-weight:400;
-  text-transform:none;
-}
-.mag .eyebrow,
-.mag .kicker,
-.mag .mag-detail small,
-.mag .mag-shot figcaption {
-  font-family:var(--micro-font);
-  font-weight:700;
-  font-size:11px;
-  letter-spacing:.135em;
-  line-height:1.6;
-}
-.mag .lead {
-  font-family:var(--body-font);
-  font-size:clamp(18px,1.4vw,21px);
-  line-height:1.78;
-  color:#51453c;
-  font-weight:400;
-  max-width:790px;
-}
-.mag .mag-pagehero {
-  min-height:770px;
-  background:#25312e;
-}
-.mag .mag-pagehero:before {
-  background:
-    linear-gradient(100deg,rgba(17,26,25,.91),rgba(29,35,32,.65) 59%,rgba(35,36,31,.34)),
-    var(--hero) center/cover;
-}
-.mag .mag-pagehero .wrap {
-  position:relative;
-  z-index:2;
-  padding-top:95px;
-  padding-bottom:335px;
-}
-.mag .mag-pagehero::after {
-  content:"";
-  position:absolute;
-  bottom:-1px;
-  left:0;
-  right:0;
-  height:540px;
-  z-index:1;
-  pointer-events:none;
-  background:linear-gradient(180deg,
-    rgba(36,43,38,0) 0%,
-    rgba(70,57,47,.09) 12%,
-    rgba(110,79,60,.29) 29%,
-    rgba(163,107,73,.52) 49%,
-    rgba(197,142,104,.80) 72%,
-    #cfaa8e 100%);
-}
-.mag .mag-pagehero .title {
-  font-family:var(--head-font);
-  font-size:clamp(49px,5.85vw,89px);
-  letter-spacing:-.037em;
-  max-width:1150px;
-}
-.mag .mag-pagehero .title em {font-size:.90em}
-.mag .mag-pagehero .lead {
-  color:#f3eee7;
-  font-size:clamp(18px,1.55vw,22px);
-  line-height:1.7;
-}
-.mag .mag-pagecontent {
-  padding:66px 0 108px;
-  background:
-    radial-gradient(ellipse 78% 62% at 100% 11%,rgba(174,91,48,.24),transparent 76%),
-    radial-gradient(ellipse 76% 75% at 0% 84%,rgba(163,88,48,.13),transparent 78%),
-    linear-gradient(158deg,#cfaa8e 0%,#d8b39a 39%,#ddc2ae 70%,#d6b39a 100%);
-  color:var(--text-ink);
-}
-.mag .mag-pagecontent .title {
-  font-size:clamp(43px,4.5vw,72px);
-  max-width:1030px;
-}
-.mag .mag-pagecontent .lead {
-  font-size:clamp(18px,1.45vw,21px);
-  line-height:1.77;
-  color:#51453e;
-}
-.mag .mag-pagecontent .mag-details {
-  margin-top:47px;
-  gap:21px;
-}
-.mag .mag-detail {
-  background:linear-gradient(145deg,rgba(231,201,176,.67),rgba(216,175,147,.53));
-  border:1px solid rgba(118,77,51,.17);
-  border-radius:26px;
-  box-shadow:0 14px 32px rgba(79,49,31,.048);
-  padding:39px 34px 34px;
-}
-.mag .mag-detail::before {
-  background:linear-gradient(90deg,#ab663f,#d39c73);
-  width:35px;
-  height:2px;
-  top:22px;
-  left:34px;
-  opacity:.7;
-}
-.mag .mag-detail h2 {
-  font-family:var(--head-font);
-  font-size:clamp(23px,2.05vw,29px);
-  font-weight:750;
-  font-stretch:condensed;
-  line-height:1.18;
-  letter-spacing:-.018em;
-  text-transform:none;
-  margin:20px 0 12px;
-}
-.mag .mag-detail p {
-  font-family:var(--body-font);
-  font-size:clamp(15.5px,1.06vw,17px);
-  line-height:1.75;
-  color:#51463e;
-}
-.mag .mag-detail small {color:#8c4e30}
-.mag .mag-pageclosing {
-  background:linear-gradient(to bottom,
-    #d6b39a 0%,
-    #ad8c73 14%,
-    #60706a 32%,
-    #23312f 56%,
-    #162222 100%);
-  padding:225px 0 96px;
-  color:#f7f1e9;
-}
-.mag .mag-pageclosing .title {
-  font-size:clamp(44px,4.95vw,79px);
-  line-height:1.10;
-  max-width:1050px;
-}
-.mag .mag-pageclosing .lead {color:#f0e9de}
-.mag section.chapter:not(.dark) {
-  background:
-    radial-gradient(ellipse at 88% 10%,rgba(184,108,65,.23),transparent 70%),
-    linear-gradient(153deg,#d1ab8d,#dfc3aa 70%,#d2ac91);
-  color:var(--text-ink);
-}
-.mag .quicknav + section.chapter:not(.dark) {
-  background:linear-gradient(to bottom,
-    #1b2827 0px,
-    #614f42 67px,
-    #b38b6e 142px,
-    #d0a98c 220px,
-    #dbc0a8 400px);
-  padding-top:190px;
-}
-.mag .chapter.alt {
-  background:linear-gradient(135deg,#d0a283,#dfc2ab 53%,#d5a98b);
-}
-.mag .privacy {
-  background:
-    radial-gradient(ellipse at 10% 90%,rgba(180,101,62,.20),transparent 69%),
-    linear-gradient(150deg,#d4ad8f,#e0c3a8);
-}
-.mag .sos {background:linear-gradient(145deg,#ddbaa2,#cfa488 66%,#d6b198)}
-.mag .mag-real {
-  background:linear-gradient(135deg,#d7b397,#e1c7b1 52%,#d6af91);
-  color:var(--text-ink);
-}
-.mag .mag-photosection {
-  background:linear-gradient(125deg,#cfa386,#dec0a8 46%,#d2aa8e);
-  color:var(--text-ink);
-}
-.mag .chip {
-  background:linear-gradient(145deg,rgba(240,213,189,.65),rgba(218,181,154,.45));
-  border:1px solid rgba(118,77,51,.17);
-  border-radius:24px;
-  box-shadow:0 13px 29px rgba(77,45,28,.045);
-}
-.mag .chip strong {
-  font-family:var(--head-font);
-  font-size:clamp(21px,1.95vw,27px);
-  line-height:1.15;
-  text-transform:none;
-  font-weight:750;
-  letter-spacing:-.018em;
-}
-.mag .chip p {font-size:16px;line-height:1.7;color:#514940}
-.mag .privacy-options strong {font:700 20px/1.3 var(--head-font)}
-.mag .mag-warning {
-  background:rgba(228,185,153,.64);
-  border-color:#ad5e3e;
-  border-radius:16px;
-  color:#3f312d;
-}
-.mag .download-choice,
-.mag .download-choice.primary {
-  background:linear-gradient(140deg,rgba(234,199,170,.80),rgba(216,172,143,.55));
-  color:var(--text-ink);
-  border:1px solid rgba(118,77,51,.2);
-  box-shadow:0 13px 33px rgba(77,45,28,.048);
-  border-radius:26px;
-}
-.mag .download-choice.primary {
-  background:linear-gradient(135deg,rgba(219,173,138,.82),rgba(235,195,164,.65));
-}
-.mag .download-choice h2 {
-  font-family:var(--head-font);
-  font-size:clamp(29px,2.85vw,43px);
-  font-weight:760;
-  font-stretch:condensed;
-  line-height:1.12;
-  letter-spacing:-.026em;
-  text-transform:none;
-}
-.mag .download-choice p {font-size:16.5px;line-height:1.7}
-.mag .download-note {background:rgba(225,188,157,.55);border-color:rgba(112,78,53,.2)}
-.mag .download-ios {background:rgba(217,174,142,.52)}
-.mag .download-note h3,.mag .download-ios h3 {font:750 21px/1.23 var(--head-font)}
-.mag .download-note p,.mag .download-ios p {font-size:16px;line-height:1.65;color:#4c4239}
-.mag .free {
-  background:linear-gradient(135deg,#b77551 0%,#d8a47d 55%,#bf805b 100%);
-}
-.mag .free p {font-family:var(--serif-font)}
-.mag .finish {background:linear-gradient(145deg,#24302c,#111b1c)}
-.mag .mag-shot figcaption {color:#714a32}
-.mag .mag-detail .button,.mag .button {font-family:var(--body-font);letter-spacing:.065em}
-@media(max-width:900px) {
-  .mag .mag-pagehero .wrap {padding-bottom:305px}
-  .mag .mag-pagehero::after {height:510px}
-  .mag .mag-pagecontent {padding-top:55px}
-  .mag .mag-pageclosing {padding-top:210px}
-}
-@media(max-width:600px) {
-  .mag .mag-pagehero {min-height:760px}
-  .mag .mag-pagehero .wrap {padding:70px 0 290px}
-  .mag .mag-pagehero::after {height:470px}
-  .mag .mag-pagehero .title {font-size:clamp(46px,10vw,67px);line-height:1.13}
-  .mag .mag-pagecontent .title {font-size:clamp(40px,9.1vw,60px)}
-  .mag .mag-pagecontent {padding:50px 0 75px}
-  .mag .mag-detail {padding:36px 24px 28px;border-radius:23px}
-  .mag .mag-detail::before {left:24px}
-  .mag .mag-pageclosing {padding:205px 0 76px}
-  .mag .quicknav + section.chapter:not(.dark) {padding-top:178px}
-}
+      <h3 data-i18n="legal.privacy.s2.2">2.2 Dati Moto (Garage)</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.2.li1">Marca, modello, anno, cilindrata, tipo di moto</li>
+        <li data-i18n="legal.privacy.s2.2.li2">Stile di guida e foto del veicolo</li>
+        <li data-i18n="legal.privacy.s2.2.li3">Stato di vendita del veicolo e relativa descrizione</li>
+      </ul>
 
-/* BikerLink wide editorial navigation: full-screen balanced header, warm links, clear hierarchy. */
-.testnav {
-  background:linear-gradient(98deg,#121a1b 0%,#202a29 52%,#152020 100%);
-  border-bottom:1px solid rgba(217,159,110,.22);
-  box-shadow:0 7px 22px rgba(12,19,19,.12);
-}
-.testnav .wrap {
-  width:calc(100% - clamp(30px,4.2vw,96px));
-  max-width:1880px;
-  min-height:84px;
-  margin-inline:auto;
-  padding:0;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:clamp(20px,2.5vw,44px);
-}
-.testnav a,.testnav a:link,.testnav a:visited {
-  color:#e6dccf;
-  text-decoration:none;
-}
-.testnav .testlogo,.testnav .testlogo:visited {
-  color:#f2eadf;
-  font-family:"Bahnschrift","Segoe UI",sans-serif;
-  font-weight:800;
-  font-size:clamp(23px,1.85vw,30px);
-  letter-spacing:-.045em;
-}
-.testnav .testlogo i {color:#d69a67}
-.testnav .testlogo small {
-  color:#c9b9a9;
-  font:700 8px/1.35 "Segoe UI Variable Text","Segoe UI",sans-serif;
-  letter-spacing:.13em;
-}
-.testnav .testlinks {
-  flex:1 1 auto;
-  min-width:0;
-  margin-left:auto;
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-  gap:clamp(12px,1.35vw,26px);
-}
-.testnav .testlinks > a {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  white-space:nowrap;
-  min-height:44px;
-  padding:8px 0;
-  font:650 clamp(11.5px,.88vw,13.4px)/1.2 "Segoe UI Variable Text","Segoe UI",sans-serif;
-  letter-spacing:.027em;
-  text-transform:uppercase;
-  color:#e6dccf;
-  text-decoration:none;
-  transition:color .16s ease;
-}
-.testnav .testlinks > a:visited {color:#e6dccf}
-.testnav .testlinks > a:hover,
-.testnav .testlinks > a:focus-visible,
-.testnav .testlinks > a[aria-current="page"]:not([href$="/download"]) {color:#efb382}
-.testnav .testlinks > a:not([href$="/download"])::after {
-  content:"";
-  position:absolute;
-  bottom:3px;
-  left:0;
-  right:0;
-  height:2px;
-  border-radius:2px;
-  background:linear-gradient(90deg,#b36c45,#e5a777);
-  opacity:0;
-  transform:scaleX(.48);
-  transition:opacity .16s ease,transform .16s ease;
-}
-.testnav .testlinks > a:not([href$="/download"]):hover::after,
-.testnav .testlinks > a:not([href$="/download"])[aria-current="page"]::after {
-  opacity:1;
-  transform:scaleX(1);
-}
-.testnav .testlinks > a[href$="/download"],
-.testnav .testlinks > a[href$="/download"]:visited {
-  color:#1b2322;
-  background:linear-gradient(120deg,#c9895d,#e0aa7a);
-  border:1px solid rgba(251,210,174,.5);
-  border-radius:12px;
-  padding:0 19px;
-  min-height:42px;
-  font-weight:750;
-  letter-spacing:.04em;
-  box-shadow:0 2px 12px rgba(5,8,9,.1);
-}
-.testnav .testlinks > a[href$="/download"]:hover {color:#151c1b;background:#efb88b}
-.testnav .testlinks > a[href$="/download"][aria-current="page"] {outline:2px solid rgba(240,204,170,.55);outline-offset:3px}
-.testnav .test-lang {
-  display:inline-flex;
-  flex:0 0 auto;
-  gap:2px;
-  padding:3px;
-  margin-left:clamp(1px,.5vw,9px);
-  border:1px solid rgba(234,184,142,.35);
-  border-radius:13px;
-  background:rgba(5,11,12,.26);
-  font-family:"Segoe UI Variable Text","Segoe UI",sans-serif;
-}
-.testnav .test-lang a,
-.testnav .test-lang a:visited {
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:36px;
-  min-height:32px;
-  padding:5px 8px;
-  border:0;
-  border-radius:9px;
-  background:transparent;
-  color:#e8dacf;
-  text-decoration:none;
-  font:750 11px/1.2 "Segoe UI",sans-serif;
-  letter-spacing:.035em;
-  transition:background .16s ease,color .16s ease;
-}
-.testnav .test-lang a[aria-current="page"],
-.testnav .test-lang a[aria-current="page"]:visited {
-  color:#232522;
-  background:linear-gradient(130deg,#cf9164,#e2ad80);
-}
-.testnav .test-lang a:hover:not([aria-current="page"]) {color:#fff4e9;background:rgba(237,180,127,.13)}
-.testnav a:focus-visible,.testnav summary:focus-visible {
-  outline:2px solid #f4be90;
-  outline-offset:3px;
-}
-.testnav .testmenu summary {
-  border-radius:11px;
-  border-color:rgba(233,185,141,.46);
-  color:#f0e5d8;
-}
-.testnav .testmenu nav {
-  background:#1b2525;
-  border:1px solid rgba(238,184,135,.22);
-  border-radius:14px;
-}
-.testnav .testmenu nav > a,
-.testnav .testmenu nav > a:visited {
-  color:#ebdfd2;
-  text-decoration:none;
-  font:650 13px/1.3 "Segoe UI Variable Text","Segoe UI",sans-serif;
-  letter-spacing:.035em;
-}
-.testnav .testmenu nav > a[aria-current="page"] {color:#edb07e}
-.testnav .testmenu nav > a[href$="/download"] {font-weight:800;color:#f0bf95}
-.testnav .testmenu .test-lang {
-  margin:11px 10px 5px;
-  width:max-content;
-}
-@media(max-width:1240px) {
-  .testnav .testlinks {gap:clamp(9px,1vw,15px)}
-  .testnav .testlinks > a {font-size:11.6px}
-  .testnav .testlinks > a[href$="/download"] {padding-inline:13px}
-}
-@media(max-width:1090px) {
-  .testnav .testlinks {display:none}
-  .testnav .testmenu {display:block}
-  .testnav .wrap {min-height:76px}
-}
-@media(max-width:600px) {
-  .testnav .wrap {width:calc(100% - 30px);min-height:70px;gap:14px}
-  .testnav .testlogo {font-size:24px}
-  .testnav .testmenu nav {top:44px}
-}
-@media(prefers-reduced-motion:reduce) {
-  .testnav .testlinks > a,.testnav .testlinks > a::after,.testnav .test-lang a {transition:none}
-}
+      <h3 data-i18n="legal.privacy.s2.3">2.3 Localizzazione GPS</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.3.li1">Coordinate geografiche correnti (latitudine e longitudine), aggiornate periodicamente durante l'uso dell'app</li>
+        <li data-i18n="legal.privacy.s2.3.li2">Cronologia delle posizioni registrate durante i percorsi in moto (tracking GPS attivo)</li>
+        <li data-i18n="legal.privacy.s2.3.li3">Velocità, accelerazione e G-force longitudinale (solo durante il tracking attivo)</li>
+        <li data-i18n="legal.privacy.s2.3.li4">Posizione acquisita in background durante tracking percorsi e funzione SOS</li>
+        <li data-i18n="legal.privacy.s2.3.li5">Coordinate di primo accesso e degli accessi successivi</li>
+      </ul>
+      <div class="callout">
+        <p data-i18n-html="legal.privacy.s2.3.callout"><strong>Controlli privacy disponibili:</strong> Ghost Mode (invisibile sulla mappa), Nascondi dalla mappa, Position Fuzzing (rumore ±500 m sulle coordinate), Fake Home (sostituisce coordinate reali con posizione fittizia nei pressi di casa).</p>
+      </div>
 
-/* BikerLink site-wide readability and Android/macOS browser audit 2026-11-18.
-   Color targets: warm text >=4.5:1 even over the darkest amber-sand areas. */
-:root {
-  -webkit-text-size-adjust:100%;
-  text-size-adjust:100%;
-}
-.mag {
-  --reading-ink:#302b27;
-  --reading-body:#44362e;
-  --reading-muted:#49372d;
-  --reading-link:#51290f;
-  --reading-light:#f4eae0;
-  --reading-light-secondary:#e1d3c6;
-  --reading-on-dark:#e9b78c;
-  --reading-line:#ad704d;
-  --read-body-font:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --read-title-font:"Bahnschrift","Aptos Display","Helvetica Neue",Roboto,Arial,sans-serif;
-  --read-serif-font:Georgia,"Times New Roman",serif;
-  font-family:var(--read-body-font);
-  font-size:18px;
-  line-height:1.68;
-  overflow-wrap:break-word;
-}
-.mag p {font-size:inherit;line-height:1.73;}
-.mag .lead {
-  font:400 clamp(18px,1.54vw,22px)/1.72 var(--read-body-font);
-  color:var(--reading-body);
-  letter-spacing:0;
-  max-width:740px;
-}
-.mag .title {
-  font-family:var(--read-title-font);
-  font-size:clamp(43px,5.1vw,82px);
-  font-weight:800;
-  letter-spacing:-.043em;
-  line-height:1.08;
-  text-wrap:balance;
-}
-.mag .title em {
-  font-family:var(--read-serif-font);
-  font-size:.87em;
-  font-weight:400;
-  letter-spacing:-.048em;
-  line-height:1.13;
-}
-.mag .eyebrow,.mag .kicker {
-  font:800 clamp(12px,.85vw,14px)/1.55 var(--read-body-font);
-  letter-spacing:.125em;
-}
-.mag .chapter .lead,.mag .mag-pagecontent .lead {font-size:clamp(18px,1.48vw,22px)}
-/* All chapters that now use sand/amber backgrounds must have dark foregrounds. */
-.mag section.chapter:not(.dark),
-.mag section.chapter:not(.dark) .copy,
-.mag section.chapter:not(.dark) .chip,
-.mag section.chapter:not(.dark) .product,
-.mag .mag-real,
-.mag .mag-photosection,
-.mag .privacy,
-.mag .sos,
-.mag .mag-pagecontent {
-  color:var(--reading-ink);
-}
-.mag section.chapter:not(.dark) .lead,
-.mag section.chapter:not(.dark) .product p,
-.mag section.chapter:not(.dark) .chip p,
-.mag section.chapter:not(.dark) .privacy-options p,
-.mag .mag-real .lead,
-.mag .mag-photosection .lead,
-.mag .mag-pagecontent p,
-.mag .mag-pagecontent .lead {
-  color:var(--reading-body);
-}
-.mag .mag-pagecontent .lead,
-.mag .mag-detail p,
-.mag .download-choice p {font-size:clamp(17.5px,1.22vw,20px);line-height:1.73}
-.mag .mag-detail h2,
-.mag .download-choice h2 {
-  font-family:var(--read-title-font);
-  font-weight:750;
-  letter-spacing:-.024em;
-  font-size:clamp(25px,2.1vw,32px);
-  line-height:1.22;
-}
-.mag .mag-detail small {
-  font:800 13px/1.6 var(--read-body-font);
-  color:#784323;
-  letter-spacing:.075em;
-}
-.mag .mag-detail p {color:var(--reading-body)}
-.mag .download-note p,.mag .download-ios p {
-  font:400 clamp(17px,1.1vw,19px)/1.67 var(--read-body-font);
-  color:var(--reading-body);
-}
-.mag .download-note h3,.mag .download-ios h3 {
-  font-family:var(--read-title-font);
-  font-size:clamp(23px,1.8vw,28px);
-  color:var(--reading-ink);
-}
-.mag .download-choice .eyebrow {color:#754022}
-.mag .download-choice.primary {color:var(--reading-ink)}
-/* Light-on-amber regressions: product teaser and photos must never inherit light grey. */
-.mag section.chapter:not(.dark) .product p,
-.mag .ecosystem .product p {
-  font:400 clamp(17px,1.2vw,19px)/1.72 var(--read-body-font);
-  color:var(--reading-body);
-}
-.mag section.chapter:not(.dark) .product h3,
-.mag .ecosystem .product h3,
-.mag .product h3 {
-  font-family:var(--read-title-font);
-  font-weight:800;
-  font-size:clamp(27px,2.35vw,38px);
-  line-height:1.14;
-  letter-spacing:-.03em;
-  margin:20px 0 12px;
-}
-.mag section.chapter:not(.dark) .product a,
-.mag .ecosystem .product a {
-  color:var(--reading-link);
-  font:750 16px/1.45 var(--read-body-font);
-  text-decoration:underline;
-  text-decoration-color:rgba(103,54,25,.5);
-  text-underline-offset:4px;
-  letter-spacing:.005em;
-}
-.mag section.chapter:not(.dark) .product a:hover,
-.mag .ecosystem .product a:hover {text-decoration-color:currentColor}
-.mag .product img {border-radius:17px;aspect-ratio:16/10;object-fit:cover}
-.mag .chip strong,
-.mag .privacy-options strong {
-  font-family:var(--read-title-font);
-  font-size:clamp(22px,1.9vw,28px);
-  font-weight:750;
-  line-height:1.22;
-  color:var(--reading-ink);
-}
-.mag .chip p,.mag .privacy-options p {
-  font:400 clamp(17px,1.13vw,19px)/1.7 var(--read-body-font);
-  color:var(--reading-body);
-}
-.mag .privacy-options p,.mag .fine,.mag .mag-warning,
-.mag .sos .note {
-  font-size:clamp(16px,1.08vw,18px);
-  line-height:1.72;
-  color:var(--reading-body);
-}
-.mag .mag-photosection .lead,.mag .mag-real .lead {color:var(--reading-body)}
-.mag .mag-shot figcaption {
-  font:750 15px/1.4 var(--read-body-font);
-  color:var(--reading-link);
-  letter-spacing:.08em;
-}
-.mag .button {
-  min-height:50px;
-  padding:13px 22px;
-  font:750 clamp(14.5px,1vw,16.5px)/1.25 var(--read-body-font);
-  letter-spacing:.055em;
-  border-radius:13px;
-  text-align:center;
-  text-decoration:none;
-}
-.mag section.chapter:not(.dark) .button:not(.filled),
-.mag .mag-pagecontent .button:not(.filled),
-.mag .mag-photosection .button:not(.filled) {color:#352c27}
-.mag .button.filled {color:#202725;background:#da9765;border-color:#da9765}
-.mag .quicknav span {font-size:13px;color:#edb080;font-weight:750}
-.mag .quicknav a {font-size:clamp(15px,1.12vw,18px);line-height:1.42}
-.mag .quicknav a:focus-visible,.mag .button:focus-visible {outline:3px solid #9d4c20;outline-offset:4px}
-/* Sections meant to remain dark (e.g. Horus) retain light typography. */
-.mag section.chapter.dark {color:var(--reading-light)}
-.mag section.chapter.dark .lead,
-.mag section.chapter.dark p {color:var(--reading-light-secondary)}
-.mag section.chapter.dark .button:not(.filled) {color:var(--reading-light)}
-.mag section.chapter.dark .eyebrow {color:#e5ad80}
-.mag .hero .lead,.mag .mag-pagehero .lead {color:#f3ece4}
-.mag .hero .title {font-size:clamp(56px,7.1vw,112px);line-height:1.03}
-.mag .mag-pagehero .title {font-size:clamp(48px,5.8vw,92px);line-height:1.11}
-.mag .mag-pagecontent .title {font-size:clamp(43px,4.5vw,76px);line-height:1.08}
-.mag .mag-pageclosing .title {font-size:clamp(43px,5vw,80px)}
-.mag .mag-pageclosing .lead {color:#f5ede6}
-.mag .mag-pageclosing .button:not(.filled) {color:var(--reading-light)}
-.mag .mag-pageclosing .eyebrow {
-  font:italic 500 clamp(22px,2.1vw,31px)/1.35 var(--read-serif-font);
-  text-transform:none;
-  letter-spacing:0;
-  color:#ffe2c5;
-}
-.mag .slogan {
-  font:italic 500 clamp(23px,2.15vw,34px)/1.3 var(--read-serif-font);
-  color:#f3c59e;
-  text-transform:none;
-  letter-spacing:-.02em;
-  margin:27px 0 29px;
-}
-.mag .finish .slogan {color:#f3c59e}
-.mag .free p {
-  font:italic 400 clamp(27px,3.4vw,44px)/1.3 var(--read-serif-font);
-}
-.mag .free div:not(.wrap) {font-size:clamp(17px,1.2vw,19px);line-height:1.68}
-.mag .finish p {font:400 clamp(17px,1.3vw,20px)/1.7 var(--read-body-font)}
-.mag .product a:focus-visible,.mag .chip a:focus-visible {outline:3px solid #824326;outline-offset:3px}
-/* Editorial brand signature: readable in both Android Chrome and macOS browsers. */
-.testnav .testlogo small {
-  font:italic 600 clamp(13px,1vw,15.5px)/1.2 var(--read-serif-font);
-  letter-spacing:-.005em;
-  text-transform:none;
-  color:#ecd3bb;
-  margin-top:8px;
-}
-.testnav .wrap {min-height:92px}
-.testnav .testlinks > a {font-size:clamp(12.5px,.93vw,14.5px)}
-.testnav .test-lang a,.testnav .test-lang a:visited {
-  font-size:13px;
-  min-height:42px;
-  min-width:44px;
-  padding:8px;
-}
-.testnav .testlinks > a[href$="/download"] {min-height:46px}
-.testmenu summary {min-height:46px;font-size:15px}
-.testmenu nav > a {min-height:48px;display:flex;align-items:center}
-.testmenu nav {max-height:calc(100dvh - 90px);overflow-y:auto}
-.preview-bar {font-size:12px;line-height:1.4;padding:8px 12px;letter-spacing:.08em}
-.testfooter {font:400 17px/1.7 var(--read-body-font)}
-.testfooter p {font-size:17px;color:#e2d5c9}
-.testfooter .footnav a {font-size:15.5px;line-height:1.5;color:#eee2d6;text-decoration:none}
-.testfooter .footnav a:hover {text-decoration:underline}
-.testfooter .copyright {font-size:13.5px;line-height:1.5;color:#c3b0a1}
-.testfooter .testlogo small {font-size:15px;font-family:var(--read-serif-font);font-style:italic}
-@media (max-width:1350px) {
-  .testnav .testlinks {display:none}
-  .testnav .testmenu {display:block}
-  .testnav .wrap {min-height:78px}
-}
-@media (max-width:900px) {
-  .mag .mag-details,.mag .download-layout {grid-template-columns:1fr}
-  .mag .mag-pagecontent .mag-details {gap:20px}
-  .mag .mag-pagecontent .lead {max-width:75ch}
-  .mag .products {grid-template-columns:repeat(2,minmax(0,1fr))}
-  .mag .product p {min-height:0}
-  .mag .mag-photosection {padding-block:70px}
-}
-@media (max-width:650px) {
-  .mag {font-size:17.5px}
-  .mag .wrap,.mag .mag-real .wrap {width:calc(100% - 38px)}
-  .mag .hero .title {font-size:clamp(49px,10.3vw,66px)}
-  .mag .mag-pagehero .title {font-size:clamp(40px,9.5vw,61px)}
-  .mag .title,.mag .mag-pagecontent .title,
-  .mag .mag-pageclosing .title {font-size:clamp(40px,9.1vw,58px);line-height:1.14}
-  .mag .title em {font-size:.91em}
-  .mag .lead,.mag .mag-pagecontent .lead,
-  .mag .mag-pagehero .lead {font-size:18.5px;line-height:1.66}
-  .mag .mag-detail h2 {font-size:26px}
-  .mag .mag-detail p,.mag .chip p,.mag .privacy-options p,
-  .mag .download-choice p {font-size:17px;line-height:1.67}
-  .mag .product h3 {font-size:29px}
-  .mag .product p {font-size:17px}
-  .mag .product a {font-size:16px}
-  .mag .products {grid-template-columns:1fr}
-  .mag .product img {height:auto;aspect-ratio:16/9}
-  .mag .mag-detail {padding:35px 25px 29px}
-  .mag .quicknav a {font-size:15px;padding:18px 14px;min-height:94px}
-  .mag .quicknav span {font-size:12px}
-  .mag .mag-shots {
-    display:flex;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    gap:15px;
-    padding:9px 0 21px;
-    overscroll-behavior-inline:contain;
-    scrollbar-width:thin;
-  }
-  .mag .mag-shot {
-    flex:0 0 min(75vw,320px);
-    scroll-snap-align:center;
-  }
-  .mag .mag-shot img {max-height:none;width:auto;max-width:100%;height:460px;object-fit:contain}
-  .mag .mag-photos {
-    display:flex;
-    flex-wrap:nowrap;
-    overflow-x:auto;
-    scroll-snap-type:x mandatory;
-    gap:13px;
-    padding-bottom:15px;
-    overscroll-behavior-inline:contain;
-  }
-  .mag .mag-photos img {
-    flex:0 0 76%;
-    width:76%;
-    height:245px;
-    object-fit:cover;
-    scroll-snap-align:start;
-  }
-  .mag .button {min-height:50px;font-size:15px;padding-inline:18px}
-  .mag .slogan {font-size:26px}
-  .mag .mag-pageclosing .eyebrow {font-size:26px}
-  .testnav .wrap {
-    width:calc(100% - 32px);
-    min-height:77px;
-    padding-left:env(safe-area-inset-left,0px);
-    padding-right:env(safe-area-inset-right,0px);
-  }
-  .testnav .testlogo {font-size:25px}
-  .testnav .testlogo small {font-size:13px}
-  .testnav .testmenu summary {font-size:15px}
-  .testnav .testmenu nav {min-width:min(290px,calc(100vw - 32px))}
-  .testnav .testmenu nav > a {font-size:16px;min-height:50px}
-  .testnav .testmenu .test-lang a {min-height:44px;min-width:48px;font-size:14px}
-  .preview-bar {font-size:11px}
-  .testfooter .footnav {gap:16px 21px}
-  .testfooter .copyright {font-size:13px}
-}
-@media(max-width:360px) {
-  .mag .wrap {width:calc(100% - 30px)}
-  .mag .mag-pagehero .title {font-size:clamp(37px,9vw,49px)}
-  .mag .title {font-size:clamp(36px,10vw,49px)}
-  .mag .hero .title {font-size:clamp(43px,10.5vw,59px)}
-  .mag .mag-detail {padding-inline:20px}
-  .mag .quicknav a {font-size:14px}
-  .testnav .testlogo {font-size:23px}
-  .testnav .testlogo small {font-size:12px}
-}
+      <h3 data-i18n="legal.privacy.s2.4">2.4 Foto e Fotocamera</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.4.li1">Foto profilo (multiple, soggette ad approvazione del team)</li>
+        <li data-i18n="legal.privacy.s2.4.li2">Foto delle moto nel garage</li>
+        <li data-i18n="legal.privacy.s2.4.li3">Foto partecipanti ai contest fotografici settimanali</li>
+        <li data-i18n="legal.privacy.s2.4.li4">Foto associate a eventi motociclistici</li>
+        <li data-i18n-html="legal.privacy.s2.4.li5">Foto scattate direttamente tramite la fotocamera del dispositivo (permesso <code>android.permission.CAMERA</code>), esclusivamente su azione esplicita dell'utente</li>
+        <li data-i18n-html="legal.privacy.s2.4.li6">Foto selezionate dalla galleria del dispositivo tramite il selettore immagini di sistema (permesso <code>android.permission.READ_MEDIA_IMAGES</code>), esclusivamente su azione esplicita dell'utente</li>
+      </ul>
 
-/* Cross-page font token fixes: header and footer live outside .mag. */
-:root {
-  --read-body-font:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
-  --read-title-font:"Bahnschrift","Aptos Display","Helvetica Neue",Roboto,Arial,sans-serif;
-  --read-serif-font:Georgia,"Times New Roman",serif;
-}
-.testnav .testlogo small {
-  font-family:var(--read-serif-font);
-  font-size:clamp(14px,1.08vw,16px);
-  font-style:italic;
-  font-weight:600;
-  line-height:1.2;
-  letter-spacing:.005em;
-  text-transform:none;
-  display:block;
-  margin-top:7px;
-  color:#f3dac4;
-}
-.testfooter .testlogo small {
-  font:italic 600 16px/1.3 var(--read-serif-font);
-  color:#f0d8bf;
-  letter-spacing:0;
-  text-transform:none;
-}
-@media(max-width:1260px) and (min-width:1091px) {
-  .testnav .testlinks {gap:10px}
-  .testnav .testlinks > a {font-size:12px}
-  .testnav .testlogo {font-size:23px}
-}
-@media(max-width:600px) {
-  .testnav .testlogo small {font-size:14px}
-}
+      <h3 data-i18n="legal.privacy.s2.5">2.5 Chat e Messaggi</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.5.li1">Contenuto testuale dei messaggi privati e di gruppo</li>
+        <li data-i18n="legal.privacy.s2.5.li2">URL di immagini condivise nelle chat</li>
+        <li data-i18n="legal.privacy.s2.5.li3">Posizioni GPS condivise volontariamente nelle conversazioni</li>
+        <li data-i18n="legal.privacy.s2.5.li4">Metadati: ID mittente, timestamp, stato di lettura</li>
+        <li data-i18n="legal.privacy.s2.5.li5">I messaggi sono soggetti a moderazione automatica del contenuto</li>
+      </ul>
 
-/* Accessible keyboard-only skip link. Hidden visually until focused. */
-.access-skip{position:fixed;top:8px;left:12px;z-index:9999;padding:12px 18px;background:#EFEAE0;color:#141A1C;font:700 16px/1.35 system-ui,sans-serif;text-decoration:underline;border:3px solid #D88748;border-radius:6px;transform:translateY(-170%);transition:transform .12s ease}
-.access-skip:focus,.access-skip:focus-visible{transform:translateY(0)}
-@media(prefers-reduced-motion:reduce){.access-skip{transition:none}}
+      <h3 data-i18n="legal.privacy.s2.6">2.6 Feature Sociale e Matching</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.6.li1">Dati di matching tra utenti (proposta, compatibilità musicale)</li>
+        <li data-i18n="legal.privacy.s2.6.li2">Appartenenza a MotoClub: iscrizioni, inviti, richieste di adesione</li>
+        <li data-i18n="legal.privacy.s2.6.li3">Lista utenti preferiti e lista utenti bloccati</li>
+        <li data-i18n="legal.privacy.s2.6.li4">Voti espressi nei contest fotografici</li>
+      </ul>
 
-/* Restore image-backed editorial heroes: negative stacking hid the photos behind the section background. */
-.mag .hero::before,.mag .mag-pagehero::before{z-index:0}
-.mag .hero>.wrap{position:relative;z-index:1}
+      <h3 data-i18n="legal.privacy.s2.7">2.7 SOS / Emergenza Stradale</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.7.li1">Motivo dell'emergenza</li>
+        <li data-i18n="legal.privacy.s2.7.li2">Coordinate GPS precise al momento dell'attivazione SOS</li>
+        <li data-i18n="legal.privacy.s2.7.li3">Raggio di ricerca scelto dall'utente</li>
+        <li data-i18n="legal.privacy.s2.7.li4">Identificativo dell'utente che ha accettato l'emergenza</li>
+        <li data-i18n="legal.privacy.s2.7.li5">Stato della richiesta SOS (attiva, accettata, annullata)</li>
+        <li data-i18n="legal.privacy.s2.7.li6">Conversazione privata creata tra utente in difficoltà e soccorritore</li>
+      </ul>
 
-/* BikerLink editorial pass 2026-11-18: preserve the photography, soften the packaging. */
-.mag .hero::before{
-  background:linear-gradient(90deg,rgba(10,15,15,.72),rgba(10,15,15,.20) 78%),
-    linear-gradient(0deg,rgba(12,21,20,.57),transparent 64%),
-    url('/assets/images/hero-forest.webp') center/cover;
-}
-.mag .mag-pagehero:before{
-  background:linear-gradient(96deg,rgba(15,22,21,.80),rgba(15,22,21,.48) 63%,rgba(15,22,21,.23)),
-    var(--hero) center/cover;
-}
-/* Real editorial material rather than rounded glossy marketing cards. */
-.mag .chip,.mag .mag-detail,.mag .download-choice,.mag .download-choice.primary{
-  background:#f5eddf;
-  border:1px solid rgba(102,80,61,.20);
-  border-radius:9px;
-  box-shadow:none;
-}
-.mag .chip{border-left:3px solid #bb8059}
-.mag .mag-detail{border-top:3px solid #b87b53}
-.mag .mag-detail::before{display:none}
-.mag .download-choice.primary{background:#eaddcd;border-color:#bc916f}
-.mag .download-note,.mag .download-ios{border-radius:9px;box-shadow:none}
-.mag .photo,.mag .mag-photos img,.mag .product img{border-radius:7px}
-.mag .mag-shot img{border-radius:9px}
-.mag .button{border-radius:6px;box-shadow:none;transition:background-color .16s ease,color .16s ease}
-.mag .button:hover{transform:none;box-shadow:none}
-.mag .eyebrow,.mag .mag-shot figcaption,.mag .quicknav span,.mag .mag-detail small{
-  font-size:clamp(12px,.95vw,14px);
-  line-height:1.5;
-}
-.mag .product{border-top:2px solid #bb8059}
-.mag .product h3{text-transform:none;letter-spacing:-.015em}
-.mag .sos .note{border-radius:7px}
-/* Expand desktop navigation before hiding it: the burger is for smaller screens. */
-@media(min-width:1200px){
-  .testnav .wrap{gap:18px}
-  .testnav .testlinks{display:flex;gap:clamp(7px,.72vw,13px)}
-  .testnav .testlinks>a{font-size:12.5px;letter-spacing:.012em}
-  .testnav .testmenu{display:none}
-  .testnav .testlogo{font-size:clamp(23px,1.85vw,27px)}
-  .testnav .test-lang{gap:3px}
-}
-@media(max-width:650px){
-  .mag section.chapter{padding-block:62px}
-  .mag .mag-photosection{padding-block:64px}
-  .mag .mag-detail{padding:30px 22px 26px}
-}
-@media(prefers-reduced-motion:reduce){.mag .button{transition:none}}
+      <h3 data-i18n="legal.privacy.s2.8">2.8 Musica (Last.fm)</h3>
+      <p data-i18n="legal.privacy.s2.8.lead">Solo se l'utente connette volontariamente il proprio account musicale:</p>
+      <ul>
+        <li data-i18n-html="legal.privacy.s2.8.li1"><strong>Last.fm:</strong> username e session key</li>
+        <li data-i18n="legal.privacy.s2.8.li2">Libreria tracce: nome brano, artista, album, generi, popolarità, data di aggiunta</li>
+        <li data-i18n="legal.privacy.s2.8.li3">Playlist condivise tra utenti (contenuto testuale e metadati tracce)</li>
+      </ul>
 
-/* Final rhythm pass: shorten the excessive decorative smoke transition. */
-.mag .quicknav + section.chapter:not(.dark) {
-  background:linear-gradient(to bottom,
-    #27312d 0,
-    #96765f 55px,
-    #cfaa8d 145px,
-    #dfc3aa 250px);
-  padding-top:112px;
-}
-@media(min-width:1200px) {
-  .testnav .testlinks {gap:clamp(12px,1.13vw,19px)}
-  .testnav .testlinks>a {font-size:clamp(12.5px,1vw,13.8px);letter-spacing:.008em}
-}
-@media(max-width:650px) {
-  .mag .quicknav + section.chapter:not(.dark) {padding-top:85px}
-}
+      <h3 data-i18n="legal.privacy.s2.9">2.9 Notifiche Push</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.9.li1">Token Expo Push Notification (per l'invio di notifiche al dispositivo)</li>
+        <li data-i18n="legal.privacy.s2.9.li2">Preferenze sulle notifiche email per nuovi messaggi</li>
+      </ul>
 
-/* Improve small editorial label contrast on warm paper and sand.
-   #673718 on #cfaa8e: >=4.5:1; keep light labels on dark heroes untouched. */
-.mag section.chapter:not(.dark) .eyebrow,
-.mag .mag-real .eyebrow,
-.mag .mag-photosection .eyebrow,
-.mag .mag-pagecontent .eyebrow,
-.mag .mag-detail small,
-.mag .mag-shot figcaption {color:#673718}
+      <h3 data-i18n="legal.privacy.s2.10">2.10 Dati Tecnici e di Sistema</h3>
+      <ul>
+        <li data-i18n="legal.privacy.s2.10.li1">Tipo di dispositivo, sistema operativo e versione</li>
+        <li data-i18n="legal.privacy.s2.10.li2">Log degli errori GPS (inclusi stack trace anonimi)</li>
+        <li data-i18n="legal.privacy.s2.10.li3">Log delle azioni dei moderatori</li>
+        <li data-i18n="legal.privacy.s2.10.li4">Impression e click su contenuti sponsorizzati</li>
+        <li data-i18n="legal.privacy.s2.10.li5">Punteggi nei giochi arcade integrati (es. Endless Biker)</li>
+        <li data-i18n="legal.privacy.s2.10.li6">Timestamp di accettazione dell'EULA e della presente Privacy Policy (consenso GDPR)</li>
+      </ul>
 
-.test-lang{display:flex;gap:4px;align-items:center;font:800 11px/1.3 "Segoe UI",sans-serif;letter-spacing:.1em;white-space:nowrap}
-.test-lang a{padding:7px 9px;border-radius:9px;border:1px solid #ffffff44;color:#eee6db}
-.test-lang a[aria-current="page"]{border-color:#dea478;background:#c1845a;color:#152020}
-.testmenu .test-lang{padding:12px}
-.mag .mag-pagehero .title[lang=en],.mag .mag-pagecontent .title[lang=en]{text-wrap:balance}
-@media(max-width:1050px){.testmenu nav .test-lang a{display:inline-flex;border-bottom:1px solid #ffffff44;padding:8px 10px}}
-</style><link rel="canonical" href="https://biker-link.net/privacy"></head><body><a href="#page" class="access-skip">Salta al contenuto</a><header class="testnav"><div class="wrap"><a href="/" aria-label="BikerLink Home"><strong class='testlogo'>BIKER<i>LINK</i><small>U'll Never Ride Alone</small></strong></a><nav class="testlinks" aria-label="Navigazione principale"><a href="/matching">Matching</a><a href="/raduni">Raduni</a><a href="/community">Community</a><a href="/horus">Horus</a><a href="/sos">SOS Biker</a><a href="/privacy" aria-current="page">Privacy</a><a href="/ecosistema">Ecosistema</a><a href="/download">Scarica</a><div class="test-lang" aria-label="Lingua"><a href="/privacy" aria-current="page" lang="it" hreflang="it">IT</a><a href="/en/privacy" lang="en" hreflang="en">EN</a></div></nav><details class="testmenu"><summary>☰ Menu</summary><nav aria-label="Navigazione mobile"><a href="/matching">Matching</a><a href="/raduni">Raduni</a><a href="/community">Community</a><a href="/horus">Horus</a><a href="/sos">SOS Biker</a><a href="/privacy" aria-current="page">Privacy</a><a href="/ecosistema">Ecosistema</a><a href="/download">Scarica</a><div class="test-lang" aria-label="Lingua"><a href="/privacy" aria-current="page" lang="it" hreflang="it">IT</a><a href="/en/privacy" lang="en" hreflang="en">EN</a></div></nav></details></div></header><main id="page"><div class="mag"><section class="mag-pagehero" style="--hero:url('/assets/images/hero-handlebar.webp')"><div class="wrap"><div class="eyebrow">03 / PRIVACY E LIBERTÀ</div><h1 class="title">Online sì.<br><em>In vetrina no.</em></h1><p class="lead">La tua presenza, la tua posizione, le tue regole. Una community può creare connessioni senza pretendere che tu renda pubblica tutta la tua vita.</p></div></section><section class="mag-pagecontent"><div class="wrap"><div class="eyebrow">COSA PUOI FARE</div><h2 class="title">Un mondo di possibilità.</h2><p class="lead">Vuoi partecipare, conoscere persone ed esplorare il mondo motociclistico, ma senza mostrare continuamente dove sei? BikerLink prevede controlli differenti per gestire presenza, visibilità e posizione pubblica.</p><div class="mag-details"><article class="mag-detail"><small>01 / BIKERLINK</small><h2>Ghost Mode</h2><p>Modalità più riservate per limitare l'esposizione verso gli altri utenti, nelle versioni in cui sono abilitate.</p></article><article class="mag-detail"><small>02 / BIKERLINK</small><h2>Posizione sulla mappa</h2><p>Opzioni di visibilità e approssimazione della posizione pubblica, secondo le impostazioni selezionate.</p></article><article class="mag-detail"><small>03 / BIKERLINK</small><h2>Informazioni personali</h2><p>Controlli dedicati a stato online, distanza e ultimo accesso, dove supportati.</p></article><article class="mag-detail"><small>04 / BIKERLINK</small><h2>Scelte personali</h2><p>La riservatezza è configurabile; alcune funzioni, incluso il matching, possono cambiare comportamento in base alle impostazioni.</p></article></div></div></section><section class="mag-pageclosing"><div class="wrap"><div class="eyebrow">U'll Never Ride Alone</div><h2 class="title">La tua libertà.<br><em>Non un anonimato assoluto.</em></h2><p class="lead">La privacy verso gli altri utenti non significa che il servizio non tratti dati. Navigazione, telemetria e SOS possono richiedere dati di posizione e autorizzazioni specifiche. Durante un SOS volontario, potrebbero essere condivise informazioni necessarie a farti trovare.</p><a class="button filled" href="/privacy">Informativa privacy completa ↗</a><a class="button" href="/">Torna alla homepage</a></div></section></div></main><footer class="testfooter"><div class="wrap"><div><a href="/"><strong class='testlogo'>BIKER<i>LINK</i><small>U'll Never Ride Alone</small></strong></a><p>La community motociclistica verticale.</p></div><nav class="footnav" aria-label="Link utili"><a href="/matching">Matching</a><a href="/raduni">Raduni</a><a href="/community">Community</a><a href="/horus">Horus</a><a href="/sos">SOS Biker</a><a href="/privacy">Privacy</a><a href="/ecosistema">Ecosistema</a><a href="/blog">BikerBlog</a><a href="/privacy">Informativa privacy</a><a href="/contact">Contatti</a></nav><div class="copyright">U&#39;ll Never Ride Alone · BikerLink</div></div></footer></body></html>
+      <!-- ─── 3. FINALITÀ E BASE GIURIDICA ─── -->
+      <h2 data-i18n="legal.privacy.s3">3. Finalità e Base Giuridica</h2>
+      <table>
+        <thead>
+          <tr>
+            <th data-i18n="legal.privacy.s3.th1">Finalità</th>
+            <th data-i18n="legal.privacy.s3.th2">Dati coinvolti</th>
+            <th data-i18n="legal.privacy.s3.th3">Base giuridica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r1.t1">Creazione e gestione account</td>
+            <td data-i18n="legal.privacy.s3.r1.t2">Profilo, email</td>
+            <td data-i18n-html="legal.privacy.s3.r1.t3"><span class="tag">Contratto</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r2.t1">Matching tra utenti</td>
+            <td data-i18n="legal.privacy.s3.r2.t2">Profilo, preferenze</td>
+            <td data-i18n-html="legal.privacy.s3.r2.t3"><span class="tag">Contratto</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r3.t1">Tracking percorsi GPS</td>
+            <td data-i18n="legal.privacy.s3.r3.t2">Posizione, velocità, G-force</td>
+            <td data-i18n-html="legal.privacy.s3.r3.t3"><span class="tag">Consenso</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r4.t1">Funzione SOS emergenza</td>
+            <td data-i18n="legal.privacy.s3.r4.t2">Posizione GPS, ID utente</td>
+            <td data-i18n-html="legal.privacy.s3.r4.t3"><span class="tag">Interesse vitale</span> <span class="tag">Consenso</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r5.t1">Chat e messaggi</td>
+            <td data-i18n="legal.privacy.s3.r5.t2">Contenuti messaggi</td>
+            <td data-i18n-html="legal.privacy.s3.r5.t3"><span class="tag">Contratto</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r6.t1">MotoClub e community</td>
+            <td data-i18n="legal.privacy.s3.r6.t2">Profilo, posizione</td>
+            <td data-i18n-html="legal.privacy.s3.r6.t3"><span class="tag">Contratto</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r7.t1">Integrazione Last.fm</td>
+            <td data-i18n="legal.privacy.s3.r7.t2">Session key, libreria tracce</td>
+            <td data-i18n-html="legal.privacy.s3.r7.t3"><span class="tag">Consenso</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r8.t1">Moderazione contenuti</td>
+            <td data-i18n="legal.privacy.s3.r8.t2">Messaggi, foto</td>
+            <td data-i18n-html="legal.privacy.s3.r8.t3"><span class="tag">Interesse legittimo</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r9.t1">Notifiche push</td>
+            <td data-i18n="legal.privacy.s3.r9.t2">Token dispositivo</td>
+            <td data-i18n-html="legal.privacy.s3.r9.t3"><span class="tag">Consenso</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r10.t1">Sicurezza e antifrode</td>
+            <td data-i18n="legal.privacy.s3.r10.t2">Log tecnici</td>
+            <td data-i18n-html="legal.privacy.s3.r10.t3"><span class="tag">Interesse legittimo</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r11.t1">Statistiche anonime sull'uso</td>
+            <td data-i18n="legal.privacy.s3.r11.t2">Dati aggregati</td>
+            <td data-i18n-html="legal.privacy.s3.r11.t3"><span class="tag">Interesse legittimo</span></td>
+          </tr>
+          <tr>
+            <td data-i18n="legal.privacy.s3.r12.t1">Adempimenti legali</td>
+            <td data-i18n="legal.privacy.s3.r12.t2">Dati necessari per legge</td>
+            <td data-i18n-html="legal.privacy.s3.r12.t3"><span class="tag">Obbligo legale</span></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ─── 4. SERVIZI TERZE PARTI ─── -->
+      <h2 data-i18n="legal.privacy.s4">4. Servizi Terze Parti</h2>
+      <p data-i18n="legal.privacy.s4.lead">BikerLink condivide o riceve dati dai seguenti servizi esterni:</p>
+      <ul>
+        <li data-i18n-html="legal.privacy.s4.li1"><strong>Last.fm / CBS Interactive</strong> — Dati musicali. <a href="https://www.last.fm/legal/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy Last.fm</a></li>
+        <li data-i18n-html="legal.privacy.s4.li2"><strong>OpenStreetMap Foundation</strong> — Tile mappa (le coordinate vengono inviate per il rendering della mappa). <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">Privacy Policy OSM</a></li>
+        <li data-i18n-html="legal.privacy.s4.li3"><strong>CartoDB / CARTO</strong> (Spagna) — Tile mappa alternative</li>
+        <li data-i18n-html="legal.privacy.s4.li4"><strong>Esri</strong> (USA) — Tile mappa satellitare</li>
+        <li data-i18n-html="legal.privacy.s4.li5"><strong>Expo</strong> (USA) — Push notification e aggiornamenti OTA. <a href="https://expo.dev/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy Expo</a></li>
+        <li data-i18n-html="legal.privacy.s4.li6"><strong>Syneco</strong> — Partner commerciale; stato partnership con officine</li>
+      </ul>
+      <div class="callout">
+        <p data-i18n-html="legal.privacy.s4.callout">Alcuni provider trattano dati al di fuori dell'Unione Europea (in particolare USA). Il trasferimento avviene sulla base delle Clausole Contrattuali Standard approvate dalla Commissione Europea (art. 46 GDPR) o di meccanismi equivalenti.</p>
+      </div>
+
+      <!-- ─── 5. CONSERVAZIONE ─── -->
+      <h2 data-i18n="legal.privacy.s5">5. Periodo di Conservazione</h2>
+      <ul>
+        <li data-i18n-html="legal.privacy.s5.li1"><strong>Dati account:</strong> conservati finché l'account è attivo. Cancellati entro 30 giorni dalla richiesta di eliminazione, salvo obblighi di legge.</li>
+        <li data-i18n-html="legal.privacy.s5.li2"><strong>Cronologia posizioni GPS:</strong> conservata per 90 giorni dall'ultima registrazione.</li>
+        <li data-i18n-html="legal.privacy.s5.li3"><strong>Messaggi chat:</strong> conservati finché almeno uno dei partecipanti mantiene l'account attivo.</li>
+        <li data-i18n-html="legal.privacy.s5.li4"><strong>Log tecnici ed errori:</strong> conservati per 12 mesi.</li>
+        <li data-i18n-html="legal.privacy.s5.li5"><strong>Dati SOS:</strong> conservati per 6 mesi dalla chiusura della richiesta.</li>
+        <li data-i18n-html="legal.privacy.s5.li6"><strong>Session key Last.fm:</strong> eliminata alla revoca della connessione.</li>
+        <li data-i18n-html="legal.privacy.s5.li7"><strong>Foto:</strong> eliminate entro 30 giorni dalla cancellazione dell'account o del contenuto.</li>
+      </ul>
+
+      <!-- ─── 6. DIRITTI GDPR ─── -->
+      <h2 data-i18n="legal.privacy.s6">6. Diritti dell'Interessato (GDPR)</h2>
+      <p data-i18n="legal.privacy.s6.lead">In qualità di interessato, hai i seguenti diritti:</p>
+      <ul>
+        <li data-i18n-html="legal.privacy.s6.li1"><strong>Accesso (art. 15):</strong> richiedere copia dei tuoi dati personali.</li>
+        <li data-i18n-html="legal.privacy.s6.li2"><strong>Rettifica (art. 16):</strong> correggere dati inesatti.</li>
+        <li data-i18n-html="legal.privacy.s6.li3"><strong>Cancellazione (art. 17 — "diritto all'oblio"):</strong> richiedere l'eliminazione dei dati, salvo obblighi di conservazione legale.</li>
+        <li data-i18n-html="legal.privacy.s6.li4"><strong>Portabilità (art. 20):</strong> ricevere i tuoi dati in formato strutturato e leggibile da dispositivo automatico.</li>
+        <li data-i18n-html="legal.privacy.s6.li5"><strong>Opposizione (art. 21):</strong> opporti al trattamento basato su interesse legittimo.</li>
+        <li data-i18n-html="legal.privacy.s6.li6"><strong>Limitazione (art. 18):</strong> richiedere la limitazione del trattamento in determinati casi.</li>
+        <li data-i18n="legal.privacy.s6.li7">Revoca del consenso: revocabile in qualsiasi momento senza pregiudicare la liceità del trattamento precedente.</li>
+      </ul>
+      <p data-i18n-html="legal.privacy.s6.p1">
+        Per esercitare i tuoi diritti scrivi a: <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a><br>
+        Risponderemo entro 30 giorni dalla ricezione della richiesta.
+      </p>
+      <p data-i18n-html="legal.privacy.s6.p2">
+        Hai il diritto di presentare reclamo all'autorità di controllo competente.<br>
+        In Italia: <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">Garante per la protezione dei dati personali</a>.
+      </p>
+
+      <!-- ─── 7. POSIZIONE IN BACKGROUND ─── -->
+      <h2 data-i18n-html="legal.privacy.s7">7. Posizione GPS (<code>android.permission.ACCESS_FINE_LOCATION</code> / <code>ACCESS_BACKGROUND_LOCATION</code>)</h2>
+      <p data-i18n-html="legal.privacy.s7.lead">BikerLink richiede i permessi <code>ACCESS_COARSE_LOCATION</code>, <code>ACCESS_FINE_LOCATION</code> e <code>ACCESS_BACKGROUND_LOCATION</code> per le seguenti funzionalità:</p>
+      <ul>
+        <li>
+          <strong data-i18n="legal.privacy.s7.li1.title">Mappa biker in tempo reale:</strong> <span data-i18n="legal.privacy.s7.li1.desc">mostra la posizione dell'utente e quella dei motociclisti vicini sulla mappa.</span>
+        </li>
+        <li>
+          <strong data-i18n="legal.privacy.s7.li2.title">Tracking percorsi:</strong> <span data-i18n="legal.privacy.s7.li2.desc">quando l'utente avvia manualmente la registrazione di un giro in moto, la posizione viene acquisita continuamente per tracciare il percorso. Il tracking si interrompe allo stop manuale o al termine del giro.</span>
+        </li>
+        <li>
+          <strong data-i18n="legal.privacy.s7.li3.title">Funzione SOS:</strong> <span data-i18n="legal.privacy.s7.li3.desc">in caso di attivazione dell'emergenza, la posizione viene inviata ai soccorritori della community anche con l'app in background o lo schermo spento, per garantire la localizzazione in caso di necessità urgente.</span>
+        </li>
+      </ul>
+      <div class="callout">
+        <p data-i18n-html="legal.privacy.s7.callout">L'acquisizione in background (<code>ACCESS_BACKGROUND_LOCATION</code>) è attiva <strong>solo</strong> quando l'utente attiva esplicitamente il tracking o la funzione SOS. Non avviene in modo automatico, permanente o senza interazione dell'utente.</p>
+      </div>
+
+      <!-- ─── 8. FOTOCAMERA ─── -->
+      <h2 data-i18n-html="legal.privacy.s8">8. Accesso alla Fotocamera (<code>android.permission.CAMERA</code>)</h2>
+      <p data-i18n-html="legal.privacy.s8.lead">BikerLink richiede il permesso di accesso alla fotocamera del dispositivo per le seguenti funzionalità:</p>
+      <ul>
+        <li data-i18n-html="legal.privacy.s8.li1"><strong>Foto profilo:</strong> l'utente può scattare una foto direttamente dalla fotocamera per impostarla come immagine del proprio profilo.</li>
+        <li data-i18n-html="legal.privacy.s8.li2"><strong>Foto moto (Garage):</strong> l'utente può fotografare la propria moto per aggiungerla al garage digitale.</li>
+        <li data-i18n-html="legal.privacy.s8.li3"><strong>Contest fotografici:</strong> l'utente può scattare e caricare una foto per partecipare ai contest settimanali.</li>
+      </ul>
+      <div class="callout">
+        <p data-i18n-html="legal.privacy.s8.callout">La fotocamera viene attivata <strong>solo</strong> quando l'utente tocca esplicitamente il pulsante "Scatta foto". BikerLink non accede alla fotocamera in background, non registra video e non trasmette immagini senza il consenso esplicito dell'utente. Le foto caricate vengono archiviate in modo sicuro sui server BikerLink.</p>
+      </div>
+
+      <!-- ─── 9. SICUREZZA ─── -->
+      <h2 data-i18n="legal.privacy.s9">9. Sicurezza dei Dati</h2>
+      <p data-i18n="legal.privacy.s9.lead">BikerLink adotta le seguenti misure tecniche e organizzative:</p>
+      <ul>
+        <li data-i18n="legal.privacy.s9.li1">Trasmissione dati cifrata via HTTPS/TLS</li>
+        <li data-i18n-html="legal.privacy.s9.li2">Password memorizzate con hashing sicuro (bcrypt)</li>
+        <li data-i18n="legal.privacy.s9.li3">Token OAuth non esposti lato client</li>
+        <li data-i18n="legal.privacy.s9.li4">Moderazione automatica dei contenuti</li>
+        <li data-i18n="legal.privacy.s9.li5">Accesso ai dati limitato al personale autorizzato</li>
+      </ul>
+      <p data-i18n="legal.privacy.s9.p2">Nessun sistema è infallibile. In caso di violazione che possa comportare rischi per i tuoi diritti, verrai notificato nei modi previsti dal GDPR.</p>
+
+      <!-- ─── 10. MINORI ─── -->
+      <h2 data-i18n="legal.privacy.s10">10. Minori</h2>
+      <p data-i18n-html="legal.privacy.s10.p">BikerLink è destinato esclusivamente a utenti maggiorenni (18 anni o più). Non raccogliamo consapevolmente dati di minori. Se ritieni che un minore abbia creato un account, contattaci a <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a> e provvederemo alla cancellazione immediata.</p>
+
+      <!-- ─── 11. COOKIE ─── -->
+      <h2 data-i18n="legal.privacy.s11">11. Cookie e Tecnologie Simili</h2>
+      <p data-i18n="legal.privacy.s11.p1">BikerLink è un'app mobile. Non utilizziamo cookie tradizionali. Le WebView integrate per la visualizzazione delle mappe (Leaflet/OpenStreetMap) possono utilizzare localStorage del browser per memorizzare preferenze tecniche di visualizzazione. Questi dati non vengono trasmessi ai nostri server.</p>
+      <p data-i18n-html="legal.privacy.s11.p2"><strong>Sito marketing (bikerlink.it):</strong> sulle pagine pubbliche del sito utilizziamo un singolo cookie tecnico <code>bl_vid</code> (HttpOnly, SameSite=Lax, durata 1 anno) che genera un identificatore casuale anonimo per misurare il numero di visitatori unici. Registriamo lato server timestamp, pagina visitata, referrer, lingua del browser, paese e una versione anonimizzata dell'indirizzo IP (solo i primi 3 ottetti, es. <code>93.45.12</code>, mai l'IP completo, più un hash salato). Non utilizziamo questo cookie per profilazione pubblicitaria né lo condividiamo con terze parti. Base giuridica: legittimo interesse statistico (art. 6.1.f GDPR).</p>
+
+      <!-- ─── 12. AGGIORNAMENTI ─── -->
+      <h2 data-i18n="legal.privacy.s12">12. Aggiornamenti a questa Informativa</h2>
+      <p data-i18n="legal.privacy.s12.p">Ci riserviamo il diritto di modificare questa informativa in qualsiasi momento. Le modifiche sostanziali verranno comunicate tramite notifica in-app o via email. La data dell'ultima modifica è indicata in cima al documento. L'uso continuato dell'app dopo la comunicazione delle modifiche implica l'accettazione della nuova versione.</p>
+
+      <!-- ─── 13. CONTATTI ─── -->
+      <h2 data-i18n="legal.privacy.s13">13. Contatti</h2>
+      <p data-i18n-html="legal.privacy.s13.p">
+        <strong>BikerLink</strong><br>
+        Email: <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a>
+      </p>
+    </div>
+
+    <div class="footer">
+      <p data-i18n-html="legal.privacy.footer">© 2026 BikerLink. Tutti i diritti riservati. &nbsp;|&nbsp; <a href="/">Home</a> &nbsp;|&nbsp; <a href="/privacy-policy">Privacy Policy</a></p>
+    </div>
+      </main>
+    <script>
+      (function(){
+        var EN={
+          'legal.skip':'Skip to content',
+          'legal.back':'\u2190 Home',
+          'legal.privacy.h1':'Privacy Policy',
+          'legal.privacy.subtitle':'Last updated: April 19, 2026 \u00a0|\u00a0 Version 2.0',
+          'legal.privacy.s1':'1. Data Controller',
+          'legal.privacy.s1.p':'The data controller is <strong>BikerLink</strong>.<br>For any questions or to exercise your rights, write to: <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a>',
+          'legal.privacy.s2':'2. Data Collected',
+          'legal.privacy.s2.lead':'BikerLink collects the following categories of personal data:',
+          'legal.privacy.s2.1':'2.1 Profile and Registration',
+          'legal.privacy.s2.1.li1':'Nickname (publicly displayed name)',
+          'legal.privacy.s2.1.li2':'Email address (verified via link)',
+          'legal.privacy.s2.1.li3':'Phone number (optional)',
+          'legal.privacy.s2.1.li4':'Year of birth and gender',
+          'legal.privacy.s2.1.li6':'User type (biker, passenger, workshop, etc.)',
+          'legal.privacy.s2.1.li7':'Bio / personal description, languages spoken',
+          'legal.privacy.s2.1.li8':'Region and country of residence',
+          'legal.privacy.s2.1.li9':'UI preferences: theme, map style, widget settings',
+          'legal.privacy.s2.1.li10':'Aggregate statistics: total km, number of recorded rides, unlocked easter eggs',
+          'legal.privacy.s2.2':'2.2 Motorcycle Data (Garage)',
+          'legal.privacy.s2.2.li1':'Make, model, year, displacement, motorcycle type',
+          'legal.privacy.s2.2.li2':'Riding style and vehicle photos',
+          'legal.privacy.s2.2.li3':'Vehicle sale status and related description',
+          'legal.privacy.s2.3':'2.3 GPS Location',
+          'legal.privacy.s2.3.li1':'Current geographic coordinates (latitude and longitude), updated periodically while using the app',
+          'legal.privacy.s2.3.li2':'History of positions recorded during motorcycle rides (active GPS tracking)',
+          'legal.privacy.s2.3.li3':'Speed, acceleration and longitudinal G-force (only during active tracking)',
+          'legal.privacy.s2.3.li4':'Location acquired in background during route tracking and SOS feature',
+          'legal.privacy.s2.3.li5':'Coordinates of first access and subsequent accesses',
+          'legal.privacy.s2.3.callout':'<strong>Available privacy controls:</strong> Ghost Mode (invisible on map), Hide from map, Position Fuzzing (\u00b1500 m noise on coordinates), Fake Home (replaces real coordinates with a fictitious position near home).',
+          'legal.privacy.s2.4':'2.4 Photos and Camera',
+          'legal.privacy.s2.4.li1':'Profile photos (multiple, subject to team approval)',
+          'legal.privacy.s2.4.li2':'Motorcycle photos in the garage',
+          'legal.privacy.s2.4.li3':'Photos submitted to weekly photo contests',
+          'legal.privacy.s2.4.li4':'Photos associated with motorcycle events',
+          'legal.privacy.s2.4.li5':'Photos taken directly via the device camera (permission <code>android.permission.CAMERA</code>), exclusively on explicit user action',
+          'legal.privacy.s2.4.li6':'Photos selected from the device gallery via the system image picker (permission <code>android.permission.READ_MEDIA_IMAGES</code>), exclusively on explicit user action',
+          'legal.privacy.s2.5':'2.5 Chat and Messages',
+          'legal.privacy.s2.5.li1':'Text content of private and group messages',
+          'legal.privacy.s2.5.li2':'URLs of images shared in chats',
+          'legal.privacy.s2.5.li3':'GPS locations voluntarily shared in conversations',
+          'legal.privacy.s2.5.li4':'Metadata: sender ID, timestamp, read status',
+          'legal.privacy.s2.5.li5':'Messages are subject to automatic content moderation',
+          'legal.privacy.s2.6':'2.6 Social Features and Matching',
+          'legal.privacy.s2.6.li1':'User matching data (proposal, music compatibility)',
+          'legal.privacy.s2.6.li2':'MotoClub membership: subscriptions, invitations, join requests',
+          'legal.privacy.s2.6.li3':'Favourite users list and blocked users list',
+          'legal.privacy.s2.6.li4':'Votes cast in photo contests',
+          'legal.privacy.s2.7':'2.7 SOS / Road Emergency',
+          'legal.privacy.s2.7.li1':'Reason for emergency',
+          'legal.privacy.s2.7.li2':'Precise GPS coordinates at the time of SOS activation',
+          'legal.privacy.s2.7.li3':'Search radius chosen by the user',
+          'legal.privacy.s2.7.li4':'Identifier of the user who accepted the emergency',
+          'legal.privacy.s2.7.li5':'SOS request status (active, accepted, cancelled)',
+          'legal.privacy.s2.7.li6':'Private conversation created between the user in distress and the responder',
+          'legal.privacy.s2.8':'2.8 Music (Last.fm)',
+          'legal.privacy.s2.8.lead':'Only if the user voluntarily connects their music account:',
+          'legal.privacy.s2.8.li1':'<strong>Last.fm:</strong> username and session key',
+          'legal.privacy.s2.8.li2':'Track library: track name, artist, album, genres, popularity, date added',
+          'legal.privacy.s2.8.li3':'Playlists shared between users (text content and track metadata)',
+          'legal.privacy.s2.9':'2.9 Push Notifications',
+          'legal.privacy.s2.9.li1':'Expo Push Notification token (for sending notifications to the device)',
+          'legal.privacy.s2.9.li2':'Email notification preferences for new messages',
+          'legal.privacy.s2.10':'2.10 Technical and System Data',
+          'legal.privacy.s2.10.li1':'Device type, operating system and version',
+          'legal.privacy.s2.10.li2':'GPS error logs (including anonymous stack traces)',
+          'legal.privacy.s2.10.li3':'Moderator action logs',
+          'legal.privacy.s2.10.li4':'Impressions and clicks on sponsored content',
+          'legal.privacy.s2.10.li5':'Scores in integrated arcade games (e.g. Endless Biker)',
+          'legal.privacy.s2.10.li6':'Timestamps of EULA and Privacy Policy acceptance (GDPR consent)',
+          'legal.privacy.s3':'3. Purposes and Legal Basis',
+          'legal.privacy.s3.th1':'Purpose',
+          'legal.privacy.s3.th2':'Data involved',
+          'legal.privacy.s3.th3':'Legal basis',
+          'legal.privacy.s3.r1.t1':'Account creation and management',
+          'legal.privacy.s3.r1.t2':'Profile, email',
+          'legal.privacy.s3.r1.t3':'<span class="tag">Contract</span>',
+          'legal.privacy.s3.r2.t1':'User matching',
+          'legal.privacy.s3.r2.t2':'Profile, preferences',
+          'legal.privacy.s3.r2.t3':'<span class="tag">Contract</span>',
+          'legal.privacy.s3.r3.t1':'GPS route tracking',
+          'legal.privacy.s3.r3.t2':'Location, speed, G-force',
+          'legal.privacy.s3.r3.t3':'<span class="tag">Consent</span>',
+          'legal.privacy.s3.r4.t1':'SOS emergency feature',
+          'legal.privacy.s3.r4.t2':'GPS location, user ID',
+          'legal.privacy.s3.r4.t3':'<span class="tag">Vital interest</span> <span class="tag">Consent</span>',
+          'legal.privacy.s3.r5.t1':'Chat and messages',
+          'legal.privacy.s3.r5.t2':'Message contents',
+          'legal.privacy.s3.r5.t3':'<span class="tag">Contract</span>',
+          'legal.privacy.s3.r6.t1':'MotoClub and community',
+          'legal.privacy.s3.r6.t2':'Profile, location',
+          'legal.privacy.s3.r6.t3':'<span class="tag">Contract</span>',
+          'legal.privacy.s3.r7.t1':'Last.fm integration',
+          'legal.privacy.s3.r7.t2':'Session key, track library',
+          'legal.privacy.s3.r7.t3':'<span class="tag">Consent</span>',
+          'legal.privacy.s3.r8.t1':'Content moderation',
+          'legal.privacy.s3.r8.t2':'Messages, photos',
+          'legal.privacy.s3.r8.t3':'<span class="tag">Legitimate interest</span>',
+          'legal.privacy.s3.r9.t1':'Push notifications',
+          'legal.privacy.s3.r9.t2':'Device token',
+          'legal.privacy.s3.r9.t3':'<span class="tag">Consent</span>',
+          'legal.privacy.s3.r10.t1':'Security and anti-fraud',
+          'legal.privacy.s3.r10.t2':'Technical logs',
+          'legal.privacy.s3.r10.t3':'<span class="tag">Legitimate interest</span>',
+          'legal.privacy.s3.r11.t1':'Anonymous usage statistics',
+          'legal.privacy.s3.r11.t2':'Aggregated data',
+          'legal.privacy.s3.r11.t3':'<span class="tag">Legitimate interest</span>',
+          'legal.privacy.s3.r12.t1':'Legal compliance',
+          'legal.privacy.s3.r12.t2':'Data required by law',
+          'legal.privacy.s3.r12.t3':'<span class="tag">Legal obligation</span>',
+          'legal.privacy.s4':'4. Third-Party Services',
+          'legal.privacy.s4.lead':'BikerLink shares or receives data from the following external services:',
+          'legal.privacy.s4.li1':'<strong>Last.fm / CBS Interactive</strong> \u2014 Music data. <a href="https://www.last.fm/legal/privacy" target="_blank" rel="noopener noreferrer">Last.fm Privacy Policy</a>',
+          'legal.privacy.s4.li2':'<strong>OpenStreetMap Foundation</strong> \u2014 Map tiles (coordinates are sent for map rendering). <a href="https://wiki.osmfoundation.org/wiki/Privacy_Policy" target="_blank" rel="noopener noreferrer">OSM Privacy Policy</a>',
+          'legal.privacy.s4.li3':'<strong>CartoDB / CARTO</strong> (Spain) \u2014 Alternative map tiles',
+          'legal.privacy.s4.li4':'<strong>Esri</strong> (USA) \u2014 Satellite map tiles',
+          'legal.privacy.s4.li5':'<strong>Expo</strong> (USA) \u2014 Push notifications and OTA updates. <a href="https://expo.dev/privacy" target="_blank" rel="noopener noreferrer">Expo Privacy Policy</a>',
+          'legal.privacy.s4.li6':'<strong>Syneco</strong> \u2014 Commercial partner; workshop partnership status',
+          'legal.privacy.s4.callout':'Some providers process data outside the European Union (in particular the USA). The transfer takes place on the basis of Standard Contractual Clauses approved by the European Commission (art. 46 GDPR) or equivalent mechanisms.',
+          'legal.privacy.s5':'5. Retention Period',
+          'legal.privacy.s5.li1':'<strong>Account data:</strong> retained while the account is active. Deleted within 30 days of the deletion request, unless legally required.',
+          'legal.privacy.s5.li2':'<strong>GPS position history:</strong> retained for 90 days from the last recording.',
+          'legal.privacy.s5.li3':'<strong>Chat messages:</strong> retained while at least one participant keeps their account active.',
+          'legal.privacy.s5.li4':'<strong>Technical logs and errors:</strong> retained for 12 months.',
+          'legal.privacy.s5.li5':'<strong>SOS data:</strong> retained for 6 months from closure of the request.',
+          'legal.privacy.s5.li6':'<strong>Last.fm session key:</strong> deleted upon connection revocation.',
+          'legal.privacy.s5.li7':'<strong>Photos:</strong> deleted within 30 days of account or content deletion.',
+          'legal.privacy.s6':'6. Your Rights (GDPR)',
+          'legal.privacy.s6.lead':'As a data subject, you have the following rights:',
+          'legal.privacy.s6.li1':'<strong>Access (art. 15):</strong> request a copy of your personal data.',
+          'legal.privacy.s6.li2':'<strong>Rectification (art. 16):</strong> correct inaccurate data.',
+          'legal.privacy.s6.li3':'<strong>Erasure (art. 17 \u2014 \u201cright to be forgotten\u201d):</strong> request deletion of your data, subject to legal retention obligations.',
+          'legal.privacy.s6.li4':'<strong>Portability (art. 20):</strong> receive your data in a structured, machine-readable format.',
+          'legal.privacy.s6.li5':'<strong>Objection (art. 21):</strong> object to processing based on legitimate interest.',
+          'legal.privacy.s6.li6':'<strong>Restriction (art. 18):</strong> request restriction of processing in certain cases.',
+          'legal.privacy.s6.li7':'Withdrawal of consent: can be withdrawn at any time without affecting the lawfulness of prior processing.',
+          'legal.privacy.s6.p1':'To exercise your rights, write to: <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a><br>We will respond within 30 days of receiving your request.',
+          'legal.privacy.s6.p2':'You have the right to lodge a complaint with the competent supervisory authority.<br>In the EU: <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer">Italian Data Protection Authority (Garante)</a>.',
+          'legal.privacy.s7':'7. GPS Location (<code>android.permission.ACCESS_FINE_LOCATION</code> / <code>ACCESS_BACKGROUND_LOCATION</code>)',
+          'legal.privacy.s7.lead':'BikerLink requests the <code>ACCESS_COARSE_LOCATION</code>, <code>ACCESS_FINE_LOCATION</code> and <code>ACCESS_BACKGROUND_LOCATION</code> permissions for the following features:',
+          'legal.privacy.s7.li1.title':'Live biker map:',
+          'legal.privacy.s7.li1.desc':"shows the user's position and that of nearby riders on the map.",
+          'legal.privacy.s7.li2.title':'Route tracking:',
+          'legal.privacy.s7.li2.desc':'when the user manually starts recording a motorcycle ride, the location is continuously acquired to trace the route. Tracking stops on manual stop or end of the ride.',
+          'legal.privacy.s7.li3.title':'SOS feature:',
+          'legal.privacy.s7.li3.desc':'when an emergency is activated, the location is sent to nearby community members even with the app in background or the screen off, to ensure localisation in urgent situations.',
+          'legal.privacy.s7.callout':'Background acquisition (<code>ACCESS_BACKGROUND_LOCATION</code>) is active <strong>only</strong> when the user explicitly activates tracking or the SOS feature. It does not occur automatically, permanently, or without user interaction.',
+          'legal.privacy.s8':'8. Camera Access (<code>android.permission.CAMERA</code>)',
+          'legal.privacy.s8.lead':'BikerLink requests access to the device camera for the following features:',
+          'legal.privacy.s8.li1':'<strong>Profile photo:</strong> the user can take a photo directly from the camera to set as their profile picture.',
+          'legal.privacy.s8.li2':'<strong>Motorcycle photos (Garage):</strong> the user can photograph their motorcycle to add it to the digital garage.',
+          'legal.privacy.s8.li3':'<strong>Photo contests:</strong> the user can take and upload a photo to participate in weekly contests.',
+          'legal.privacy.s8.callout':"The camera is activated <strong>only</strong> when the user explicitly taps the \u201cTake photo\u201d button. BikerLink does not access the camera in background, does not record video, and does not transmit images without the user's explicit consent. Uploaded photos are securely stored on BikerLink servers.",
+          'legal.privacy.s9':'9. Data Security',
+          'legal.privacy.s9.lead':'BikerLink adopts the following technical and organisational measures:',
+          'legal.privacy.s9.li1':'Data transmission encrypted via HTTPS/TLS',
+          'legal.privacy.s9.li2':'Passwords stored with secure hashing (bcrypt)',
+          'legal.privacy.s9.li3':'OAuth tokens not exposed client-side',
+          'legal.privacy.s9.li4':'Automatic content moderation',
+          'legal.privacy.s9.li5':'Data access restricted to authorised personnel',
+          'legal.privacy.s9.p2':'No system is infallible. In the event of a breach that may pose risks to your rights, you will be notified in the manner required by the GDPR.',
+          'legal.privacy.s10':'10. Minors',
+          'legal.privacy.s10.p':'BikerLink is intended exclusively for users who are of legal age (18 years or older). We do not knowingly collect data from minors. If you believe a minor has created an account, contact us at <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a> and we will delete it immediately.',
+          'legal.privacy.s11':'11. Cookies and Similar Technologies',
+          'legal.privacy.s11.p1':'BikerLink is a mobile app. We do not use traditional cookies. The embedded WebViews for map display (Leaflet/OpenStreetMap) may use browser localStorage to store technical display preferences. This data is not transmitted to our servers.',
+          'legal.privacy.s11.p2':'<strong>Marketing website (bikerlink.it):</strong> on public pages we use a single technical cookie <code>bl_vid</code> (HttpOnly, SameSite=Lax, 1-year duration) that generates an anonymous random identifier to measure unique visitors. We record server-side: timestamp, page visited, referrer, browser language, country and an anonymised IP address (first 3 octets only, e.g. <code>93.45.12</code>, never the full IP, plus a salted hash). We do not use this cookie for advertising profiling or share it with third parties. Legal basis: legitimate statistical interest (art. 6.1.f GDPR).',
+          'legal.privacy.s12':'12. Updates to this Policy',
+          'legal.privacy.s12.p':'We reserve the right to modify this policy at any time. Material changes will be communicated via in-app notification or email. The date of the last change is indicated at the top of the document. Continued use of the app after notification of changes constitutes acceptance of the new version.',
+          'legal.privacy.s13':'13. Contact',
+          'legal.privacy.s13.p':'<strong>BikerLink</strong><br>Email: <a href="mailto:bikerlinkapp@gmail.com">bikerlinkapp@gmail.com</a>',
+          'legal.privacy.footer':'\u00a9 2026 BikerLink. All rights reserved. \u00a0|\u00a0 <a href="/">Home</a> \u00a0|\u00a0 <a href="/privacy">Privacy Policy</a>'
+        };
+        try{
+          if(localStorage.getItem('bl_lang')==='en'){
+            document.querySelectorAll('[data-i18n]').forEach(function(el){
+              var k=el.getAttribute('data-i18n');if(EN[k])el.textContent=EN[k];
+            });
+            document.querySelectorAll('[data-i18n-html]').forEach(function(el){
+              var k=el.getAttribute('data-i18n-html');if(EN[k])el.innerHTML=EN[k];
+            });
+          }
+        }catch(e){}
+      })();
+    </script>
+  </body>
+</html>

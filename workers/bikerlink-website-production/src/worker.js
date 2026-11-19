@@ -1,42 +1,45 @@
-const STATIC_PAGES = new Set([
-  "/",
-  "/matching",
-  "/raduni",
-  "/community",
-  "/horus",
-  "/sos",
-  "/privacy",
-  "/ecosistema",
-  "/download",
-  "/en",
-  "/en/matching",
-  "/en/raduni",
-  "/en/community",
-  "/en/horus",
-  "/en/sos",
-  "/en/privacy",
-  "/en/ecosistema",
-  "/en/download",
+const STATIC_PAGES = new Map([
+  ["/", "/index.html"],
+  ["/features", "/features/index.html"],
+  ["/matching", "/matching/index.html"],
+  ["/matching/come-funziona", "/matching/come-funziona/index.html"],
+  ["/matching/tipi-di-match", "/matching/tipi-di-match/index.html"],
+  ["/matching/come-impara", "/matching/come-impara/index.html"],
+  ["/matching/intelligenza-artificiale", "/matching/intelligenza-artificiale/index.html"],
+  ["/matching/privacy", "/matching/privacy/index.html"],
+  ["/matching/per-investitori", "/matching/per-investitori/index.html"],
+  ["/sos", "/sos/index.html"],
+  ["/motoclub", "/motoclub/index.html"],
+  ["/community", "/community/index.html"],
+  ["/raduni", "/raduni/index.html"],
+  ["/horus", "/horus/index.html"],
+  ["/download", "/download/index.html"],
+  ["/about", "/about/index.html"],
+  ["/faq", "/faq/index.html"],
+  ["/contact", "/contact/index.html"],
+  ["/blog", "/blog/index.html"],
+  ["/blog/perche-esiste-bikerlink", "/blog/perche-esiste-bikerlink/index.html"],
+  ["/blog/un-giro-comincia-prima-di-partire", "/blog/un-giro-comincia-prima-di-partire/index.html"],
+  ["/blog/sos-biker-una-rete-che-risponde", "/blog/sos-biker-una-rete-che-risponde/index.html"],
+  ["/privacy", "/privacy/index.html"],
+  ["/terms", "/terms/index.html"],
+  ["/ecosistema", "/ecosistema/index.html"],
+  ["/en", "/en/index.html"],
+  ["/en/matching", "/en/matching/index.html"],
+  ["/en/raduni", "/en/raduni/index.html"],
+  ["/en/community", "/en/community/index.html"],
+  ["/en/horus", "/en/horus/index.html"],
+  ["/en/sos", "/en/sos/index.html"],
+  ["/en/privacy", "/en/privacy/index.html"],
+  ["/en/ecosistema", "/en/ecosistema/index.html"],
+  ["/en/download", "/en/download/index.html"],
 ]);
 
 const STATIC_FILES = new Set(["/robots.txt", "/sitemap.xml", "/web-session.js"]);
 
 const BACKEND_PAGES = new Set([
-  "/features",
-  "/motoclub",
-  "/about",
-  "/faq",
-  "/contact",
-  "/blog",
   "/privacy-policy",
-  "/matching/come-funziona",
-  "/matching/tipi-di-match",
-  "/matching/come-impara",
-  "/matching/intelligenza-artificiale",
-  "/matching/privacy",
-  "/matching/per-investitori",
   "/matching/pdf",
-  "/terms",
   "/tos",
   "/delete-account",
   "/investors",
@@ -179,7 +182,15 @@ async function rewritePublicOrigin(response, request, railway, publicOrigin) {
 
   const html = await response.text();
   const rewritten = html.replaceAll(railway.host, publicOrigin.host);
-  if (rewritten === html && !changed) return response;
+  if (rewritten === html && !changed) {
+    // `response.text()` has consumed the upstream stream. Rebuild the response
+    // body even when no host rewrite was needed, preserving its original headers.
+    return new Response(html, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: response.headers,
+    });
+  }
 
   for (const name of ["content-length", "content-encoding", "etag", "content-md5", "digest", "content-digest", "repr-digest"]) {
     headers.delete(name);
@@ -341,6 +352,15 @@ export default {
       return proxyToRailway(request, env);
     }
 
+    // Public marketing, editorial, and legal pages are served from Workers
+    // Static Assets. Exact paths are listed above so application-owned pages
+    // such as /delete-account and /docs remain on Railway. API handling above
+    // still wins for every method and path in the /api namespace.
+    const staticPage = STATIC_PAGES.get(pathname);
+    if (staticPage && (method === "GET" || method === "HEAD")) {
+      return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, staticPage)));
+    }
+
     // These legacy and application pages remain on Railway. This is an
     // explicit route family list; unknown paths never receive frontend HTML.
     if (isBackendPage(pathname) && (method === "GET" || method === "HEAD")) {
@@ -365,11 +385,6 @@ export default {
 
     if (STATIC_FILES.has(pathname) && (method === "GET" || method === "HEAD")) {
       const file = pathname;
-      return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, file)));
-    }
-
-    if (STATIC_PAGES.has(pathname) && (method === "GET" || method === "HEAD")) {
-      const file = pathname === "/" ? "/index.html" : `${pathname}/index.html`;
       return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, file)));
     }
 

@@ -1,0 +1,1771 @@
+{
+  "captured_date": "2026-11-19",
+  "source_sitemap": "https://biker-link.net/sitemap.xml",
+  "source_repository": "Andreamasteri/bikerWeb working tree, branch codex/bikerweb-content-preservation-20261119",
+  "pages_copied_exactly": 22,
+  "legacy_sitemap_url_count": 30,
+  "legacy_marketing_legal_pages_moved_to_static": 22,
+  "legacy_app_pages_retained_on_railway": [
+    "/delete-account",
+    "/docs",
+    "/docs/matching",
+    "/docs/sos",
+    "/docs/motoclub",
+    "/docs/percorsi",
+    "/docs/telemetria",
+    "/docs/api"
+  ],
+  "totals": {
+    "html_bytes": 4373343,
+    "main_text_characters": 88472,
+    "image_placements": 25,
+    "unique_r2_image_files_in_src_and_srcset": 22,
+    "tables": 8
+  },
+  "all_image_assets_in_r2": true,
+  "pages": [
+    {
+      "path": "/",
+      "source_url": "https://biker-link.net/",
+      "destination": "workers/bikerlink-website-production/public/index.html",
+      "sha256": "57eeb2152caffcc67e3243636c287a79971450437a2a338de341c2f18475e022",
+      "bytes": 254972,
+      "title": "BikerLink — App per motociclisti: GPS, Community, SOS",
+      "meta_description": "App verticale per motociclisti: mappa biker live, MotoClub, SOS emergenza, contest foto. Gratis, italiana, in continua evoluzione.",
+      "main_text_characters": 7149,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "BIKER·LINKAPP PER MOTOCICLISTI"
+        },
+        {
+          "level": "h2",
+          "text": "CONNETTILA TUAPASSIONE."
+        },
+        {
+          "level": "h2",
+          "text": "Tutto ciò che un biker vuole."
+        },
+        {
+          "level": "h3",
+          "text": "Mappa biker live"
+        },
+        {
+          "level": "h3",
+          "text": "MotoClub"
+        },
+        {
+          "level": "h3",
+          "text": "SOS Biker"
+        },
+        {
+          "level": "h3",
+          "text": "Contest foto"
+        },
+        {
+          "level": "h3",
+          "text": "Tracking percorsi"
+        },
+        {
+          "level": "h3",
+          "text": "Matching biker"
+        },
+        {
+          "level": "h2",
+          "text": "Una sola app.Due profili di motociclista."
+        },
+        {
+          "level": "h3",
+          "text": "IL BIKER"
+        },
+        {
+          "level": "h3",
+          "text": "LE ZAVORRINE"
+        },
+        {
+          "level": "h2",
+          "text": "Ogni dato.Ogni curva."
+        },
+        {
+          "level": "h2",
+          "text": "Non a caso.Per davvero."
+        },
+        {
+          "level": "h2",
+          "text": "Il tuo itinerario moto.In 30 secondi."
+        },
+        {
+          "level": "h2",
+          "text": "Ogni settimanaun nuovo palco."
+        },
+        {
+          "level": "h2",
+          "text": "Niente abbonamenti.Niente compromessi."
+        },
+        {
+          "level": "h3",
+          "text": "Privacy reale"
+        },
+        {
+          "level": "h3",
+          "text": "Veloce e leggera"
+        },
+        {
+          "level": "h3",
+          "text": "Community moderata"
+        },
+        {
+          "level": "h2",
+          "text": "Funzionalità a confronto."
+        },
+        {
+          "level": "h2",
+          "text": "Perché un'app dedicata ai motociclisti"
+        },
+        {
+          "level": "h2",
+          "text": "Pronto a non guidare più da solo?"
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/images/hero-forest.webp",
+          "alt": "Motociclista su strada forestale — luce filtrata tra gli alberi",
+          "srcset": "/assets/images/hero-forest-sm.webp 800w, /assets/images/hero-forest.webp 1600w"
+        },
+        {
+          "src": "/assets/images/hero-community.webp",
+          "alt": "Moto parcheggiate in un bosco — raduno biker",
+          "srcset": "/assets/images/hero-community-sm.webp 800w, /assets/images/hero-community.webp 1600w"
+        },
+        {
+          "src": "/assets/images/bike-road-1.webp",
+          "alt": "Moto su strada — mappa biker live",
+          "srcset": "/assets/images/bike-road-1-sm.webp 600w, /assets/images/bike-road-1.webp 1200w"
+        },
+        {
+          "src": "/assets/images/motoclub-ride.webp",
+          "alt": "Gruppo di motociclisti — MotoClub",
+          "srcset": "/assets/images/motoclub-ride-sm.webp 600w, /assets/images/motoclub-ride.webp 1200w"
+        },
+        {
+          "src": "/assets/images/bike-road-2.webp",
+          "alt": "Moto sulla strada — SOS Biker emergenza",
+          "srcset": "/assets/images/bike-road-2-sm.webp 600w, /assets/images/bike-road-2.webp 1200w"
+        },
+        {
+          "src": "/assets/images/contest-1.webp",
+          "alt": "Foto contest moto — PicContest BikerLink",
+          "srcset": "/assets/images/contest-1-sm.webp 600w, /assets/images/contest-1.webp 1200w"
+        },
+        {
+          "src": "/assets/images/telemetry-dash.webp",
+          "alt": "Dashboard telemetria — tracking GPS percorsi",
+          "srcset": "/assets/images/telemetry-dash-sm.webp 512w, /assets/images/telemetry-dash.webp 1024w"
+        },
+        {
+          "src": "/assets/images/card-biker.webp",
+          "alt": "Biker solitario — matching compagni di viaggio",
+          "srcset": "/assets/images/card-biker-sm.webp 400w, /assets/images/card-biker.webp 800w"
+        },
+        {
+          "src": "/assets/images/card-biker.webp",
+          "alt": "Biker solitario su moto sportiva",
+          "srcset": "/assets/images/card-biker-sm.webp 400w, /assets/images/card-biker.webp 800w"
+        },
+        {
+          "src": "/assets/images/card-zavorrine.webp",
+          "alt": "Passeggero in moto — le zavorrine",
+          "srcset": "/assets/images/card-zavorrine-sm.webp 400w, /assets/images/card-zavorrine.webp 800w"
+        },
+        {
+          "src": "/assets/images/telemetry-dash.webp",
+          "alt": "Dashboard telemetria BikerLink — velocità e G-force",
+          "srcset": "/assets/images/telemetry-dash-sm.webp 512w, /assets/images/telemetry-dash.webp 1024w"
+        },
+        {
+          "src": "/assets/images/bike-road-2.webp",
+          "alt": "Percorso moto curvy tra le montagne",
+          "srcset": "/assets/images/bike-road-2-sm.webp 600w, /assets/images/bike-road-2.webp 1200w"
+        },
+        {
+          "src": "/assets/images/contest-1.webp",
+          "alt": "Foto contest #1 — Moto in gara",
+          "srcset": "/assets/images/contest-1-sm.webp 600w, /assets/images/contest-1.webp 1200w"
+        },
+        {
+          "src": "/assets/images/contest-2.webp",
+          "alt": "Foto contest #2 — Biker su passo di montagna",
+          "srcset": "/assets/images/contest-2-sm.webp 600w, /assets/images/contest-2.webp 1200w"
+        },
+        {
+          "src": "/assets/images/contest-3.webp",
+          "alt": "Foto contest #3 — Moto sul passo",
+          "srcset": "/assets/images/contest-3-sm.webp 600w, /assets/images/contest-3.webp 1200w"
+        },
+        {
+          "src": "/assets/images/card-biker.webp",
+          "alt": "Biker solitario — privacy e libertà",
+          "srcset": "/assets/images/card-biker-sm.webp 400w, /assets/images/card-biker.webp 800w"
+        },
+        {
+          "src": "/assets/images/bike-road-1.webp",
+          "alt": "Moto su strada veloce",
+          "srcset": "/assets/images/bike-road-1-sm.webp 600w, /assets/images/bike-road-1.webp 1200w"
+        },
+        {
+          "src": "/assets/images/motoclub-ride.webp",
+          "alt": "Community di motociclisti in gruppo",
+          "srcset": "/assets/images/motoclub-ride-sm.webp 600w, /assets/images/motoclub-ride.webp 1200w"
+        }
+      ],
+      "tables": [
+        {
+          "rows": 21,
+          "cells": 147,
+          "headers": [
+            "Funzionalità",
+            "Kurviger",
+            "Calimoto",
+            "MotoPlanner",
+            "Rever",
+            "Scenic",
+            "BikerLink"
+          ]
+        }
+      ],
+      "source_sha256": "647c87e7be6d4cac3793cb917c20a5a4edfd8358402a3d56901127add2515ca2",
+      "source_bytes": 254982,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/features",
+      "source_url": "https://biker-link.net/features",
+      "destination": "workers/bikerlink-website-production/public/features/index.html",
+      "sha256": "5b999a18349e1f9006a19e5e70866e96f8c7b52bada28cb5341b298d86b63724",
+      "bytes": 216650,
+      "title": "Funzionalità BikerLink — Mappa, MotoClub, SOS, Contest",
+      "meta_description": "Tutte le funzioni BikerLink: mappa biker live, MotoClub con chat, SOS d'emergenza, contest fotografici, matching e tracking GPS.",
+      "main_text_characters": 3684,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "FUNZIONALITÀ BIKERLINKPER MOTOCICLISTI"
+        },
+        {
+          "level": "h2",
+          "text": "Vedi i biker vicino a te, in tempo reale"
+        },
+        {
+          "level": "h2",
+          "text": "Crea il tuo club. Gestiscilo come vuoi."
+        },
+        {
+          "level": "h2",
+          "text": "Un tasto. La rete ti trova."
+        },
+        {
+          "level": "h2",
+          "text": "Mostra la tua moto. Vinci visibilità."
+        },
+        {
+          "level": "h2",
+          "text": "Registra ogni giro. Senza limiti."
+        },
+        {
+          "level": "h2",
+          "text": "Trova compagni di viaggio compatibili."
+        },
+        {
+          "level": "h2",
+          "text": "Funzionalità a confronto."
+        },
+        {
+          "level": "h2",
+          "text": "Provala adesso. È gratis."
+        }
+      ],
+      "images": [
+        {
+          "src": "/assets/images/bike-road-1.webp",
+          "alt": "Moto su strada — mappa biker live",
+          "srcset": "/assets/images/bike-road-1-sm.webp 600w, /assets/images/bike-road-1.webp 1200w"
+        },
+        {
+          "src": "/assets/images/motoclub-ride.webp",
+          "alt": "Gruppo di motociclisti — MotoClub BikerLink",
+          "srcset": "/assets/images/motoclub-ride-sm.webp 600w, /assets/images/motoclub-ride.webp 1200w"
+        },
+        {
+          "src": "/assets/images/bike-road-2.webp",
+          "alt": "Moto sulla strada — SOS emergenza biker",
+          "srcset": "/assets/images/bike-road-2-sm.webp 600w, /assets/images/bike-road-2.webp 1200w"
+        },
+        {
+          "src": "/assets/images/contest-1.webp",
+          "alt": "Foto contest moto — BikerLink PicContest",
+          "srcset": "/assets/images/contest-1-sm.webp 600w, /assets/images/contest-1.webp 1200w"
+        },
+        {
+          "src": "/assets/images/telemetry-dash.webp",
+          "alt": "Dashboard telemetria moto — tracking GPS BikerLink",
+          "srcset": "/assets/images/telemetry-dash-sm.webp 512w, /assets/images/telemetry-dash.webp 1024w"
+        },
+        {
+          "src": "/assets/images/card-biker.webp",
+          "alt": "Biker solitario — matching compagni di viaggio",
+          "srcset": "/assets/images/card-biker-sm.webp 400w, /assets/images/card-biker.webp 800w"
+        }
+      ],
+      "tables": [
+        {
+          "rows": 21,
+          "cells": 147,
+          "headers": [
+            "Funzionalità",
+            "Kurviger",
+            "Calimoto",
+            "MotoPlanner",
+            "Rever",
+            "Scenic",
+            "BikerLink"
+          ]
+        }
+      ],
+      "source_sha256": "01a2493b72cbf12e1deb58c5c85450c6d2aa28b27e844b6ae2ca5a4683bedd7b",
+      "source_bytes": 216674,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/sos",
+      "source_url": "https://biker-link.net/sos",
+      "destination": "workers/bikerlink-website-production/public/sos/index.html",
+      "sha256": "b6c6d32ede8790f4e8020026dabf186a78b03e28d21aef9b7bf0db1e45ff7759",
+      "bytes": 204166,
+      "title": "SOS Biker — Emergenza stradale per motociclisti | BikerLink",
+      "meta_description": "L'SOS di BikerLink notifica i motociclisti vicino a te con la tua posizione GPS in caso di emergenza. Come funziona, quando si attiva, le garanzie di privacy.",
+      "main_text_characters": 2491,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "SOS BIKER"
+        },
+        {
+          "level": "h2",
+          "text": "Come si attiva"
+        },
+        {
+          "level": "h3",
+          "text": "Apri l'app"
+        },
+        {
+          "level": "h3",
+          "text": "Tocca SOS"
+        },
+        {
+          "level": "h3",
+          "text": "Conferma"
+        },
+        {
+          "level": "h3",
+          "text": "Coordina"
+        },
+        {
+          "level": "h2",
+          "text": "Privacy e sicurezza"
+        },
+        {
+          "level": "h3",
+          "text": "Solo su attivazione"
+        },
+        {
+          "level": "h3",
+          "text": "Raggio scelto da te"
+        },
+        {
+          "level": "h3",
+          "text": "Annullabile sempre"
+        },
+        {
+          "level": "h2",
+          "text": "Perché esiste questa funzione"
+        },
+        {
+          "level": "h2",
+          "text": "Non guidare più da solo."
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "b6c6d32ede8790f4e8020026dabf186a78b03e28d21aef9b7bf0db1e45ff7759",
+      "source_bytes": 204166,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/motoclub",
+      "source_url": "https://biker-link.net/motoclub",
+      "destination": "workers/bikerlink-website-production/public/motoclub/index.html",
+      "sha256": "7b944e28f7cada16d6590b1d5208b021905217eb50c4162fcb555d6e1f241e5c",
+      "bytes": 204033,
+      "title": "MotoClub su BikerLink — Crea, gestisci, ride insieme",
+      "meta_description": "I MotoClub di BikerLink: crea un club, invita i tuoi compagni con codici, gestisci approvazioni e usa la chat di gruppo dedicata. Pensato per veri equipaggi.",
+      "main_text_characters": 1752,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "MOTOCLUB"
+        },
+        {
+          "level": "h2",
+          "text": "Tre modi di stare insieme"
+        },
+        {
+          "level": "h3",
+          "text": "Crea il tuo club"
+        },
+        {
+          "level": "h3",
+          "text": "Invita con un codice"
+        },
+        {
+          "level": "h3",
+          "text": "Chat di gruppo dedicata"
+        },
+        {
+          "level": "h2",
+          "text": "Tre esempi reali"
+        },
+        {
+          "level": "h3",
+          "text": "Equipaggi locali"
+        },
+        {
+          "level": "h3",
+          "text": "Club di brand"
+        },
+        {
+          "level": "h3",
+          "text": "Community tematiche"
+        },
+        {
+          "level": "h2",
+          "text": "Strumenti per admin"
+        },
+        {
+          "level": "h2",
+          "text": "Costruisci il tuo equipaggio."
+        }
+      ],
+      "images": [],
+      "tables": [
+        {
+          "rows": 5,
+          "cells": 10,
+          "headers": [
+            "Approvazioni"
+          ]
+        }
+      ],
+      "source_sha256": "7b944e28f7cada16d6590b1d5208b021905217eb50c4162fcb555d6e1f241e5c",
+      "source_bytes": 204033,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/community",
+      "source_url": "https://biker-link.net/community",
+      "destination": "workers/bikerlink-website-production/public/community/index.html",
+      "sha256": "57314dba8ce47780c69a06ddff7674d6b465fd82e8bc561af7d01502d401a424",
+      "bytes": 206926,
+      "title": "Community BikerLink — Mappa mondiale biker, contest, eventi",
+      "meta_description": "La community BikerLink raccoglie motociclisti da tutto il mondo. Mappa interattiva degli iscritti, contest fotografici settimanali, eventi, chat e profili.",
+      "main_text_characters": 2453,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "COMMUNITY BIKERMAPPA MONDIALE E RADUNI"
+        },
+        {
+          "level": "h2",
+          "text": "Dove sono i nostri biker"
+        },
+        {
+          "level": "h2",
+          "text": "La community è viva"
+        },
+        {
+          "level": "h3",
+          "text": "Contest fotografici"
+        },
+        {
+          "level": "h3",
+          "text": "Eventi e raduni"
+        },
+        {
+          "level": "h3",
+          "text": "Chat sempre attive"
+        },
+        {
+          "level": "h3",
+          "text": "Garage condiviso"
+        },
+        {
+          "level": "h3",
+          "text": "Profili veri"
+        },
+        {
+          "level": "h3",
+          "text": "Moderazione attiva"
+        },
+        {
+          "level": "h2",
+          "text": "Una rete che cresce, ogni settimana"
+        },
+        {
+          "level": "h2",
+          "text": "Unisciti."
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "57314dba8ce47780c69a06ddff7674d6b465fd82e8bc561af7d01502d401a424",
+      "source_bytes": 206926,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/download",
+      "source_url": "https://biker-link.net/download",
+      "destination": "workers/bikerlink-website-production/public/download/index.html",
+      "sha256": "3203b6b3a4b191aaceffee9ae6805ff0978c155aa14511b6098004cd3e8653d7",
+      "bytes": 204815,
+      "title": "Scarica BikerLink — Android, iOS (in arrivo), APK diretto",
+      "meta_description": "Scarica BikerLink per Android dal Google Play, prova l'APK diretto, o scansiona il QR code con Expo Go. Versione iOS in arrivo.",
+      "main_text_characters": 2186,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "SCARICA BIKERLINK"
+        },
+        {
+          "level": "h2",
+          "text": "Tre modi per iniziare"
+        },
+        {
+          "level": "h3",
+          "text": "Google Play"
+        },
+        {
+          "level": "h3",
+          "text": "APK diretto"
+        },
+        {
+          "level": "h3",
+          "text": "iOS"
+        },
+        {
+          "level": "h2",
+          "text": "Prova con Expo Go"
+        },
+        {
+          "level": "h2",
+          "text": "Note sulla sicurezza"
+        },
+        {
+          "level": "h2",
+          "text": "Tutto pronto?"
+        }
+      ],
+      "images": [
+        {
+          "src": "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=exp%3A%2F%2Fexpo.dev%2F%40andreamasteri%2Fbikerlink%3Frelease-channel%3Ddefault",
+          "alt": "QR Code per Expo Go",
+          "srcset": ""
+        }
+      ],
+      "tables": [],
+      "source_sha256": "3203b6b3a4b191aaceffee9ae6805ff0978c155aa14511b6098004cd3e8653d7",
+      "source_bytes": 204815,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/about",
+      "source_url": "https://biker-link.net/about",
+      "destination": "workers/bikerlink-website-production/public/about/index.html",
+      "sha256": "55514ac2cbff8fa84346daa2b77364a915a87785df094eac7c48e125e28185f4",
+      "bytes": 212956,
+      "title": "Chi siamo — La missione di BikerLink",
+      "meta_description": "La storia di BikerLink: chi siamo, perché abbiamo costruito l'app social per motociclisti, la nostra mission e i nostri principi.",
+      "main_text_characters": 4152,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "CHI SIAMO"
+        },
+        {
+          "level": "h2",
+          "text": "La storia"
+        },
+        {
+          "level": "h2",
+          "text": "La mission"
+        },
+        {
+          "level": "h2",
+          "text": "Team"
+        },
+        {
+          "level": "h2",
+          "text": "Principi"
+        },
+        {
+          "level": "h2",
+          "text": "Contatti"
+        },
+        {
+          "level": "h2",
+          "text": "Funzionalità a confronto."
+        },
+        {
+          "level": "h2",
+          "text": "Una community vera."
+        }
+      ],
+      "images": [],
+      "tables": [
+        {
+          "rows": 21,
+          "cells": 147,
+          "headers": [
+            "Funzionalità",
+            "Kurviger",
+            "Calimoto",
+            "MotoPlanner",
+            "Rever",
+            "Scenic",
+            "BikerLink"
+          ]
+        }
+      ],
+      "source_sha256": "55514ac2cbff8fa84346daa2b77364a915a87785df094eac7c48e125e28185f4",
+      "source_bytes": 212956,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/faq",
+      "source_url": "https://biker-link.net/faq",
+      "destination": "workers/bikerlink-website-production/public/faq/index.html",
+      "sha256": "393e43b3881ebd2f70fa52f85b27743450013cdeec948df9a9563d3e3fb52f27",
+      "bytes": 205608,
+      "title": "FAQ BikerLink — Privacy, gratuità, account, supporto",
+      "meta_description": "Domande frequenti su BikerLink: gratuità reale, privacy GPS, funzionamento SOS, MotoClub, eliminazione account, supporto. Tutte le risposte in una pagina.",
+      "main_text_characters": 2871,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "DOMANDE FREQUENTI"
+        },
+        {
+          "level": "h2",
+          "text": "Tutto chiaro?"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "393e43b3881ebd2f70fa52f85b27743450013cdeec948df9a9563d3e3fb52f27",
+      "source_bytes": 205608,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/contact",
+      "source_url": "https://biker-link.net/contact",
+      "destination": "workers/bikerlink-website-production/public/contact/index.html",
+      "sha256": "8d3a4a35b181bc54e36269eb6b6b4a0bd8783ef68fb8de864a76237fc3932ead",
+      "bytes": 202454,
+      "title": "Contatti BikerLink — supporto, partnership, stampa",
+      "meta_description": "Contatti BikerLink: email diretta a supporto e partnership, tempi di risposta, sezioni dedicate per investitori e media. Rispondiamo entro 48 ore lavorative.",
+      "main_text_characters": 1950,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "CONTATTI"
+        },
+        {
+          "level": "h2",
+          "text": "Come raggiungerci"
+        },
+        {
+          "level": "h3",
+          "text": "Supporto utenti"
+        },
+        {
+          "level": "h3",
+          "text": "Partnership e brand"
+        },
+        {
+          "level": "h3",
+          "text": "Stampa e media"
+        },
+        {
+          "level": "h2",
+          "text": "Informazioni utili prima di scriverci"
+        },
+        {
+          "level": "h2",
+          "text": "Tempi di risposta"
+        },
+        {
+          "level": "h2",
+          "text": "Email principale"
+        },
+        {
+          "level": "h2",
+          "text": "Prima di scriverci, prova l'app."
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "8d3a4a35b181bc54e36269eb6b6b4a0bd8783ef68fb8de864a76237fc3932ead",
+      "source_bytes": 202454,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/blog",
+      "source_url": "https://biker-link.net/blog",
+      "destination": "workers/bikerlink-website-production/public/blog/index.html",
+      "sha256": "5651faed424975f102d32d8424e2854399753396b55bd6fb9faa586118989a49",
+      "bytes": 201679,
+      "title": "Blog BikerLink — Strade, community e vita in moto",
+      "meta_description": "Storie, idee e aggiornamenti da BikerLink: community, giri, sicurezza e tutto ciò che rende la moto più condivisa.",
+      "main_text_characters": 714,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Strade, persone,moto."
+        },
+        {
+          "level": "h2",
+          "text": "Perché esiste BikerLink"
+        },
+        {
+          "level": "h2",
+          "text": "Un giro comincia prima di partire"
+        },
+        {
+          "level": "h2",
+          "text": "SOS Biker: una rete che risponde"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "5651faed424975f102d32d8424e2854399753396b55bd6fb9faa586118989a49",
+      "source_bytes": 201679,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/blog/perche-esiste-bikerlink",
+      "source_url": "https://biker-link.net/blog/perche-esiste-bikerlink",
+      "destination": "workers/bikerlink-website-production/public/blog/perche-esiste-bikerlink/index.html",
+      "sha256": "7a4df317c735f9d2bdf0a21280bd91765ca13515d12eec10fa319ca664a65935",
+      "bytes": 202149,
+      "title": "Perché esiste BikerLink — Blog BikerLink",
+      "meta_description": "Una community costruita attorno a ciò che conta davvero quando si va in moto: persone, strade e presenza reciproca.",
+      "main_text_characters": 1264,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Perché esiste BikerLink"
+        },
+        {
+          "level": "h2",
+          "text": "Non un social generico"
+        },
+        {
+          "level": "h2",
+          "text": "La tecnologia deve restare sullo sfondo"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "7a4df317c735f9d2bdf0a21280bd91765ca13515d12eec10fa319ca664a65935",
+      "source_bytes": 202149,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/blog/un-giro-comincia-prima-di-partire",
+      "source_url": "https://biker-link.net/blog/un-giro-comincia-prima-di-partire",
+      "destination": "workers/bikerlink-website-production/public/blog/un-giro-comincia-prima-di-partire/index.html",
+      "sha256": "68e6a5d4654c7813a52108b029738b3e372b7026c487324501d075655cb0be72",
+      "bytes": 202238,
+      "title": "Un giro comincia prima di partire — Blog BikerLink",
+      "meta_description": "Un buon giro non è solo una traccia sul navigatore: è anche il modo in cui scegli chi portarti dietro e cosa vuoi vivere.",
+      "main_text_characters": 1245,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Un giro comincia prima di partire"
+        },
+        {
+          "level": "h2",
+          "text": "La compagnia cambia il giro"
+        },
+        {
+          "level": "h2",
+          "text": "Dal messaggio al punto d'incontro"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "68e6a5d4654c7813a52108b029738b3e372b7026c487324501d075655cb0be72",
+      "source_bytes": 202238,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/blog/sos-biker-una-rete-che-risponde",
+      "source_url": "https://biker-link.net/blog/sos-biker-una-rete-che-risponde",
+      "destination": "workers/bikerlink-website-production/public/blog/sos-biker-una-rete-che-risponde/index.html",
+      "sha256": "52d1515cad7081c7c36b2d5ca920365fb5931acbc867df5a526b43b12185076c",
+      "bytes": 202205,
+      "title": "SOS Biker: una rete che risponde — Blog BikerLink",
+      "meta_description": "Quando qualcosa va storto in strada, la differenza la fa chi riesce a sapere subito dove sei e può muoversi davvero.",
+      "main_text_characters": 1250,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "SOS Biker: una rete che risponde"
+        },
+        {
+          "level": "h2",
+          "text": "Prima le persone, poi l'app"
+        },
+        {
+          "level": "h2",
+          "text": "Una community utile quando conta"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "52d1515cad7081c7c36b2d5ca920365fb5931acbc867df5a526b43b12185076c",
+      "source_bytes": 202205,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/matching",
+      "source_url": "https://biker-link.net/matching",
+      "destination": "workers/bikerlink-website-production/public/matching/index.html",
+      "sha256": "771102b652b28a9bf5521fd20d06b5ec1b863d91df11a95e97bb9cd2722265b1",
+      "bytes": 217515,
+      "title": "Matching BikerLink — Come ti facciamo incontrare i biker giusti",
+      "meta_description": "Il sistema di matching di BikerLink usa 17 segnali di affinità, embeddings semantici e telemetria reale per connetterti con i biker più compatibili. Scopri come funziona.",
+      "main_text_characters": 3139,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "COME TI FACCIAMOINCONTRAREI BIKER GIUSTI"
+        },
+        {
+          "level": "h2",
+          "text": "Non a caso. Per davvero."
+        },
+        {
+          "level": "h2",
+          "text": "Il problema che risolviamo."
+        },
+        {
+          "level": "h2",
+          "text": "Esplora il sistema passo per passo."
+        },
+        {
+          "level": "h3",
+          "text": "Come funziona"
+        },
+        {
+          "level": "h3",
+          "text": "I 17 tipi di match"
+        },
+        {
+          "level": "h3",
+          "text": "Come impara"
+        },
+        {
+          "level": "h3",
+          "text": "Il cervello AI"
+        },
+        {
+          "level": "h3",
+          "text": "Privacy"
+        },
+        {
+          "level": "h3",
+          "text": "Per investitori"
+        },
+        {
+          "level": "h2",
+          "text": "Pronto a trovare il tuo compagno di giro?"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "771102b652b28a9bf5521fd20d06b5ec1b863d91df11a95e97bb9cd2722265b1",
+      "source_bytes": 217515,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/matching/come-funziona",
+      "source_url": "https://biker-link.net/matching/come-funziona",
+      "destination": "workers/bikerlink-website-production/public/matching/come-funziona/index.html",
+      "sha256": "668f4e743ea76ad5364efe1b6adb068d1d166c2940411cf1ed907abfc5b08132",
+      "bytes": 224875,
+      "title": "Come funziona il matching BikerLink — Dal profilo al match in 5 step Flow del matching BikerLink in 5 step Visualizzazione contributo segnali allo score finale",
+      "meta_description": "Il flow completo del sistema di matching BikerLink: profilo, tracking GPS, engine di scoring, filtri e proposta dei top match con badge di trasparenza.",
+      "main_text_characters": 4874,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "DAL PROFILOAL MATCH"
+        },
+        {
+          "level": "h2",
+          "text": "5 fasi. 1 risultato."
+        },
+        {
+          "level": "h3",
+          "text": "👤 Compili il profilo"
+        },
+        {
+          "level": "h3",
+          "text": "📍 Tracciamo i tuoi giri"
+        },
+        {
+          "level": "h3",
+          "text": "⚙️ L'engine calcola l'affinità"
+        },
+        {
+          "level": "h3",
+          "text": "🔧 Applichi i tuoi filtri"
+        },
+        {
+          "level": "h3",
+          "text": "🏍️ Ricevi i top match con il 'perché'"
+        },
+        {
+          "level": "h2",
+          "text": "Come si calcola lo score."
+        },
+        {
+          "level": "h3",
+          "text": "Formula di base"
+        },
+        {
+          "level": "h3",
+          "text": "Embeddings semantici"
+        },
+        {
+          "level": "h3",
+          "text": "Segnali diretti"
+        },
+        {
+          "level": "h3",
+          "text": "Segnali geo-temporali"
+        },
+        {
+          "level": "h3",
+          "text": "Segnali semantici"
+        },
+        {
+          "level": "h3",
+          "text": "Segnali telemetrici"
+        },
+        {
+          "level": "h2",
+          "text": "Sai sempre perché."
+        },
+        {
+          "level": "h2",
+          "text": "Vuoi vedere tutti i 17 tipi di segnale?"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "0bba8b7fabebbc932afa162d7897d1140002e8ec233afa4f5aba33b2ea0d3df4",
+      "source_bytes": 224887,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/matching/tipi-di-match",
+      "source_url": "https://biker-link.net/matching/tipi-di-match",
+      "destination": "workers/bikerlink-website-production/public/matching/tipi-di-match/index.html",
+      "sha256": "64673c6558cf11a36f14ab596f4590af04b4ed964989ef2bb6b71f863e9af17c",
+      "bytes": 226065,
+      "title": "I 17 tipi di match BikerLink — Tutti i segnali di affinità spiegati I 17 segnali raggruppati per famiglia Radar chart: pesi default vs profilo personalizzato",
+      "meta_description": "Tutti i 17 segnali di affinità del sistema matching BikerLink: brand moto, distanza, musica, lean angle, route affinity, overlap temporale e altro. Spiegati in linguaggio semplice.",
+      "main_text_characters": 5283,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "I 17 TIPIDI MATCH"
+        },
+        {
+          "level": "h2",
+          "text": "17 dimensioni. 1 punteggio."
+        },
+        {
+          "level": "h2",
+          "text": "Tu decidi cosa conta."
+        },
+        {
+          "level": "h3",
+          "text": "Primo giorno"
+        },
+        {
+          "level": "h3",
+          "text": "Dopo 1 settimana"
+        },
+        {
+          "level": "h3",
+          "text": "Dopo 1 mese"
+        },
+        {
+          "level": "h2",
+          "text": "Vuoi capire come il sistema impara?"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "bcfdb292a64eabd92680cf8baedd946e5499d1b53856911c9aa40bc2f4582aa3",
+      "source_bytes": 226071,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/matching/come-impara",
+      "source_url": "https://biker-link.net/matching/come-impara",
+      "destination": "workers/bikerlink-website-production/public/matching/come-impara/index.html",
+      "sha256": "daaee37483b4fc7df180b43ad6458966c4de5d47194c257c2e2f3e305d18f307",
+      "bytes": 224510,
+      "title": "Come impara il matching BikerLink — Feedback loop, decay e A/B testing Ciclo di feedback loop del matching",
+      "meta_description": "Il sistema di matching BikerLink impara dai tuoi sì e dai tuoi no: feedback loop continuo, decay temporale, A/B testing e preferenze negative. Spiegato con esempi reali.",
+      "main_text_characters": 4996,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "IL SISTEMAIMPARADA TE"
+        },
+        {
+          "level": "h2",
+          "text": "Il sistema impara dai tuoi sì e no."
+        },
+        {
+          "level": "h3",
+          "text": "Proposta match"
+        },
+        {
+          "level": "h3",
+          "text": "Interazione utente"
+        },
+        {
+          "level": "h3",
+          "text": "Aggiornamento pesi"
+        },
+        {
+          "level": "h3",
+          "text": "Match migliori"
+        },
+        {
+          "level": "h2",
+          "text": "I match invecchiano."
+        },
+        {
+          "level": "h3",
+          "text": "Come funziona il decay"
+        },
+        {
+          "level": "h3",
+          "text": "Cosa conta come \"attività\""
+        },
+        {
+          "level": "h2",
+          "text": "Sperimentiamo per migliorare."
+        },
+        {
+          "level": "h2",
+          "text": "Puoi escludere."
+        },
+        {
+          "level": "h3",
+          "text": "Apprendimento automatico"
+        },
+        {
+          "level": "h3",
+          "text": "Controllo esplicito"
+        },
+        {
+          "level": "h2",
+          "text": "Il digest del lunedì."
+        },
+        {
+          "level": "h2",
+          "text": "Curioso di sapere come funziona l'AI?"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "daaee37483b4fc7df180b43ad6458966c4de5d47194c257c2e2f3e305d18f307",
+      "source_bytes": 224510,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/matching/intelligenza-artificiale",
+      "source_url": "https://biker-link.net/matching/intelligenza-artificiale",
+      "destination": "workers/bikerlink-website-production/public/matching/intelligenza-artificiale/index.html",
+      "sha256": "2a85793130bcd8bf25e6ab5f56aac686236ed325c82dac03e87c14899cb0ec30",
+      "bytes": 222851,
+      "title": "Il Cervello AI di BikerLink — 6 AI specializzate, 8 modelli, 4 provider",
+      "meta_description": "BikerLink non usa una sola AI: 6 sistemi specializzati, 8 modelli orchestrati in cascata (Anthropic, OpenAI, Google, self-hosted), failover automatico e 100% delle decisioni loggato e auditabile.",
+      "main_text_characters": 4956,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "IL CERVELLOAI DIBIKERLINK"
+        },
+        {
+          "level": "h2",
+          "text": "Non una AI.Un'orchestra."
+        },
+        {
+          "level": "h2",
+          "text": "Il matching usaaltre 2 AI."
+        },
+        {
+          "level": "h2",
+          "text": "Perché tante AIinvece di una?"
+        },
+        {
+          "level": "h3",
+          "text": "Specializzazione"
+        },
+        {
+          "level": "h3",
+          "text": "Ridondanza in cascata"
+        },
+        {
+          "level": "h3",
+          "text": "Costo controllato"
+        },
+        {
+          "level": "h3",
+          "text": "Trasparenza totale"
+        },
+        {
+          "level": "h3",
+          "text": "Human-in-the-loop"
+        },
+        {
+          "level": "h3",
+          "text": "Monitoraggio 24/7"
+        },
+        {
+          "level": "h2",
+          "text": "Lo stack AIin tabella."
+        },
+        {
+          "level": "h2",
+          "text": "La cascatadi fallback."
+        },
+        {
+          "level": "h2",
+          "text": "Vuoi vedere la console AI in azione?"
+        }
+      ],
+      "images": [],
+      "tables": [
+        {
+          "rows": 9,
+          "cells": 36,
+          "headers": [
+            "Ruolo",
+            "Modello",
+            "Provider",
+            "Quando lo usiamo"
+          ]
+        }
+      ],
+      "source_sha256": "62b46872550c81427813e996f976301c70dd55af9d2ba6ac7f1f8bb4f5cfb4bc",
+      "source_bytes": 222867,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/matching/privacy",
+      "source_url": "https://biker-link.net/matching/privacy",
+      "destination": "workers/bikerlink-website-production/public/matching/privacy/index.html",
+      "sha256": "618deecf4542df28c52a796bf898f36f6fb2681fcdbe9d2be737f27b26d62252",
+      "bytes": 223832,
+      "title": "Privacy del matching BikerLink — Cosa raccogliamo e cosa non facciamo Confronto: cosa raccogliamo vs cosa non facciamo mai Pipeline di anonimizzazione e aggregazione dei dati",
+      "meta_description": "Privacy del sistema di matching BikerLink: dati raccolti, nessuna vendita a terzi, nessuna profilazione pubblicitaria, come disattivare ogni tipo di segnale. GDPR compliant.",
+      "main_text_characters": 4792,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "COSA SAPPIAMODI TEE PERCHÉ"
+        },
+        {
+          "level": "h2",
+          "text": "I dati che usiamo."
+        },
+        {
+          "level": "h2",
+          "text": "Le nostre linee rosse."
+        },
+        {
+          "level": "h2",
+          "text": "Puoi disattivare tutto."
+        },
+        {
+          "level": "h3",
+          "text": "Eliminazione completa"
+        },
+        {
+          "level": "h2",
+          "text": "Dai dati grezzi all'aggregato."
+        },
+        {
+          "level": "h2",
+          "text": "Privacy Policy completa."
+        },
+        {
+          "level": "h2",
+          "text": "Hai altre domande sulla privacy?"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "e493764c2ed1b3d455872cd78690aff770bd3f52b2de1b2c7206866f5a758536",
+      "source_bytes": 223838,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/matching/per-investitori",
+      "source_url": "https://biker-link.net/matching/per-investitori",
+      "destination": "workers/bikerlink-website-production/public/matching/per-investitori/index.html",
+      "sha256": "c8c89c7b5fb3bcd2c0bcc22fd5e39ac9ed2eb17a492f1386cc6edcd11990fcf2",
+      "bytes": 228709,
+      "title": "Matching BikerLink per Investitori — Architettura tecnica e vantaggio competitivo Stack architettura matching BikerLink Stato di avanzamento roadmap matching",
+      "meta_description": "Architettura tecnica del sistema matching BikerLink: PostgreSQL+PostGIS+pgvector, DragonflyDB+BullMQ, scoring engine, embeddings, feedback loop. KPI, stack completo e roadmap.",
+      "main_text_characters": 5157,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "MATCHINGTECNICOPER INVESTITORI"
+        },
+        {
+          "level": "h2",
+          "text": "Come è costruito il sistema."
+        },
+        {
+          "level": "h2",
+          "text": "Tecnologie e versioni."
+        },
+        {
+          "level": "h2",
+          "text": "Perché è difficile da copiare."
+        },
+        {
+          "level": "h3",
+          "text": "Telemetria reale"
+        },
+        {
+          "level": "h3",
+          "text": "Embeddings su testo biker"
+        },
+        {
+          "level": "h3",
+          "text": "Feedback loop + dati storici"
+        },
+        {
+          "level": "h3",
+          "text": "Verticale moto — zero distrazione"
+        },
+        {
+          "level": "h2",
+          "text": "Cosa è fatto. Cosa segue."
+        },
+        {
+          "level": "h2",
+          "text": "L'orchestra AI in numeri."
+        },
+        {
+          "level": "h2",
+          "text": "Interessato a investire o collaborare?"
+        }
+      ],
+      "images": [],
+      "tables": [
+        {
+          "rows": 9,
+          "cells": 27,
+          "headers": [
+            "Layer",
+            "Tecnologia",
+            "Note"
+          ]
+        },
+        {
+          "rows": 12,
+          "cells": 36,
+          "headers": [
+            "Stato",
+            "Feature",
+            "Quando"
+          ]
+        }
+      ],
+      "source_sha256": "eee959838c45bf47f08c884e2243d67d5370a6d6312d97c48d7aefd67952bca3",
+      "source_bytes": 228729,
+      "byte_identical_to_source": false,
+      "only_trailing_whitespace_changed": true
+    },
+    {
+      "path": "/privacy",
+      "source_url": "https://biker-link.net/privacy",
+      "destination": "workers/bikerlink-website-production/public/privacy/index.html",
+      "sha256": "344ad973bdf6b55d24dc73eb3bac4231cacc5ee24f6bb1e6f9fed4fe2ac7bd75",
+      "bytes": 46599,
+      "title": "Privacy Policy â BikerLink",
+      "meta_description": "Privacy Policy di BikerLink â come raccogliamo, usiamo e proteggiamo i tuoi dati personali. Informativa completa ai sensi del GDPR.",
+      "main_text_characters": 10996,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Informativa sulla Privacy"
+        },
+        {
+          "level": "h2",
+          "text": "1. Titolare del Trattamento"
+        },
+        {
+          "level": "h2",
+          "text": "2. Dati Raccolti"
+        },
+        {
+          "level": "h3",
+          "text": "2.1 Profilo e Registrazione"
+        },
+        {
+          "level": "h3",
+          "text": "2.2 Dati Moto (Garage)"
+        },
+        {
+          "level": "h3",
+          "text": "2.3 Localizzazione GPS"
+        },
+        {
+          "level": "h3",
+          "text": "2.4 Foto e Fotocamera"
+        },
+        {
+          "level": "h3",
+          "text": "2.5 Chat e Messaggi"
+        },
+        {
+          "level": "h3",
+          "text": "2.6 Feature Sociale e Matching"
+        },
+        {
+          "level": "h3",
+          "text": "2.7 SOS / Emergenza Stradale"
+        },
+        {
+          "level": "h3",
+          "text": "2.8 Musica (Last.fm)"
+        },
+        {
+          "level": "h3",
+          "text": "2.9 Notifiche Push"
+        },
+        {
+          "level": "h3",
+          "text": "2.10 Dati Tecnici e di Sistema"
+        },
+        {
+          "level": "h2",
+          "text": "3. FinalitÃ e Base Giuridica"
+        },
+        {
+          "level": "h2",
+          "text": "4. Servizi Terze Parti"
+        },
+        {
+          "level": "h2",
+          "text": "5. Periodo di Conservazione"
+        },
+        {
+          "level": "h2",
+          "text": "6. Diritti dell'Interessato (GDPR)"
+        },
+        {
+          "level": "h2",
+          "text": "7. Posizione GPS (android.permission.ACCESS_FINE_LOCATION / ACCESS_BACKGROUND_LOCATION)"
+        },
+        {
+          "level": "h2",
+          "text": "8. Accesso alla Fotocamera (android.permission.CAMERA)"
+        },
+        {
+          "level": "h2",
+          "text": "9. Sicurezza dei Dati"
+        },
+        {
+          "level": "h2",
+          "text": "10. Minori"
+        },
+        {
+          "level": "h2",
+          "text": "11. Cookie e Tecnologie Simili"
+        },
+        {
+          "level": "h2",
+          "text": "12. Aggiornamenti a questa Informativa"
+        },
+        {
+          "level": "h2",
+          "text": "13. Contatti"
+        }
+      ],
+      "images": [],
+      "tables": [
+        {
+          "rows": 13,
+          "cells": 39,
+          "headers": [
+            "FinalitÃ",
+            "Dati coinvolti",
+            "Base giuridica"
+          ]
+        }
+      ],
+      "source_sha256": "344ad973bdf6b55d24dc73eb3bac4231cacc5ee24f6bb1e6f9fed4fe2ac7bd75",
+      "source_bytes": 46599,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    },
+    {
+      "path": "/terms",
+      "source_url": "https://biker-link.net/terms",
+      "destination": "workers/bikerlink-website-production/public/terms/index.html",
+      "sha256": "fbebfd0b17b27dcb95a6f1ad83161a4d1a850cf60a9891c1951e5a787a7555b9",
+      "bytes": 37536,
+      "title": "Termini di Servizio â BikerLink",
+      "meta_description": "Termini di Servizio di BikerLink â la piattaforma verticale per motociclisti. Leggi le condizioni d'uso dell'app e dei servizi offerti.",
+      "main_text_characters": 11118,
+      "headings": [
+        {
+          "level": "h1",
+          "text": "Termini di Servizio"
+        },
+        {
+          "level": "h2",
+          "text": "1. Accettazione dei Termini"
+        },
+        {
+          "level": "h2",
+          "text": "2. Descrizione del Servizio"
+        },
+        {
+          "level": "h2",
+          "text": "3. Requisiti di Accesso"
+        },
+        {
+          "level": "h2",
+          "text": "4. Condotta degli Utenti"
+        },
+        {
+          "level": "h3",
+          "text": "4.1 Contenuti Vietati"
+        },
+        {
+          "level": "h3",
+          "text": "4.2 Comportamenti Vietati"
+        },
+        {
+          "level": "h2",
+          "text": "5. Contenuti Generati dagli Utenti"
+        },
+        {
+          "level": "h2",
+          "text": "6. Funzione SOS â Emergenza Stradale"
+        },
+        {
+          "level": "h2",
+          "text": "7. Privacy e Dati Personali"
+        },
+        {
+          "level": "h2",
+          "text": "8. ProprietÃ Intellettuale"
+        },
+        {
+          "level": "h2",
+          "text": "9. Limitazione di ResponsabilitÃ"
+        },
+        {
+          "level": "h2",
+          "text": "10. Indennizzo"
+        },
+        {
+          "level": "h2",
+          "text": "11. Sospensione e Cancellazione dell'Account"
+        },
+        {
+          "level": "h2",
+          "text": "12. Servizi di Terze Parti"
+        },
+        {
+          "level": "h2",
+          "text": "13. Legge Applicabile e Foro Competente"
+        },
+        {
+          "level": "h2",
+          "text": "14. Disposizioni Generali"
+        },
+        {
+          "level": "h2",
+          "text": "15. Contatti"
+        }
+      ],
+      "images": [],
+      "tables": [],
+      "source_sha256": "fbebfd0b17b27dcb95a6f1ad83161a4d1a850cf60a9891c1951e5a787a7555b9",
+      "source_bytes": 37536,
+      "byte_identical_to_source": true,
+      "only_trailing_whitespace_changed": false
+    }
+  ],
+  "image_assets": [
+    {
+      "url_path": "/assets/images/bike-road-1-sm.webp",
+      "r2_key": "assets/images/bike-road-1-sm.webp",
+      "r2_sha256": "2d32608ef05636718cf9a3b7cd76c3d2ab59f3c3b0db9c9e80b6bf0351045cbd",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/bike-road-1.webp",
+      "r2_key": "assets/images/bike-road-1.webp",
+      "r2_sha256": "93b181bd5324a888fe32fb74ed7d9f8b082da35b1681a8e8dc5774f2c540b659",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/bike-road-2-sm.webp",
+      "r2_key": "assets/images/bike-road-2-sm.webp",
+      "r2_sha256": "3aa1b998d56069a38cc04c902c3beea7d3bb351a124a14ae379307e190856b44",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/bike-road-2.webp",
+      "r2_key": "assets/images/bike-road-2.webp",
+      "r2_sha256": "8f3e4d743e4333bd559c5bf3e90617d632f437d9a586e2e8e6197e4648c726c3",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/card-biker-sm.webp",
+      "r2_key": "assets/images/card-biker-sm.webp",
+      "r2_sha256": "36cd7a09adb5c49da2bfb2c82194c4c39def5250946c2080724d90a431681ee8",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/card-biker.webp",
+      "r2_key": "assets/images/card-biker.webp",
+      "r2_sha256": "c5f24bfaf73a9830e4b8ce3e0e7f937c207b32e3b87b3636ae97d59c4b9289c2",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/card-zavorrine-sm.webp",
+      "r2_key": "assets/images/card-zavorrine-sm.webp",
+      "r2_sha256": "53cba91acb1b52c28b6427754fc4c646ea6059b4a95598ed35d360bd1fd9891a",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/card-zavorrine.webp",
+      "r2_key": "assets/images/card-zavorrine.webp",
+      "r2_sha256": "4ed0f1eaf6bf3c67fe14fef3dcc5f12bc948b81807978dd4f68cbf8bb3b9f933",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/contest-1-sm.webp",
+      "r2_key": "assets/images/contest-1-sm.webp",
+      "r2_sha256": "e281f87c31cf5b1b84ae2064c7e724db4947c720b0a586bf33ec0b2c0f9a56c7",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/contest-1.webp",
+      "r2_key": "assets/images/contest-1.webp",
+      "r2_sha256": "858ef91ef49ae9776fe27650dcb863d0c40f1b1e1fa980f9650d2e5a78297a6a",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/contest-2-sm.webp",
+      "r2_key": "assets/images/contest-2-sm.webp",
+      "r2_sha256": "09ac89d03f7615580dd3d223ad74e9f826c37e47fe01b688776f27d3e184e051",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/contest-2.webp",
+      "r2_key": "assets/images/contest-2.webp",
+      "r2_sha256": "474b62c0b6ee4b091407baf2ff4516a290abd4c5f1aaacdb793a9d9f87be13fa",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/contest-3-sm.webp",
+      "r2_key": "assets/images/contest-3-sm.webp",
+      "r2_sha256": "b30ab1bcb81d373aa7c03728abfac7bcdb98f50fd0a9248bd7748e2418d9f50c",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/contest-3.webp",
+      "r2_key": "assets/images/contest-3.webp",
+      "r2_sha256": "67c733b0295407b3387de14f49152c193a5bd9a5f6df85a50f706aad7a0ab4aa",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/hero-community-sm.webp",
+      "r2_key": "assets/images/hero-community-sm.webp",
+      "r2_sha256": "57ed777f075fa2c32143585203ce16f3fd85770c83a4ab75eaa4e9706b8e8d6d",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/hero-community.webp",
+      "r2_key": "assets/images/hero-community.webp",
+      "r2_sha256": "9a78d12d5d949434695e8943e84967b6c0345854dbc1c1a3d449d45158ff69f2",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/hero-forest-sm.webp",
+      "r2_key": "assets/images/hero-forest-sm.webp",
+      "r2_sha256": "69c059ccbfac187ba8f5089c56489eab43beda24a92b38d06f91c81cb93755c3",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/hero-forest.webp",
+      "r2_key": "assets/images/hero-forest.webp",
+      "r2_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+      "r2_present": true,
+      "used_on": [
+        "/"
+      ]
+    },
+    {
+      "url_path": "/assets/images/motoclub-ride-sm.webp",
+      "r2_key": "assets/images/motoclub-ride-sm.webp",
+      "r2_sha256": "22976dc47229c53fb41a3554d2aec8dca6a449fa91b12317c01a1ca0f178dae4",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/motoclub-ride.webp",
+      "r2_key": "assets/images/motoclub-ride.webp",
+      "r2_sha256": "34638a0ce6db9b6f3b570babe28132508ee8c9e7c9ca03e059aa5f2123a0f513",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/telemetry-dash-sm.webp",
+      "r2_key": "assets/images/telemetry-dash-sm.webp",
+      "r2_sha256": "544b0662b371a14bdee47827ac4fee06c8e52d01f2cdc5a0a0b771d43a34dd14",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    },
+    {
+      "url_path": "/assets/images/telemetry-dash.webp",
+      "r2_key": "assets/images/telemetry-dash.webp",
+      "r2_sha256": "754c9684b9a9f507329172de0e1eb26de75d2239b5cbe81087efba91327e6283",
+      "r2_present": true,
+      "used_on": [
+        "/",
+        "/features"
+      ]
+    }
+  ],
+  "all_page_markup_matches_source_after_trailing_whitespace_cleanup": true
+}

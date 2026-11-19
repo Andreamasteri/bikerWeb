@@ -3,6 +3,12 @@
 **Aggiornato:** 19 novembre 2026 (UTC)
 **Stato:** candidate verificato su Cloudflare Preview e codice unito in main via PR #1; **cutover non eseguito**. Host DB staging e login/sessione admin staging verificati; Gate 1 resta bloccato perché manca la copertura completa delle API autenticate. Il sito ufficiale continua a essere servito da Railway; il backend production è rimasto attivo e invariato.
 
+## Ripristino dei contenuti originali — aggiornamento
+
+La revisione richiesta dal proprietario ha rilevato che la homepage candidate aveva sostituito la pagina originale con una versione più corta. Nel branch `codex/bikerweb-content-preservation-20261119` sono state ripristinate le 22 pagine pubbliche marketing/editoriali/legali dal sito originale e sono stati aggiunti i percorsi Static Assets espliciti. La home originale, con 18 piazzamenti immagine e tabella comparativa completa, è stata ripristinata senza riscriverne il contenuto. Tutte le 8 tabelle e le 25 immagini originali sono conservate; i 22 file immagine/varianti `src` e `srcset` usati dalle pagine sono già presenti in R2. Manifest e conteggi: [`CONTENT_PRESERVATION_REPORT.md`](docs/cloudflare-migration/CONTENT_PRESERVATION_REPORT.md) e [`LEGACY_CONTENT_MANIFEST.json`](docs/cloudflare-migration/LEGACY_CONTENT_MANIFEST.json).
+
+Il branch modifica soltanto il Worker candidato, i suoi Static Assets, il routing esplicito e il test harness. Le 8 pagine applicative `/delete-account` e `/docs*` restano su Railway. API, DB, DNS ufficiale e Worker BikerTest non sono stati modificati. Il deployment Preview 9 elencato sotto è la versione precedente ai contenuti ripristinati; questo branch non è ancora pubblicato su Cloudflare.
+
 ## Architettura e stato live
 
 | Componente | Stato verificato |
@@ -25,7 +31,7 @@ La verifica ha trovato che `/blog` generava canonical e Open Graph con l’hostn
 - **API applicative:** `/api` e `/api/*`, ogni metodo, query string, header, cookie e body inoltrati a Railway.
 - **Readiness e handshake:** `GET/HEAD /healthz`; `GET /` con `expo-platform: ios|android`; WebSocket diretti `/ws/admin/notifications`, `/ws/diagnostic` e `/ws/diagnostic/*`.
 - **Pagine e servizi Railway:** elenco esplicito di pagine legacy/app, `/blog/*`, `/matching/*`, `/docs/*`, `/uploads/*`, `/music/*`, `/assets/*` non immagini e file documentato in `ROUTES.md`.
-- **Frontend Cloudflare:** le 18 pagine già approvate su BikerTest, più `robots.txt`, `sitemap.xml` e `web-session.js` come Static Assets.
+- **Frontend Cloudflare:** il branch corrente contiene 34 route statiche esplicite: 22 pagine originali complete più le pagine aggiuntive del candidate e le pagine inglesi. Il deployment Preview 9 qui sotto non include ancora questo aggiornamento.
 - **Immagini R2:** `GET` semplice da `bikerlink-website-assets`; HEAD, Range, `If-*` e oggetti mancanti ricadono su Railway per mantenere i validator e le risposte condizionali dell’origine.
 - **CORS, callback e webhook:** i preflight CORS sono stati provati; nessun webhook o callback è stato invocato. Non sono state trovate route applicative pubbliche di scrittura fuori da `/api/*`; gli endpoint diretti sopra sono elencati separatamente.
 
@@ -85,7 +91,7 @@ Evidenza browser aggiornata per deployment 9 in [`BROWSER_PREVIEW.json`](docs/cl
 - Branch dedicato: codex/bikerweb-cloudflare-production-20261119; base verificata main a 7827790d7f26c8060319e29772d073160fd23af0.
 - Commit sorgente candidate: 1fec50617a2c6aad9f84bc87ce993f07aba106ab; il sorgente del Preview 9 corrisponde a quel commit.
 - PR #1: https://github.com/Andreamasteri/bikerWeb/pull/1, unita il 19 novembre 2026 alle 17:26:27Z. Merge commit: 3627b464c593f66164dd75e3e7160b1790e52d04. Stato verificato via API GitHub.
-- Non esistono workflow .github/workflows; la PR non aveva check CI automatici. Verifiche locali sul candidate: npm run test:routing (35/35 PASS), npm run dry-run (PASS; 38 file statici e binding ASSETS, SITE_ASSETS, RAILWAY_ORIGIN, PUBLIC_SITE_ORIGIN).
+- Non esistono workflow .github/workflows; la PR non aveva check CI automatici. Questa revisione ha superato `npm run test:routing` con 76/76 PASS; il dry-run del candidato sarà aggiornato sul commit di questo branch.
 - Wrangler 4.165.0 è fissato nel lockfile. L’account Cloudflare è autenticato. Cloudflare API non trova configurazione Workers Builds per il Worker candidate; l’elenco script production continua a non includerlo. Il merge GitHub non ha pubblicato il Worker.
 - Nessun deployment production, custom domain o route apex è stato creato.
 
