@@ -1,0 +1,19 @@
+{
+  "name": "bikerlink-website-production",
+  "main": "src/worker.js",
+  "compatibility_date": "2026-11-19",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "none",
+    "not_found_handling": "none"
+  },
+  "r2_buckets": [
+    {
+      "binding": "SITE_ASSETS",
+      "bucket_name": "bikerlink-website-assets"
+    }
+  ]
+}

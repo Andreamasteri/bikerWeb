@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /accedi
+Disallow: /registrati
+Disallow: /area-utente
+Disallow: /media
+Disallow: /uploads/
+
+Sitemap: https://biker-link.net/sitemap.xml
