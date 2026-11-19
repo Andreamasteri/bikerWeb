@@ -48,6 +48,6 @@ Le righe seguenti descrivono ciò che era noto durante l’acquisizione Preview 
 
 Questo controllo dimostra l’instradamento anonimo sul candidato v9, non l’autenticazione con sessione valida. Non ha eseguito login, modifiche account, matching autenticato, scritture telemetria, upload, SOS, notifiche, webhook o callback. Gli stream SSE/WebSocket con cookie valido non sono stati aperti. Nessun database è stato scritto.
 
-Il codice esatto del branch staging seleziona DATABASE_URL_CANDIDATE; Railway espone un Postgres separato nello stesso environment. L’host del valore DATABASE_URL_CANDIDATE resta però non verificato perché Railway OAuth oscura i valori. Non è stato possibile reperire una sessione utente autorizzata; la patch staged nello staging non è stata toccata.
+Alla data dell’acquisizione v9 non erano ancora disponibili la verifica dell’host DB staging e la sessione admin. Le prove successive — host `postgres.railway.internal`, admin login/session/logout e `GET /api/auth/me` — sono registrate in [`API_AUTH_STAGING_REPORT.md`](API_AUTH_STAGING_REPORT.md). Il nuovo smoke anonimo del Worker Preview è in [`API_GATE1_CURRENT_REPORT.md`](API_GATE1_CURRENT_REPORT.md).
 
-Gate 1: BLOCKED, non PASS. Non c’è stata prova autenticata sicura su un account esistente di test né prova dell’host DB staging. Il cambio DNS e il deploy production restano vietati dai gate del piano. Gate 2 e Gate 3: NOT RUN perché non è avvenuta la pubblicazione.
+Gate 1 resta BLOCKED, non PASS, perché la copertura autenticata di matching, telemetria, chat/notifiche, upload, SOS, callback e stream persistenti non è completa. Il cambio DNS e il deploy production non sono avvenuti; Gate 2 e Gate 3 restano NOT RUN.
