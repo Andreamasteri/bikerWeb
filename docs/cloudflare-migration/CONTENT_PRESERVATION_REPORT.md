@@ -24,7 +24,7 @@ The Worker checks the full `/api` namespace, readiness, WebSockets, and the Expo
 - All source and `srcset` image variants referenced by these pages are present in the existing R2 manifest.
 - The local route harness is updated to assert Cloudflare delivery for the restored pages and Railway delivery for account deletion and unlisted backend routes.
 - PR [#4](https://github.com/Andreamasteri/bikerWeb/pull/4) merged into `main` on 19 November 2026. Source commit `ac5a9d64c5c8eeb97be35ab7a05c273f69646c29`; merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`.
-- `npm run test:routing`: 76/76 PASS. `npm run dry-run`: PASS, 70 Static Assets files and the expected R2, assets, and Railway bindings.
+- `npm run test:routing`: 79/79 PASS on the merged `main` source. `npm run dry-run`: PASS, 70 Static Assets files and the expected R2, assets, and Railway bindings.
 
 ## Preview and production status
 
