@@ -1,0 +1,67 @@
+{
+  "captured_at_utc": "2026-11-19T23:37:16Z",
+  "target": "https://bikerlink-staging-staging.up.railway.app",
+  "checks": [
+    {
+      "method": "GET",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/health",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "health": {
+        "revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+        "state": "READY",
+        "status": "ready",
+        "degraded": false
+      }
+    },
+    {
+      "method": "GET",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/me",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "method": "GET",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/users/me",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "method": "GET",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/chat/conversations",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "method": "GET",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/notifications",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "method": "GET",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/session-events",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8"
+    },
+    {
+      "method": "OPTIONS",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/login",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "access-control-allow-origin": "https://bikerlink-staging-staging.up.railway.app",
+      "access-control-allow-credentials": "true",
+      "access-control-allow-methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "access-control-allow-headers": "Content-Type, Authorization"
+    },
+    {
+      "method": "OPTIONS",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/login",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8"
+    }
+  ],
+  "notes": [
+    "Only GET and OPTIONS were sent. No credentials, cookies or application writes were used."
+  ]
+}
