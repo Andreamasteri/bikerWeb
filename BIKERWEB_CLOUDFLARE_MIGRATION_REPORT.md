@@ -1,24 +1,24 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 19 novembre 2026 (UTC)
-**Stato:** candidate verificato su Cloudflare Preview e codice unito in main via PR #1; **cutover non eseguito**. Host DB staging e login/sessione admin staging verificati; Gate 1 resta bloccato perché manca la copertura completa delle API autenticate. Il sito ufficiale continua a essere servito da Railway; il backend production è rimasto attivo e invariato.
+**Aggiornato:** 19 novembre 2026, 22:59 UTC
+**Stato:** contenuti originali ripristinati, uniti in `main` e pubblicati su un Worker Preview isolato; **cutover production non eseguito**. Host DB staging e login/sessione admin staging verificati; Gate 1 resta bloccato perché manca la copertura completa delle API autenticate. Il sito ufficiale continua a essere servito da Railway; Railway è rimasto l’origine applicativa.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
 La revisione richiesta dal proprietario ha rilevato che la homepage candidate aveva sostituito la pagina originale con una versione più corta. Nel branch `codex/bikerweb-content-preservation-20261119` sono state ripristinate le 22 pagine pubbliche marketing/editoriali/legali dal sito originale e sono stati aggiunti i percorsi Static Assets espliciti. La home originale, con 18 piazzamenti immagine e tabella comparativa completa, è stata ripristinata senza riscriverne il contenuto. Tutte le 8 tabelle e le 25 immagini originali sono conservate; i 22 file immagine/varianti `src` e `srcset` usati dalle pagine sono già presenti in R2. Manifest e conteggi: [`CONTENT_PRESERVATION_REPORT.md`](docs/cloudflare-migration/CONTENT_PRESERVATION_REPORT.md) e [`LEGACY_CONTENT_MANIFEST.json`](docs/cloudflare-migration/LEGACY_CONTENT_MANIFEST.json).
 
-La modifica di contenuti è stata unita in `main` tramite [PR #4](https://github.com/Andreamasteri/bikerWeb/pull/4), merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`. Le 8 pagine applicative `/delete-account` e `/docs*` restano su Railway. API, DB, DNS ufficiale e Worker BikerTest non sono stati modificati. Il deployment Preview 9 elencato sotto è la versione precedente ai contenuti ripristinati; il nuovo source non è ancora pubblicato su Cloudflare perché la sessione Wrangler non ha lo scope `workers:write`.
+La modifica di contenuti è stata unita in `main` tramite [PR #4](https://github.com/Andreamasteri/bikerWeb/pull/4), merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`. Le 8 pagine applicative `/delete-account` e `/docs*` restano su Railway. API, DB, DNS ufficiale e Worker BikerTest non sono stati modificati. Dopo l’autenticazione Wrangler ho pubblicato la sorgente ripristinata sul Worker separato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`; non ha trigger o hostname personalizzati.
 
 ## Architettura e stato live
 
 | Componente | Stato verificato |
 | --- | --- |
 | Sito ufficiale `https://biker-link.net` | HTTP 200; DNS continua a puntare direttamente a Railway, quindi non è ancora sul Worker. Nessuna modifica DNS applicata. |
-| Backend Railway produzione | `bikerlink-production.up.railway.app`; `/api/health` HTTP 200, `degraded=false`, revisione `aedfb278f487105a10567c9efa4c090705b3d801`. Nessun deploy o modifica variabili Railway di produzione. |
+| Backend Railway produzione | `bikerlink-production.up.railway.app`; `/api/health` HTTP 200, `degraded=false`, revisione live `72c7508644b86f268765e2873310dcf45aa0ffb9` (verificata anche dal Preview e dall’apex). Nessuna modifica Railway è stata fatta da questa attività. |
 | DNS Cloudflare apex | Un record CNAME, `biker-link.net` → `bikerlink-production.up.railway.app`, DNS-only (`proxied:false`), ID `f4b67198cdea0c5f2f61d65e53ce6841`, TTL Auto. Snapshot Cloudflare: 46 record totali; nessun record email o hostname alternativo modificato. |
 | BikerTest | `https://bikertest.biker-link.net/` HTTP 200; Worker distinto e non modificato. Il record AAAA `100::` resta proxied. |
 | Cloudflare R2 | Bucket `bikerlink-website-assets`: 49 oggetti, 6.044.133 byte, manifest allineato alla sorgente Railway verificata. Nessun oggetto modificato durante questa fase. |
-| Worker candidato | Preview isolato su `workers.dev`, non produzione. Preview ID `fa7a694ccc584f439a2cef32f65be791`; deployment 9 `3c35e4a7-8080-41ef-a23a-71d07f37e30d`, URL immutabile <https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev>. Nessun custom domain o route apex collegato. |
+| Worker candidato | Worker separato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`, URL <https://bikerlink-website-content-preview.andreamasteri-nadir-radio.workers.dev>. Wrangler mostra zero trigger; nessun custom domain o route apex collegato. Il precedente Preview 9 è rimasto distinto e non è stato sovrascritto. |
 | Static Assets e variabili | Il candidate serve i file in `workers/bikerlink-website-production/public` tramite `ASSETS`, usa R2 via `SITE_ASSETS`, `RAILWAY_ORIGIN=https://bikerlink-production.up.railway.app` e `PUBLIC_SITE_ORIGIN=https://biker-link.net`. Variabili non segrete nel file Wrangler; nessun segreto nel repository. |
 | TLS e connessioni persistenti | La zona usa SSL Full e WebSockets attivi secondo l’audit precedente; il candidate apre TLS direttamente verso l’hostname Railway, senza fetch del dominio apex e quindi senza loop. Le prove WebSocket sono state anonime. |
 
@@ -31,7 +31,7 @@ La verifica ha trovato che `/blog` generava canonical e Open Graph con l’hostn
 - **API applicative:** `/api` e `/api/*`, ogni metodo, query string, header, cookie e body inoltrati a Railway.
 - **Readiness e handshake:** `GET/HEAD /healthz`; `GET /` con `expo-platform: ios|android`; WebSocket diretti `/ws/admin/notifications`, `/ws/diagnostic` e `/ws/diagnostic/*`.
 - **Pagine e servizi Railway:** elenco esplicito di pagine legacy/app, `/blog/*`, `/matching/*`, `/docs/*`, `/uploads/*`, `/music/*`, `/assets/*` non immagini e file documentato in `ROUTES.md`.
-- **Frontend Cloudflare:** il branch corrente contiene 34 route statiche esplicite: 22 pagine originali complete più le pagine aggiuntive del candidate e le pagine inglesi. Il deployment Preview 9 qui sotto non include ancora questo aggiornamento.
+- **Frontend Cloudflare:** il sorgente contiene 34 route statiche esplicite: 22 pagine originali complete più le pagine aggiuntive del candidate e le pagine inglesi. Il nuovo Worker Preview è stato verificato dopo il ripristino dei contenuti.
 - **Immagini R2:** `GET` semplice da `bikerlink-website-assets`; HEAD, Range, `If-*` e oggetti mancanti ricadono su Railway per mantenere i validator e le risposte condizionali dell’origine.
 - **CORS, callback e webhook:** i preflight CORS sono stati provati; nessun webhook o callback è stato invocato. Non sono state trovate route applicative pubbliche di scrittura fuori da `/api/*`; gli endpoint diretti sopra sono elencati separatamente.
 
@@ -63,6 +63,8 @@ Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFOR
 
 Il confronto Preview → baseline apex ha trovato **0 differenze** nei 38 controlli. Comprende health/readiness, auth/profile/chat anonimi, configurazione e community, CORS, BikerBlog canonical, redirect, HEAD, immagine completa/hash, validator condizionali, Range, SSE anonimi e handshake WebSocket anonimi. I `401` sono quelli attesi per richieste senza sessione.
 
+Verifica read-only successiva, 19 novembre 2026 alle 22:59Z: il nuovo Worker Preview con contenuti ripristinati, Railway diretta e apex restituiscono tutti `/api/health` HTTP 200 e la stessa revisione live `72c7508644b86f268765e2873310dcf45aa0ffb9` (`ready`, `degraded=false`). `/api/auth/me` anonimo risponde HTTP 401 come atteso. La revisione backend è diversa dalla baseline delle 13:14Z; la stessa revisione live è stata osservata su tutte e tre le origini. Questo smoke limitato non sostituisce la suite da 38 controlli né i test autenticati e non sblocca Gate 1. Evidenza: [`CONTENT_PREVIEW_VERIFICATION.json`](docs/cloudflare-migration/CONTENT_PREVIEW_VERIFICATION.json).
+
 **Gate 1: BLOCKED, non PASS.** Sul Preview production e sull’origine production la suite anonima passa senza regressioni. Il login admin staging e una richiesta autenticata `GET /api/auth/me` sono stati verificati; mancano matching autenticato, telemetria, chat/notifiche con sessione, upload, SOS, callback e stream SSE/WebSocket autenticati. L’autenticazione Wrangler non equivale a un’identità BikerLink.
 
 Il backend staging servito al momento dei test è il branch feat/telemetry-capability-close-20261103, revisione cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374. Il codice di quella revisione mappa staging su DATABASE_URL_CANDIDATE e rifiuta l’uso della variabile DATABASE_URL generica. L’operatore ha eseguito `railway run --environment staging --service Bikerlink-Staging` e ha riportato l’host `postgres.railway.internal`; Railway mostra il servizio `Postgres` e il volume da 500 MB nello stesso environment staging. L’host candidato è verificato come staging.
@@ -75,7 +77,15 @@ Finché Gate 1 non passa, non si esegue il deployment production né il cambio D
 
 ## Sito e browser
 
-Evidenza browser aggiornata per deployment 9 in [`BROWSER_PREVIEW.json`](docs/cloudflare-migration/BROWSER_PREVIEW.json), acquisita alle `13:19:08Z`:
+[`BROWSER_PREVIEW.json`](docs/cloudflare-migration/BROWSER_PREVIEW.json) conserva le prove browser del deployment 9, acquisite alle `13:19:08Z`. Il nuovo preview dei contenuti ripristinati è verificato in [`CONTENT_PREVIEW_VERIFICATION.json`](docs/cloudflare-migration/CONTENT_PREVIEW_VERIFICATION.json), acquisito alle `22:59:10Z`:
+
+- Nuovo Worker: `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`; 22/22 pagine storiche identiche agli SHA-256 sorgente e 34/34 route statiche HTTP 200.
+- Homepage: 18/18 immagini caricate su desktop 1440 px e mobile 390 px; tabella originale con 21 righe e 147 celle. Il menu mobile apre 10 link; nessun overflow orizzontale, eccezione JavaScript o richiesta browser fallita.
+- Tutti i 24 URL immagine rilevati nella sorgente rispondono 200; il manifest conferma le immagini originali nel bucket R2.
+- Preview `workers.dev` con `X-Robots-Tag: noindex`; canonical resta `https://biker-link.net/`. L’host ufficiale continua a rispondere `index, follow` senza header `noindex`.
+- Il nuovo preview non ha trigger o hostname personalizzati. Nessun DNS, Railway, Worker BikerTest, database o servizio matching/telemetria è stato modificato.
+
+Verifiche del deployment 9 (storiche):
 
 - Chromium desktop 1365×900 e Pixel 7 emulato 412 px; homepage, `/blog`, `/matching`, `/community` tutti HTTP 200 e senza overflow.
 - Homepage canonical `https://biker-link.net/`, meta robots `index,follow`; 13/13 immagini R2 caricate dopo scroll progressivo su entrambi i viewport.
@@ -92,11 +102,12 @@ Evidenza browser aggiornata per deployment 9 in [`BROWSER_PREVIEW.json`](docs/cl
 - Commit sorgente candidate: 1fec50617a2c6aad9f84bc87ce993f07aba106ab; il sorgente del Preview 9 corrisponde a quel commit.
 - PR #1: https://github.com/Andreamasteri/bikerWeb/pull/1, unita il 19 novembre 2026 alle 17:26:27Z. Merge commit: 3627b464c593f66164dd75e3e7160b1790e52d04. Stato verificato via API GitHub.
 - Ripristino contenuti PR #4: https://github.com/Andreamasteri/bikerWeb/pull/4, unita il 19 novembre 2026 alle 22:38:03Z. Source `ac5a9d64c5c8eeb97be35ab7a05c273f69646c29`; merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`. `main` è stato aggiornato e verificato.
-- Non esistono workflow .github/workflows; la PR non aveva check CI automatici. Questa revisione ha superato `npm run test:routing` con 76/76 PASS; il dry-run del candidato sarà aggiornato sul commit di questo branch.
+- Protezione `noindex` per le pagine viste tramite `.workers.dev` e test associati: branch `codex/bikerweb-preview-noindex-20261119`, commit sorgente `b14897b945861fff019595e95636bb85505b79c3`; il codice del deployment preview è identico a questo commit. PR e stato merge sono riportati dopo la verifica GitHub.
+- Non esistono workflow .github/workflows; le PR non hanno check CI automatici. Il test di routing del sorgente ora conta 79/79 PASS; `npm run dry-run` ha letto 70 file e confermato i binding ASSETS, R2 e Railway.
 - Wrangler 4.165.0 è fissato nel lockfile. L’account Cloudflare è autenticato. Cloudflare API non trova configurazione Workers Builds per il Worker candidate; l’elenco script production continua a non includerlo. Il merge GitHub non ha pubblicato il Worker.
-- Un deploy su Worker separato `bikerlink-website-content-preview` si è fermato dopo l’upload degli asset, quando Wrangler ha richiesto la lettura dei metadati del bucket R2 e Cloudflare ha restituito `Authentication error 10000`. La sessione OAuth ha `workers_scripts:write` e `workers_routes:write`, ma non `workers:write`; l’API Cloudflare ha confermato che non esiste una versione del nuovo Worker. Nessun dominio o script esistente è stato aggiornato.
+- Il primo tentativo autenticato di deploy del Worker separato si era fermato sul controllo dei metadati R2. Dopo il nuovo login Device Authorization, il deploy è riuscito sul Worker dedicato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`. Il Worker BikerTest e il candidato Preview 9 non sono stati sovrascritti.
 - Nessun deployment production, custom domain o route apex è stato creato.
 
 ## Decisione
 
-Il candidate è unito in main e resta solo in Preview; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti invariati. La verifica autenticata mostra che il login reale BikerLink funziona con la credenziale admin canonica; il preflight fisso invia una coppia identificativo/password che il verificatore production rifiuta e non ottiene una sessione. Restano da eseguire i test autenticati sui percorsi critici. Nessun utente è stato creato, nessun token o segreto è stato salvato; il singolo login/logout ha aggiornato il bookkeeping sul DB staging e la sessione è stata distrutta. Gate 1 resta BLOCKED fino al completamento della suite.
+Il ripristino completo del sito è verificato sul Worker Preview isolato; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti operativi e non modificati da questa attività. Il login admin staging funziona, ma restano da eseguire i test autenticati sui percorsi critici. Nessun utente è stato creato in questa fase di pubblicazione del preview e nessun segreto è stato salvato. Gate 1 resta BLOCKED fino al completamento della suite; non sono stati eseguiti il cutover DNS né Gate 2/3.

@@ -28,8 +28,13 @@ The Worker checks the full `/api` namespace, readiness, WebSockets, and the Expo
 
 ## Preview and production status
 
-- The new source has not yet been deployed to a Worker preview. The existing preview URL still serves the earlier, shorter candidate.
-- A deploy attempt for isolated Worker `bikerlink-website-content-preview` uploaded 37 static asset files, then stopped at Cloudflare's R2 bucket metadata check with `Authentication error 10000`. The authenticated Wrangler OAuth session has `workers_scripts:write` but lacks `workers:write`. Cloudflare's Worker API confirmed no Worker version was created.
-- No custom domain, DNS record, production Worker, Railway setting, database, or BikerTest Worker was changed. The official site, `/api/health`, and BikerTest still return HTTP 200.
+- The restored source is deployed on isolated Worker `bikerlink-website-content-preview` at <https://bikerlink-website-content-preview.andreamasteri-nadir-radio.workers.dev>, version `3f5a2d95-20e4-4c61-a3be-d676ea24dca2` (19 November 2026, 22:57:37 UTC). Wrangler reports zero triggers; no custom domain or route is attached. The deployed source was saved immediately after validation as branch `codex/bikerweb-preview-noindex-20261119`, commit `b14897b945861fff019595e95636bb85505b79c3`.
+- Live verification: 22/22 legacy pages match their committed source SHA-256 exactly; all 34 explicit static routes return HTTP 200. The homepage retains 18 images and its 21-row, 147-cell comparison table. All 18 homepage images loaded in Chromium at desktop and mobile widths; the mobile document has no horizontal overflow and the menu opens with 10 visible links. No JavaScript exceptions or failed browser requests were observed.
+- All 24 image URLs found in the legacy page source return HTTP 200 through the Worker; the manifest records all 22 original image files/variants in the existing R2 bucket. The preview sends `X-Robots-Tag: noindex`; its canonical still points to `https://biker-link.net/`, whose response remains indexable.
+- `/api/health` through the preview, direct Railway origin, and the official domain returns HTTP 200 with the same ready backend revision `72c7508644b86f268765e2873310dcf45aa0ffb9`. Anonymous `/api/auth/me` continues to return the expected HTTP 401. This is a read-only smoke check, not the complete authenticated API Gate 1 suite.
+- The earlier failed Wrangler attempt occurred before device authentication and did not create a Worker version. The subsequent authenticated deployment created the isolated preview version above.
+- No custom domain, production DNS record, production Worker, Railway setting, database, or BikerTest Worker was changed. The official site and BikerTest homepage still return HTTP 200; the official domain has not been cut over.
+
+Detailed live evidence: [`CONTENT_PREVIEW_VERIFICATION.json`](CONTENT_PREVIEW_VERIFICATION.json).
 
 Manifest: [`LEGACY_CONTENT_MANIFEST.json`](LEGACY_CONTENT_MANIFEST.json).

@@ -1,0 +1,76 @@
+{
+  "captured_at_utc": "2026-11-19T22:59:10Z",
+  "worker": "bikerlink-website-content-preview",
+  "preview_url": "https://bikerlink-website-content-preview.andreamasteri-nadir-radio.workers.dev",
+  "version_id": "3f5a2d95-20e4-4c61-a3be-d676ea24dca2",
+  "deployment_created_at_utc": "2026-11-19T22:57:37Z",
+  "source_branch": "codex/bikerweb-preview-noindex-20261119",
+  "source_commit": "b14897b945861fff019595e95636bb85505b79c3",
+  "source_commit_created_after_deployment": true,
+  "triggers": 0,
+  "custom_domain_or_route_added": false,
+  "production_dns_changed": false,
+  "railway_configuration_changed": false,
+  "bikertest_changed": false,
+  "content_checks": {
+    "legacy_pages_sha256_exact": {
+      "passed": 22,
+      "total": 22
+    },
+    "explicit_static_routes_http_200": {
+      "passed": 34,
+      "total": 34
+    },
+    "homepage_img_elements": 18,
+    "homepage_table_rows": 21,
+    "homepage_table_cells": 147
+  },
+  "asset_checks": {
+    "legacy_image_files_in_r2_manifest": 22,
+    "referenced_image_urls_http_200": 24,
+    "desktop_images_loaded": {
+      "passed": 18,
+      "total": 18
+    },
+    "mobile_images_loaded": {
+      "passed": 18,
+      "total": 18
+    }
+  },
+  "browser_checks": {
+    "desktop_viewport_px": 1440,
+    "desktop_document_width_px": 1440,
+    "mobile_viewport_px": 390,
+    "mobile_document_width_px": 390,
+    "mobile_menu_links_visible_after_open": 10,
+    "javascript_exceptions": 0,
+    "failed_requests": 0
+  },
+  "preview_seo": {
+    "x_robots_tag": "noindex",
+    "canonical": "https://biker-link.net/",
+    "official_custom_domain_indexable": true
+  },
+  "api_read_only_smoke": {
+    "preview_api_health_http": 200,
+    "railway_api_health_http": 200,
+    "official_domain_api_health_http": 200,
+    "shared_backend_revision": "72c7508644b86f268765e2873310dcf45aa0ffb9",
+    "backend_state": "ready",
+    "degraded": false,
+    "anonymous_auth_me_http": 401,
+    "anonymous_auth_me_expected": true,
+    "authenticated_api_suite": "not run; Gate 1 remains blocked"
+  },
+  "live_site_checks": {
+    "official_homepage_http": 200,
+    "bikertest_homepage_http": 200,
+    "official_dns_cutover": false
+  },
+  "release_gates": {
+    "gate_1": "BLOCKED",
+    "gate_2": "NOT RUN",
+    "gate_3": "NOT RUN",
+    "production_cutover": "NOT PERFORMED"
+  }
+}

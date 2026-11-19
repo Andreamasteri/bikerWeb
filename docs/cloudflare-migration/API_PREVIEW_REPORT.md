@@ -1,5 +1,7 @@
 # Verifica Cloudflare Preview — deployment 9
 
+> Questo report conserva le prove API anonime del deployment 9, acquisito alle 13:14Z. Il nuovo Worker separato con i contenuti storici ripristinati è `bikerlink-website-content-preview` (versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`); la verifica limitata del suo routing API è registrata in [`CONTENT_PREVIEW_VERIFICATION.json`](CONTENT_PREVIEW_VERIFICATION.json). Il controllo aggiornato ha confrontato `/api/health` sul preview, su Railway e sull’apex: tutti HTTP 200 e revisione live `72c7508644b86f268765e2873310dcf45aa0ffb9`. `/api/auth/me` anonimo restituisce l’HTTP 401 previsto. Non è stata ripetuta la suite completa né la suite autenticata: Gate 1 resta BLOCKED.
+
 - Preview alias: https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev
 - URL immutabile del deployment verificato: https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev
 - Preview ID fa7a694ccc584f439a2cef32f65be791; deployment 3c35e4a7-8080-41ef-a23a-71d07f37e30d, versione 9, creato 2026-11-19T13:14:24Z.
@@ -41,6 +43,8 @@ Suite read-only acquisita il 2026-11-19T17:31:27Z su https://bikerlink-staging-s
 Queste prove non usano cookie né credenziali e non generano scritture. Non indicano un regressione production: gli stessi test CORS con origine production sul candidate Preview verso il backend production passano 7/7. Non sono però una verifica autenticata dello staging.
 
 ## Limiti e gate
+
+Le righe seguenti descrivono ciò che era noto durante l’acquisizione Preview v9 e sono state superate dalle prove successive: il controllo dell’host `DATABASE_URL_CANDIDATE` nello staging e il flusso admin login/session/logout sono documentati in [`API_AUTH_STAGING_REPORT.md`](API_AUTH_STAGING_REPORT.md). La copertura autenticata degli altri endpoint critici resta incompleta; Gate 1 è ancora BLOCKED.
 
 Questo controllo dimostra l’instradamento anonimo sul candidato v9, non l’autenticazione con sessione valida. Non ha eseguito login, modifiche account, matching autenticato, scritture telemetria, upload, SOS, notifiche, webhook o callback. Gli stream SSE/WebSocket con cookie valido non sono stati aperti. Nessun database è stato scritto.
 
