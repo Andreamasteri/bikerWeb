@@ -1,0 +1,14 @@
+{
+  "name": "bikerlink-website-production-worker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cloudflare Workers Static Assets deployment for the BikerLink public website",
+  "scripts": {
+    "preview": "wrangler preview --ignore-base-config --json",
+    "dry-run": "wrangler deploy --dry-run",
+    "test:routing": "node ../../scripts/cloudflare-migration/worker_route_harness.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "4.165.0"
+  }
+}

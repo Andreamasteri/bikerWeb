@@ -1,0 +1,269 @@
+{
+  "captured_at_utc": "2026-11-19T13:19:08Z",
+  "preview_deployment_id": "3c35e4a7-8080-41ef-a23a-71d07f37e30d",
+  "deployment_number": 9,
+  "preview_url": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev",
+  "browser": "system Chromium via Playwright",
+  "writes_attempted": 0,
+  "viewports": [
+    {
+      "viewport": "desktop",
+      "path": "/",
+      "status": 200,
+      "title": "BikerLink Motorcycle Magazine",
+      "canonical": "https://biker-link.net/",
+      "robots": "index,follow",
+      "h1": "LA STRADA È TUA.\nNON SEI MAI SOLO.",
+      "width": "1365/1365",
+      "railwayHostInHtml": false,
+      "sessionScript": false,
+      "images": [
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/card-biker.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-community.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/bike-road-2.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/bike-road-1.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/telemetry-dash.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-1.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-2.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/screenshots/screenshot-6.5inch-01-mappa.png",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/screenshots/screenshot-6.5inch-02-chat.png",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/screenshots/screenshot-6.5inch-03-profilo.png",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-1.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-2.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-3.webp",
+          "loaded": true
+        }
+      ]
+    },
+    {
+      "viewport": "desktop",
+      "path": "/blog",
+      "status": 200,
+      "title": "Blog BikerLink — Strade, community e vita in moto",
+      "canonical": "https://biker-link.net/blog",
+      "robots": "index, follow",
+      "h1": "STRADE, PERSONE,\nMOTO.",
+      "width": "1365/1365",
+      "railwayHostInHtml": false,
+      "sessionScript": true,
+      "images": []
+    },
+    {
+      "viewport": "desktop",
+      "path": "/matching",
+      "status": 200,
+      "title": "01 / MATCHING DINAMICO — BikerLink",
+      "canonical": "https://biker-link.net/matching",
+      "robots": "index,follow",
+      "h1": "NON CERCARE TUTTI.\nLascia che BikerLink cerchi per te.",
+      "width": "1365/1365",
+      "railwayHostInHtml": false,
+      "sessionScript": false,
+      "images": []
+    },
+    {
+      "viewport": "desktop",
+      "path": "/community",
+      "status": 200,
+      "title": "06 / LA COMMUNITY VERTICALE — BikerLink",
+      "canonical": "https://biker-link.net/community",
+      "robots": "index,follow",
+      "h1": "NON UN SOCIAL CON LE MOTO.\nUn mondo costruito intorno alla moto.",
+      "width": "1365/1365",
+      "railwayHostInHtml": false,
+      "sessionScript": false,
+      "images": []
+    },
+    {
+      "viewport": "desktop",
+      "webSession": {
+        "status": 200,
+        "type": "text/javascript",
+        "bytes": 4827
+      },
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "expectedAnonymous401s": [
+        {
+          "status": 401,
+          "url": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/me"
+        },
+        {
+          "status": 401,
+          "url": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/me"
+        }
+      ],
+      "blockedWrites": []
+    },
+    {
+      "viewport": "android_pixel",
+      "path": "/",
+      "status": 200,
+      "title": "BikerLink Motorcycle Magazine",
+      "canonical": "https://biker-link.net/",
+      "robots": "index,follow",
+      "h1": "LA STRADA È TUA.\nNON SEI MAI SOLO.",
+      "width": "412/412",
+      "railwayHostInHtml": false,
+      "sessionScript": false,
+      "images": [
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/card-biker.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/hero-community.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/bike-road-2.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/bike-road-1.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/telemetry-dash.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-1.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-2.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/screenshots/screenshot-6.5inch-01-mappa.png",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/screenshots/screenshot-6.5inch-02-chat.png",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/screenshots/screenshot-6.5inch-03-profilo.png",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-1.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-2.webp",
+          "loaded": true
+        },
+        {
+          "src": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/assets/images/contest-3.webp",
+          "loaded": true
+        }
+      ]
+    },
+    {
+      "viewport": "android_pixel",
+      "path": "/blog",
+      "status": 200,
+      "title": "Blog BikerLink — Strade, community e vita in moto",
+      "canonical": "https://biker-link.net/blog",
+      "robots": "index, follow",
+      "h1": "STRADE, PERSONE,\nMOTO.",
+      "width": "412/412",
+      "railwayHostInHtml": false,
+      "sessionScript": true,
+      "images": []
+    },
+    {
+      "viewport": "android_pixel",
+      "path": "/matching",
+      "status": 200,
+      "title": "01 / MATCHING DINAMICO — BikerLink",
+      "canonical": "https://biker-link.net/matching",
+      "robots": "index,follow",
+      "h1": "NON CERCARE TUTTI.\nLascia che BikerLink cerchi per te.",
+      "width": "412/412",
+      "railwayHostInHtml": false,
+      "sessionScript": false,
+      "images": []
+    },
+    {
+      "viewport": "android_pixel",
+      "path": "/community",
+      "status": 200,
+      "title": "06 / LA COMMUNITY VERTICALE — BikerLink",
+      "canonical": "https://biker-link.net/community",
+      "robots": "index,follow",
+      "h1": "NON UN SOCIAL CON LE MOTO.\nUn mondo costruito intorno alla moto.",
+      "width": "412/412",
+      "railwayHostInHtml": false,
+      "sessionScript": false,
+      "images": []
+    },
+    {
+      "viewport": "android_pixel",
+      "menuOpen": 1,
+      "menuLinks": 10
+    },
+    {
+      "viewport": "android_pixel",
+      "webSession": {
+        "status": 200,
+        "type": "text/javascript",
+        "bytes": 4827
+      },
+      "pageErrors": [],
+      "failedRequests": [],
+      "httpErrors": [],
+      "expectedAnonymous401s": [
+        {
+          "status": 401,
+          "url": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/me"
+        },
+        {
+          "status": 401,
+          "url": "https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/api/auth/me"
+        }
+      ],
+      "blockedWrites": []
+    }
+  ]
+}
