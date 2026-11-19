@@ -1,5 +1,3 @@
-const RAILWAY_ORIGIN = "https://bikerlink-production.up.railway.app";
-
 const STATIC_PAGES = new Set([
   "/",
   "/matching",
@@ -8,7 +6,6 @@ const STATIC_PAGES = new Set([
   "/horus",
   "/sos",
   "/privacy",
-  "/privacy-policy",
   "/ecosistema",
   "/download",
   "/en",
@@ -31,6 +28,7 @@ const BACKEND_PAGES = new Set([
   "/faq",
   "/contact",
   "/blog",
+  "/privacy-policy",
   "/matching/come-funziona",
   "/matching/tipi-di-match",
   "/matching/come-impara",
@@ -97,9 +95,32 @@ function isWebSocketPath(pathname) {
   );
 }
 
-async function proxyToRailway(request) {
+function railwayOrigin(env) {
+  try {
+    const origin = new URL(env.RAILWAY_ORIGIN);
+    if (
+      origin.protocol !== "https:" ||
+      !origin.hostname.endsWith(".up.railway.app") ||
+      origin.pathname !== "/" ||
+      origin.search ||
+      origin.hash
+    ) return null;
+    return origin;
+  } catch {
+    return null;
+  }
+}
+
+async function proxyToRailway(request, env) {
   const incomingUrl = new URL(request.url);
-  const upstreamUrl = new URL(incomingUrl.pathname + incomingUrl.search, RAILWAY_ORIGIN);
+  const origin = railwayOrigin(env);
+  if (!origin) {
+    return new Response("Railway origin is not configured", {
+      status: 503,
+      headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+    });
+  }
+  const upstreamUrl = new URL(incomingUrl.pathname + incomingUrl.search, origin);
   const headers = new Headers(request.headers);
 
   // The connection Host is set from RAILWAY_ORIGIN by fetch. Keep the public
@@ -133,7 +154,23 @@ function envRequest(request, path) {
   return new Request(url, request);
 }
 
+function notFound() {
+  return new Response("Not Found", {
+    status: 404,
+    headers: { "content-type": "text/plain; charset=utf-8" },
+  });
+}
+
 async function serveR2Image(request, env, pathname) {
+  // Keep the live origin's validators and range semantics authoritative. R2's
+  // validators are not guaranteed to match Railway's weak ETag and Last-Modified,
+  // so conditional, ranged, and HEAD requests must use the origin.
+  if (
+    request.method !== "GET" ||
+    ["if-match", "if-none-match", "if-modified-since", "if-unmodified-since", "if-range", "range"]
+      .some((name) => request.headers.has(name))
+  ) return null;
+
   const key = pathname.slice(1);
   const object = await env.SITE_ASSETS.get(key);
   if (!object) return null;
@@ -141,13 +178,20 @@ async function serveR2Image(request, env, pathname) {
   const headers = new Headers();
   object.writeHttpMetadata(headers);
   headers.set("etag", object.httpEtag);
+  headers.set("accept-ranges", "bytes");
   if (!headers.has("content-type")) {
     headers.set("content-type", "application/octet-stream");
   }
+  headers.set("content-length", String(object.size));
   if (!headers.has("cache-control")) {
-    headers.set("cache-control", "public, max-age=31536000, immutable");
+    headers.set(
+      "cache-control",
+      pathname === "/assets/images/favicon.png" || pathname === "/favicon.png" || pathname === "/favicon.ico"
+        ? "public, max-age=604800"
+        : "public, max-age=31536000, immutable",
+    );
   }
-  return new Response(request.method === "HEAD" ? null : object.body, {
+  return new Response(object.body, {
     status: 200,
     headers,
   });
@@ -161,10 +205,12 @@ export default {
 
     // The complete API namespace always wins over static assets and the site
     // fallback. Preserve all methods, query strings, headers, cookies, and body.
-    if (isApiPath(pathname)) return proxyToRailway(request);
+    if (isApiPath(pathname)) return proxyToRailway(request, env);
 
-    if (pathname === "/healthz") return proxyToRailway(request);
-    if (isWebSocketPath(pathname)) return proxyToRailway(request);
+    if (pathname === "/healthz" && (method === "GET" || method === "HEAD")) {
+      return proxyToRailway(request, env);
+    }
+    if (isWebSocketPath(pathname)) return proxyToRailway(request, env);
 
     // The app's Expo manifest handshake uses GET / with expo-platform.
     const expoPlatform = request.headers.get("expo-platform")?.toLowerCase();
@@ -173,27 +219,29 @@ export default {
       method === "GET" &&
       (expoPlatform === "ios" || expoPlatform === "android")
     ) {
-      return proxyToRailway(request);
+      return proxyToRailway(request, env);
     }
 
     // These legacy and application pages remain on Railway. This is an
     // explicit route family list; unknown paths never receive frontend HTML.
-    if (isBackendPage(pathname)) return proxyToRailway(request);
+    if (isBackendPage(pathname) && (method === "GET" || method === "HEAD")) {
+      return proxyToRailway(request, env);
+    }
 
     // Preserve the website's current image paths while serving the original
     // image files from the dedicated R2 bucket. A missing object falls through
     // to Railway so an asset omitted from the manifest remains available.
     if (pathname.startsWith("/assets/images/")) {
-      if (method !== "GET" && method !== "HEAD") return proxyToRailway(request);
+      if (method !== "GET" && method !== "HEAD") return notFound();
       const image = await serveR2Image(request, env, pathname);
       if (image) return image;
-      return proxyToRailway(request);
+      return proxyToRailway(request, env);
     }
     if (pathname === "/favicon.png" || pathname === "/favicon.ico") {
-      if (method !== "GET" && method !== "HEAD") return proxyToRailway(request);
+      if (method !== "GET" && method !== "HEAD") return notFound();
       const image = await serveR2Image(request, env, "/assets/images/favicon.png");
       if (image) return image;
-      return proxyToRailway(request);
+      return proxyToRailway(request, env);
     }
 
     if (STATIC_FILES.has(pathname) && (method === "GET" || method === "HEAD")) {
@@ -206,9 +254,6 @@ export default {
       return env.ASSETS.fetch(assetRequest(request, file));
     }
 
-    return new Response("Not Found", {
-      status: 404,
-      headers: { "content-type": "text/plain; charset=utf-8" },
-    });
+    return notFound();
   },
 };

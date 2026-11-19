@@ -3,6 +3,9 @@
   "main": "src/worker.js",
   "compatibility_date": "2026-11-19",
   "workers_dev": true,
+  "vars": {
+    "RAILWAY_ORIGIN": "https://bikerlink-production.up.railway.app"
+  },
   "assets": {
     "directory": "./public",
     "binding": "ASSETS",
