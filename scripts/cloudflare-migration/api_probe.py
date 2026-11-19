@@ -7,6 +7,7 @@ authorized sandbox account and must never use a real SOS action.
 """
 
 import argparse
+import hashlib
 import json
 import statistics
 import time
@@ -60,15 +61,15 @@ def shape(body, ct):
         except: pass
     return {"kind":"non_json","bytes":len(body)}
 
-def req(base,method,path,headers=None,data=None,timeout=12):
+def req(base,method,path,headers=None,data=None,timeout=12,capture_body=False):
     url=base+path; start=time.perf_counter(); h=headers or {}
     r=urllib.request.Request(url,data=data,headers=h,method=method)
     try:
       with opener.open(r,timeout=timeout) as resp:
-        body=resp.read(2048) if method!="HEAD" else b""
+        body=resp.read() if method!="HEAD" and capture_body else (resp.read(2048) if method!="HEAD" else b"")
         status=resp.status; hdr=resp.headers
     except urllib.error.HTTPError as e:
-      body=e.read(2048) if method!="HEAD" else b""; status=e.code; hdr=e.headers
+      body=e.read() if method!="HEAD" and capture_body else (e.read(2048) if method!="HEAD" else b""); status=e.code; hdr=e.headers
     except Exception as e:
       return {"method":method,"url":url,"expected":None,"status":None,"error":type(e).__name__,"latency_ms":round((time.perf_counter()-start)*1000)}
     ct=hdr.get("Content-Type")
@@ -77,7 +78,11 @@ def req(base,method,path,headers=None,data=None,timeout=12):
     for c in setc:
       parts=[p.strip() for p in c.split(';')]
       cookies.append({"name":parts[0].split('=',1)[0],"attributes":[p for p in parts[1:] if p.lower().startswith(('path=','domain=','samesite=','secure','httponly','max-age=','expires='))]})
-    return {"method":method,"url":url,"status":status,"latency_ms":round((time.perf_counter()-start)*1000),"content_type":ct,"schema":shape(body,ct),"headers":{k:hdr.get(k) for k in ["Cache-Control","Access-Control-Allow-Origin","Access-Control-Allow-Credentials","Access-Control-Allow-Methods","Access-Control-Allow-Headers","Vary","X-Content-Type-Options","Referrer-Policy"] if hdr.get(k) is not None},"cookies":cookies,"location":hdr.get("Location")}
+    row={"method":method,"url":url,"status":status,"latency_ms":round((time.perf_counter()-start)*1000),"content_type":ct,"schema":shape(body,ct),"headers":{k:hdr.get(k) for k in ["Cache-Control","Access-Control-Allow-Origin","Access-Control-Allow-Credentials","Access-Control-Allow-Methods","Access-Control-Allow-Headers","Vary","X-Content-Type-Options","Referrer-Policy","ETag","Last-Modified","Content-Length","Accept-Ranges","Content-Range"] if hdr.get(k) is not None},"cookies":cookies,"location":hdr.get("Location")}
+    if capture_body:
+      row["body_bytes"]=len(body)
+      row["body_sha256"]=hashlib.sha256(body).hexdigest()
+    return row
 
 def websocket_probe(base,path):
     url=base+path
@@ -115,6 +120,9 @@ for name,base in TARGETS.items():
  items=[]
  for label,path,expected in GETS:
   row=req(base,"GET",path,{"Accept":"application/json, text/event-stream"},timeout=8); row.update({"test":label,"expected_status":expected,"pass":row.get("status")==expected}); items.append(row)
+ image=req(base,"GET","/assets/images/hero-forest.webp",timeout=12,capture_body=True)
+ image.update({"test":"plain_image","expected_status":200,"pass":image.get("status")==200 and image.get("content_type")=="image/webp" and image.get("headers",{}).get("Cache-Control")=="public, max-age=31536000, immutable"})
+ items.append(image)
  for label,path in OPTIONS:
   row=req(base,"OPTIONS",path,{"Origin":"https://biker-link.net","Access-Control-Request-Method":"POST","Access-Control-Request-Headers":"content-type,authorization"},timeout=8)
   allow_methods=(row.get("headers") or {}).get("Access-Control-Allow-Methods","")
@@ -125,6 +133,28 @@ for name,base in TARGETS.items():
   row=req(base,"HEAD",path,{},timeout=8)
   row.update({"test":"head_"+label,"expected_status":expected,"expected_location":location,"pass":row.get("status")==expected and (location is None or row.get("location")==location)})
   items.append(row)
+ image_head=next((r for r in items if r.get("test")=="head_r2_source_image"),{})
+ origin_etag=image_head.get("headers",{}).get("ETag")
+ origin_modified=image_head.get("headers",{}).get("Last-Modified")
+ if origin_etag:
+  row=req(base,"GET","/assets/images/hero-forest.webp",{"If-None-Match":origin_etag},timeout=8)
+  row.update({"test":"image_if_none_match","expected_status":304,"pass":row.get("status")==304})
+ else:
+  row={"method":"GET","url":base+"/assets/images/hero-forest.webp","status":None,"expected_status":304,"pass":False,"error":"origin ETag missing from HEAD"}
+ items.append(row)
+ if origin_modified:
+  row=req(base,"GET","/assets/images/hero-forest.webp",{"If-Modified-Since":origin_modified},timeout=8)
+  row.update({"test":"image_if_modified_since","expected_status":304,"pass":row.get("status")==304})
+ else:
+  row={"method":"GET","url":base+"/assets/images/hero-forest.webp","status":None,"expected_status":304,"pass":False,"error":"origin Last-Modified missing from HEAD"}
+ items.append(row)
+ row=req(base,"GET","/assets/images/hero-forest.webp",{"Range":"bytes=0-15"},timeout=8,capture_body=True)
+ content_range=row.get("headers",{}).get("Content-Range","")
+ row.update({"test":"image_range","expected_status":206,"pass":row.get("status")==206 and content_range.startswith("bytes 0-15/") and row.get("body_bytes")==16})
+ items.append(row)
+ row=req(base,"GET","/assets/images/hero-forest.webp",{"Range":"bytes=0-15","If-Range":"\"stale-validator\""},timeout=12,capture_body=True)
+ row.update({"test":"image_if_range_stale","expected_status":200,"pass":row.get("status")==200 and row.get("body_sha256")==image.get("body_sha256")})
+ items.append(row)
  for label,path in WEBSOCKETS:
   row=websocket_probe(base,path)
   row.update({"test":label,"expected_status":401,"pass":row.get("status")==401})
@@ -133,12 +163,45 @@ for name,base in TARGETS.items():
  out['targets'][name]={"base_url":base,"revision":health.get("schema",{}).get("revision") if isinstance(health.get("schema"),dict) else None,"results":items}
 parser=argparse.ArgumentParser()
 parser.add_argument('--output',default='API_BEFORE.json',help='JSON evidence output path')
+parser.add_argument('--compare',help='Compare results with an earlier probe JSON and fail on response regressions')
 args=parser.parse_args()
 output=Path(args.output)
 output.parent.mkdir(parents=True,exist_ok=True)
+comparison=None
+if args.compare:
+ previous=json.loads(Path(args.compare).read_text())
+ rows=[]
+ compared_fields=('status','content_type','schema','headers','cookies','location','body_bytes','body_sha256')
+ for target,current in out['targets'].items():
+  before=previous.get('targets',{}).get(target,{})
+  old={r['test']:r for r in before.get('results',[])}
+  for current_row in current['results']:
+   prior=old.get(current_row['test'])
+   if not prior:
+    rows.append({"target":target,"test":current_row['test'],"regression":"missing_from_before"})
+    continue
+   for field in compared_fields:
+    old_value=prior.get(field)
+    new_value=current_row.get(field)
+    if field=="headers" and current_row['test']=="plain_image":
+     old_value={k:v for k,v in (old_value or {}).items() if k.lower() not in ("etag","last-modified")}
+     new_value={k:v for k,v in (new_value or {}).items() if k.lower() not in ("etag","last-modified")}
+    if old_value!=new_value:
+     rows.append({"target":target,"test":current_row['test'],"field":field,"before":old_value,"after":new_value})
+  if current.get('revision')!=before.get('revision'):
+   rows.append({"target":target,"test":"backend_revision","before":before.get('revision'),"after":current.get('revision')})
+ comparison={"baseline":args.compare,"regressions":rows,"regression_count":len(rows),"latency_review":{}}
+ for target,current in out['targets'].items():
+  prior=previous.get('targets',{}).get(target,{})
+  old={r['test']:r for r in prior.get('results',[])}
+  deltas=[{"test":r['test'],"before_ms":old[r['test']].get('latency_ms'),"after_ms":r.get('latency_ms')} for r in current['results'] if r['test'] in old and old[r['test']].get('latency_ms') is not None and r.get('latency_ms') is not None]
+  comparison['latency_review'][target]=deltas
+ out['comparison']=comparison
 output.write_text(json.dumps(out,indent=2,ensure_ascii=False)+"\n")
 summary={}
 for name,value in out['targets'].items():
  latencies=[r['latency_ms'] for r in value['results'] if r.get('latency_ms') is not None]
  summary[name]={"revision":value['revision'],"checks":len(value['results']),"pass":sum(r['pass'] is True for r in value['results']),"fail":sum(r['pass'] is False for r in value['results']),"median_latency_ms":statistics.median(latencies) if latencies else None,"output":str(output)}
-print(json.dumps(summary,indent=2,ensure_ascii=False))
+print(json.dumps({"targets":summary,"comparison":comparison},indent=2,ensure_ascii=False))
+if comparison and comparison['regression_count']:
+ raise SystemExit(1)

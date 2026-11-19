@@ -51,14 +51,14 @@ La verifica d’integrità e di ripristino dei sorgenti è PASS. Nessuna procedu
 
 La baseline è registrata in [`docs/cloudflare-migration/API_BEFORE.json`](docs/cloudflare-migration/API_BEFORE.json) e [`docs/cloudflare-migration/API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md). È ripetibile con [`scripts/cloudflare-migration/api_probe.py`](scripts/cloudflare-migration/api_probe.py).
 
-- Acquisizione: `2026-11-19T11:00:33Z`.
-- Dominio apex: **32/32 PASS**, mediana `137,5 ms`.
-- Hostname Railway: **32/32 PASS**, mediana `183,5 ms`.
+- Acquisizione: `2026-11-19T11:12:49Z`.
+- Dominio apex: **37/37 PASS**, mediana `156 ms`.
+- Hostname Railway: **37/37 PASS**, mediana `184 ms`.
 - Entrambi restituiscono la revisione backend `aedfb278f487105a10567c9efa4c090705b3d801`.
-- Sono stati controllati health/readiness, risposte anonime auth/profile/chat/notifications/AI, CORS preflight, redirect, HEAD di pagine/asset, SSE anonimi e handshake WebSocket anonimi. Le API protette hanno restituito i `401` attesi; i due handshake WebSocket anonimi hanno restituito `401`.
+- Sono stati controllati health/readiness, risposte anonime auth/profile/chat/notifications/AI, CORS preflight, redirect, HEAD di pagine/asset, SSE anonimi e handshake WebSocket anonimi. Include hash e dimensione immagine, `If-None-Match`/`If-Modified-Since` (304), Range (206) e fallback `If-Range` stale (200). Le API protette hanno restituito i `401` attesi; i due handshake WebSocket anonimi hanno restituito `401`.
 - La suite non ha eseguito login, scritture, upload, SOS, notifiche o callback. Non è stata usata una sessione autorizzata: gli endpoint SSE sono stati verificati solo per il rifiuto anonimo e i WebSocket autenticati non sono stati aperti.
 
-**Gate 1: BLOCKED, non PASS.** Mancano prove autenticate non distruttive per sessione/cookie, profilo, matching, telemetria, community, chat, notifiche, media/upload, AI e stream persistenti. In base al piano vincolante non si può pubblicare finché il gate non è PASS.
+**Gate 1: BLOCKED, non PASS.** Mancano prove autenticate non distruttive per sessione/cookie, profilo, matching, telemetria, community, chat, notifiche, media/upload, AI e stream persistenti. La suite può confrontare in automatico status, schema, headers, cookie, redirect, body e revisione; un’autocomparazione sul servizio pre-cutover alle `2026-11-19T11:13:12Z` ha dato zero differenze (solo verifica del comparatore, non Gate 2). In base al piano vincolante non si può pubblicare finché il gate non è PASS.
 
 ## Candidate e validazioni
 
