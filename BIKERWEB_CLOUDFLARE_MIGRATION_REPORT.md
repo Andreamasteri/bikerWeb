@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
 **Aggiornato:** 19 novembre 2026 (UTC)
-**Stato:** candidate pronto e validato su Cloudflare Preview; **cutover non eseguito**. Il Gate 1 resta bloccato sulle verifiche autenticate. Il frontend ufficiale è ancora servito da Railway e il backend Railway è rimasto attivo e invariato.
+**Stato:** candidate verificato su Cloudflare Preview e codice unito in main via PR #1; **cutover non eseguito**. Il Gate 1 resta bloccato sulle verifiche autenticate e sulla conferma del DB staging. Il sito ufficiale continua a essere servito da Railway; il backend production è rimasto attivo e invariato.
 
 ## Architettura e stato live
 
@@ -45,7 +45,7 @@ Rollback documentato in `RESTORE.md`: mantenere Railway attivo, ripristinare il 
 
 ## API — Gate 1
 
-Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md), [`API_PREVIEW_REPORT.md`](docs/cloudflare-migration/API_PREVIEW_REPORT.md), [`API_BEFORE.json`](docs/cloudflare-migration/API_BEFORE.json) e [`API_PREVIEW.json`](docs/cloudflare-migration/API_PREVIEW.json).
+Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md), [`API_PREVIEW_REPORT.md`](docs/cloudflare-migration/API_PREVIEW_REPORT.md), [`API_BEFORE.json`](docs/cloudflare-migration/API_BEFORE.json) e [`API_PREVIEW.json`](docs/cloudflare-migration/API_PREVIEW.json), [`API_STAGING_ANON.json`](docs/cloudflare-migration/API_STAGING_ANON.json) e [`API_STAGING_ANON_REPORT.md`](docs/cloudflare-migration/API_STAGING_ANON_REPORT.md).
 
 | Target e acquisizione | Controlli | PASS | FAIL | Mediana | Revisione backend |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -57,9 +57,15 @@ Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFOR
 
 Il confronto Preview → baseline apex ha trovato **0 differenze** nei 38 controlli. Comprende health/readiness, auth/profile/chat anonimi, configurazione e community, CORS, BikerBlog canonical, redirect, HEAD, immagine completa/hash, validator condizionali, Range, SSE anonimi e handshake WebSocket anonimi. I `401` sono quelli attesi per richieste senza sessione.
 
-**Gate 1: BLOCKED, non PASS.** La suite non verifica un cookie/sessione valida e non ha eseguito login, matching autenticato, telemetria scritta, chat/notifiche con sessione, upload, SOS, callback o WebSocket/SSE autenticati. L’autenticazione Wrangler è ora verificata sull’account Cloudflare previsto; questo non fornisce un’identità applicativa sandbox. Il progetto Railway contiene un ambiente `staging` attivo con servizio backend e Postgres, ma il servizio usa un branch/revisione diversi (`feat/telemetry-capability-close-20261103`, `cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374`). Ho verificato health 200 e `degraded=false`, ma non un’identità di test autorizzata né il collegamento esclusivo di quel backend al database di test. Non sono state eseguite scritture né toccata la patch già staged nello staging.
+**Gate 1: BLOCKED, non PASS.** Sul Preview production e sull’origine production la suite anonima passa senza regressioni, ma non verifica cookie/sessione valida. Mancano login, matching autenticato, telemetry, chat/notifiche con sessione, upload, SOS, callback e stream SSE/WebSocket autenticati. L’autenticazione Wrangler è verificata; non equivale a un’identità BikerLink.
 
-Finché Gate 1 non passa, non si esegue il deployment production né il cambio DNS. **Gate 2 e Gate 3: NOT RUN**; `API_AFTER.json` non esiste perché la pubblicazione non è avvenuta.
+Il backend staging servito al momento dei test è il branch feat/telemetry-capability-close-20261103, revisione cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374. Il codice di quella revisione mappa staging su DATABASE_URL_CANDIDATE e rifiuta l’uso della variabile DATABASE_URL generica; nello stesso ambiente Railway esiste un servizio Postgres separato con volume da 500 MB. Tuttavia il connettore Railway restituisce solo i nomi delle variabili e oscura i valori: l’host effettivo di DATABASE_URL_CANDIDATE non è stato verificato, quindi non dichiaro dimostrato l’isolamento DB.
+
+Smoke staging in sola lettura: 31/38 controlli PASS. I 7 FAIL sono preflight CORS eseguiti con origine production; lo staging non restituisce ACAO per biker-link.net o bikertest.biker-link.net. Due preflight separati per l’origine staging stessa restituiscono ACAO, credenziali, metodi e header attesi. Evidenza e interpretazione sono in API_STAGING_ANON_REPORT.md. Questa prova non include autenticazione.
+
+Non ho lanciato lo smoke backend automatico: il runner registra account, aggiorna direttamente il DB per la verifica email e all’avvio ripulisce possibili account smoke precedenti usando DATABASE_URL_CANDIDATE. Senza host DB verificato e sessione autorizzata, quei write non sono sicuri. Nessuna scrittura DB è stata eseguita e la patch staged Railway non è stata toccata.
+
+Finché Gate 1 non passa, non si esegue il deployment production né il cambio DNS. **Gate 2 e Gate 3: NOT RUN**; API_AFTER.json non esiste perché il cutover non è avvenuto.
 
 ## Sito e browser
 
@@ -75,13 +81,14 @@ Evidenza browser aggiornata per deployment 9 in [`BROWSER_PREVIEW.json`](docs/cl
 
 ## GitHub, CI e deployment
 
-- Repository: `Andreamasteri/bikerWeb`.
-- Branch dedicato: `codex/bikerweb-cloudflare-production-20261119`; base verificata `main` a `7827790d7f26c8060319e29772d073160fd23af0`.
-- Commit candidato: `1fec50617a2c6aad9f84bc87ce993f07aba106ab`; push verificato con `git ls-remote` sul branch GitHub. Il codice Worker del Preview 9 corrisponde al sorgente contenuto nel commit.
-- PR #1: <https://github.com/Andreamasteri/bikerWeb/pull/1>, stato OPEN, draft, non merged; la branch contiene il commit candidato e questo report finale. Descrizione PR aggiornata con risultati e gate.
-- Non esistono file `.github/workflows`; la PR non ha check CI automatici (`statusCheckRollup` vuoto). Verifiche locali finali: `npm run test:routing` (**35/35 PASS**), `npm run dry-run` (**PASS**, 38 file statici e binding `ASSETS`, `SITE_ASSETS`, `RAILWAY_ORIGIN`, `PUBLIC_SITE_ORIGIN`).
-- Wrangler `4.165.0` fissato nel lockfile. `wrangler whoami` verifica l’account `Andreamasteri81@gmail.com's Account` (`d116d3d97b133c543d02934be4bc98d2`). L’OAuth è fuori dal repository. Nessun deployment production o dominio collegato al Worker candidate.
+- Repository: Andreamasteri/bikerWeb.
+- Branch dedicato: codex/bikerweb-cloudflare-production-20261119; base verificata main a 7827790d7f26c8060319e29772d073160fd23af0.
+- Commit sorgente candidate: 1fec50617a2c6aad9f84bc87ce993f07aba106ab; il sorgente del Preview 9 corrisponde a quel commit.
+- PR #1: https://github.com/Andreamasteri/bikerWeb/pull/1, unita il 19 novembre 2026 alle 17:26:27Z. Merge commit: 3627b464c593f66164dd75e3e7160b1790e52d04. Stato verificato via API GitHub.
+- Non esistono workflow .github/workflows; la PR non aveva check CI automatici. Verifiche locali sul candidate: npm run test:routing (35/35 PASS), npm run dry-run (PASS; 38 file statici e binding ASSETS, SITE_ASSETS, RAILWAY_ORIGIN, PUBLIC_SITE_ORIGIN).
+- Wrangler 4.165.0 è fissato nel lockfile. L’account Cloudflare è autenticato. Cloudflare API non trova configurazione Workers Builds per il Worker candidate; l’elenco script production continua a non includerlo. Il merge GitHub non ha pubblicato il Worker.
+- Nessun deployment production, custom domain o route apex è stato creato.
 
 ## Decisione
 
-La preparazione e il Preview sono completati; la migrazione **non è conclusa**. Frontend ufficiale, DNS e backend sono rimasti nello stato precedente; BikerTest è operativo. Il motivo del blocco è il Gate 1: non è disponibile un account/sessione applicativa sandbox già autorizzato e verificato come isolato dai dati di produzione. Il login Wrangler completa l’accesso Cloudflare ma non sostituisce questa identità applicativa. Quando sarà disponibile, si potrà eseguire la suite autenticata sullo staging corretto e rivalutare il cutover secondo i gate vincolanti.
+Il candidate è unito in main e resta solo in Preview; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti invariati. Per chiudere Gate 1 servono una sessione utente di test autorizzata e la prova del target effettivo del DB candidato. Il connettore Railway oscura i valori e il download della CLI Railway è fallito per connessione rifiutata al rilascio GitHub; la sessione browser sandbox condivisa non era avviabile. Non ho creato utenti, letto/scritto dati DB o invocato notifiche. Il cutover resta bloccato secondo il piano.
