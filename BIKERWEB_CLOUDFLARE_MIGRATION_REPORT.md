@@ -77,8 +77,8 @@ Di conseguenza il candidate non è stato deployato su un hostname di verifica; *
 - Repository: `Andreamasteri/bikerWeb`.
 - Branch: `codex/bikerweb-cloudflare-production-20261119`.
 - Base verificata: `main` a `7827790d7f26c8060319e29772d073160fd23af0`.
-- Commit candidato e baseline salvati: `b794c6290a9ae58558789c49d07015555590571c`; push verificato sul branch remoto.
-- PR #1: `https://github.com/Andreamasteri/bikerWeb/pull/1`, aperta, draft, non merged.
+- Commit del branch salvati: `5566301` (preparazione Worker), `b794c62` (routing), `8c8a95d` (report e gate) e `cabd098` (baseline API estesa a 37 prove); push sul remoto da verificare dopo il checkpoint corrente.
+- PR #1: `https://github.com/Andreamasteri/bikerWeb/pull/1`, aperta, draft, non merged. Il commit puntato dal branch remoto è verificato nel riepilogo finale e nella PR.
 - Il repository non contiene workflow `.github/workflows`; nessun check CI è stato generato. Nessun commit o deploy backend è stato eseguito.
 
 ## Pubblicazione e decisione
