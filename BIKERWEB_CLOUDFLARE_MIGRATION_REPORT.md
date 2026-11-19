@@ -7,7 +7,7 @@
 
 La revisione richiesta dal proprietario ha rilevato che la homepage candidate aveva sostituito la pagina originale con una versione più corta. Nel branch `codex/bikerweb-content-preservation-20261119` sono state ripristinate le 22 pagine pubbliche marketing/editoriali/legali dal sito originale e sono stati aggiunti i percorsi Static Assets espliciti. La home originale, con 18 piazzamenti immagine e tabella comparativa completa, è stata ripristinata senza riscriverne il contenuto. Tutte le 8 tabelle e le 25 immagini originali sono conservate; i 22 file immagine/varianti `src` e `srcset` usati dalle pagine sono già presenti in R2. Manifest e conteggi: [`CONTENT_PRESERVATION_REPORT.md`](docs/cloudflare-migration/CONTENT_PRESERVATION_REPORT.md) e [`LEGACY_CONTENT_MANIFEST.json`](docs/cloudflare-migration/LEGACY_CONTENT_MANIFEST.json).
 
-Il branch modifica soltanto il Worker candidato, i suoi Static Assets, il routing esplicito e il test harness. Le 8 pagine applicative `/delete-account` e `/docs*` restano su Railway. API, DB, DNS ufficiale e Worker BikerTest non sono stati modificati. Il deployment Preview 9 elencato sotto è la versione precedente ai contenuti ripristinati; questo branch non è ancora pubblicato su Cloudflare.
+La modifica di contenuti è stata unita in `main` tramite [PR #4](https://github.com/Andreamasteri/bikerWeb/pull/4), merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`. Le 8 pagine applicative `/delete-account` e `/docs*` restano su Railway. API, DB, DNS ufficiale e Worker BikerTest non sono stati modificati. Il deployment Preview 9 elencato sotto è la versione precedente ai contenuti ripristinati; il nuovo source non è ancora pubblicato su Cloudflare perché la sessione Wrangler non ha lo scope `workers:write`.
 
 ## Architettura e stato live
 
@@ -91,8 +91,10 @@ Evidenza browser aggiornata per deployment 9 in [`BROWSER_PREVIEW.json`](docs/cl
 - Branch dedicato: codex/bikerweb-cloudflare-production-20261119; base verificata main a 7827790d7f26c8060319e29772d073160fd23af0.
 - Commit sorgente candidate: 1fec50617a2c6aad9f84bc87ce993f07aba106ab; il sorgente del Preview 9 corrisponde a quel commit.
 - PR #1: https://github.com/Andreamasteri/bikerWeb/pull/1, unita il 19 novembre 2026 alle 17:26:27Z. Merge commit: 3627b464c593f66164dd75e3e7160b1790e52d04. Stato verificato via API GitHub.
+- Ripristino contenuti PR #4: https://github.com/Andreamasteri/bikerWeb/pull/4, unita il 19 novembre 2026 alle 22:38:03Z. Source `ac5a9d64c5c8eeb97be35ab7a05c273f69646c29`; merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`. `main` è stato aggiornato e verificato.
 - Non esistono workflow .github/workflows; la PR non aveva check CI automatici. Questa revisione ha superato `npm run test:routing` con 76/76 PASS; il dry-run del candidato sarà aggiornato sul commit di questo branch.
 - Wrangler 4.165.0 è fissato nel lockfile. L’account Cloudflare è autenticato. Cloudflare API non trova configurazione Workers Builds per il Worker candidate; l’elenco script production continua a non includerlo. Il merge GitHub non ha pubblicato il Worker.
+- Un deploy su Worker separato `bikerlink-website-content-preview` si è fermato dopo l’upload degli asset, quando Wrangler ha richiesto la lettura dei metadati del bucket R2 e Cloudflare ha restituito `Authentication error 10000`. La sessione OAuth ha `workers_scripts:write` e `workers_routes:write`, ma non `workers:write`; l’API Cloudflare ha confermato che non esiste una versione del nuovo Worker. Nessun dominio o script esistente è stato aggiornato.
 - Nessun deployment production, custom domain o route apex è stato creato.
 
 ## Decisione

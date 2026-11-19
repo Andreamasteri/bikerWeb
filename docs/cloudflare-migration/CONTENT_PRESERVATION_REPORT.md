@@ -1,6 +1,6 @@
 # Legacy content restoration report
 
-Captured from the live original site on 19 November 2026. This report describes the content restored to the isolated Cloudflare Worker candidate; it does not describe a production DNS cutover.
+Captured from the live original site on 19 November 2026. This report describes the content restored in the Cloudflare Worker source; it does not describe a production DNS cutover.
 
 ## Preserved material
 
@@ -23,5 +23,13 @@ The Worker checks the full `/api` namespace, readiness, WebSockets, and the Expo
 - Each restored page preserves the captured source markup and text. Trailing whitespace was removed from seven files only; the manifest records source and output SHA-256 values for every page.
 - All source and `srcset` image variants referenced by these pages are present in the existing R2 manifest.
 - The local route harness is updated to assert Cloudflare delivery for the restored pages and Railway delivery for account deletion and unlisted backend routes.
+- PR [#4](https://github.com/Andreamasteri/bikerWeb/pull/4) merged into `main` on 19 November 2026. Source commit `ac5a9d64c5c8eeb97be35ab7a05c273f69646c29`; merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`.
+- `npm run test:routing`: 76/76 PASS. `npm run dry-run`: PASS, 70 Static Assets files and the expected R2, assets, and Railway bindings.
+
+## Preview and production status
+
+- The new source has not yet been deployed to a Worker preview. The existing preview URL still serves the earlier, shorter candidate.
+- A deploy attempt for isolated Worker `bikerlink-website-content-preview` uploaded 37 static asset files, then stopped at Cloudflare's R2 bucket metadata check with `Authentication error 10000`. The authenticated Wrangler OAuth session has `workers_scripts:write` but lacks `workers:write`. Cloudflare's Worker API confirmed no Worker version was created.
+- No custom domain, DNS record, production Worker, Railway setting, database, or BikerTest Worker was changed. The official site, `/api/health`, and BikerTest still return HTTP 200.
 
 Manifest: [`LEGACY_CONTENT_MANIFEST.json`](LEGACY_CONTENT_MANIFEST.json).
