@@ -1,0 +1,976 @@
+{
+  "captured_at_utc": "2026-11-19T17:31:27Z",
+  "backend_revision_expected": "aedfb278f487105a10567c9efa4c090705b3d801",
+  "targets": {
+    "staging": {
+      "base_url": "https://bikerlink-staging-staging.up.railway.app",
+      "revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+      "results": [
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/health",
+          "status": 200,
+          "latency_ms": 246,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "coordinator",
+              "dbCircuit",
+              "degraded",
+              "degradedReasons",
+              "initializing",
+              "redisTunnel",
+              "revision",
+              "slices",
+              "state",
+              "status"
+            ],
+            "revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+            "state": "READY",
+            "degraded": false
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"376-nAMwLzkd9jOyGxRQyw2u5AowqpQ\"",
+            "Content-Length": "886"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 886,
+          "body_sha256": "9dd715b7ac7d422f5c6e450843f84b3459494399f8a07710e1541709e520cd73",
+          "test": "health",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/healthz",
+          "status": 200,
+          "latency_ms": 211,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2-eoX0dku9ba8cNUXvu/DyeabcC+s\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 2,
+          "body_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+          "canonical_url": null,
+          "contains_railway_origin": false,
+          "test": "readiness",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/me",
+          "status": 401,
+          "latency_ms": 253,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "auth_session",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/users/me",
+          "status": 401,
+          "latency_ms": 182,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "profile",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/chat/conversations",
+          "status": 401,
+          "latency_ms": 185,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/chat/stream",
+          "status": 401,
+          "latency_ms": 248,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "chat_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/session-events",
+          "status": 401,
+          "latency_ms": 191,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "session_sse",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/notifications",
+          "status": 401,
+          "latency_ms": 176,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/ai/assistant/config",
+          "status": 401,
+          "latency_ms": 175,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "message",
+              "success"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"2d-Y9JzTif1bJ4kCNBU2e/e8uxNDwU\"",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 45,
+          "body_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+          "test": "ai_config",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/download/apk/status",
+          "status": 200,
+          "latency_ms": 348,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "available"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"12-Aimy5TBnYW7WAzHpRLoSkMxmC1Y\"",
+            "Content-Length": "18"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 18,
+          "body_sha256": "631f4d836f9d199ee9721cc528112d8b61d2b90455bb214dd364596b487fe6b6",
+          "test": "apk_status",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/config",
+          "status": 200,
+          "latency_ms": 351,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "maintenance_enabled",
+              "maintenance_message",
+              "play_store_url",
+              "website_url"
+            ]
+          },
+          "headers": {
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5f-KZR94ZMPm0KJsKO83314T/Lawcg\"",
+            "Content-Length": "95"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 95,
+          "body_sha256": "7428e6e3b3808be770a7747e71e19131d669cb28d00f09cee91c2e1194d44ee6",
+          "test": "app_config",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/community/stats",
+          "status": 200,
+          "latency_ms": 492,
+          "content_type": "application/json; charset=utf-8",
+          "schema": {
+            "kind": "object",
+            "keys": [
+              "countries",
+              "total"
+            ]
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"d7-iiWHp5zitvp1df4/eXRSPN6sa6g\"",
+            "Content-Length": "215"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 215,
+          "body_sha256": "f10f000d6085eb253153e8b68ae7636e30ec109696366486a9757b8bad1c7dab",
+          "test": "community_stats",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/blog",
+          "status": 200,
+          "latency_ms": 201,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 201861
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"31485-aP0nmUT6XNxnsZwy35aqsNQOcOY\"",
+            "Content-Length": "201861"
+          },
+          "cookies": [
+            {
+              "name": "bl_vid",
+              "attributes": [
+                "Path=/",
+                "Max-Age=31536000",
+                "HttpOnly",
+                "SameSite=Lax",
+                "Secure"
+              ]
+            }
+          ],
+          "location": null,
+          "body_bytes": 201861,
+          "body_sha256": "00ae823ef6d17c6c4aa71f222677aa340e0939e85f9ec8e9cc9e9f1799c27cb2",
+          "canonical_url": "https://bikerlink-staging-staging.up.railway.app/blog",
+          "contains_railway_origin": false,
+          "test": "blog_page",
+          "expected_status": 200,
+          "expected_canonical_url": "https://bikerlink-staging-staging.up.railway.app/blog",
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 212,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "plain_image",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/register",
+          "status": 200,
+          "latency_ms": 191,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_registration",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/auth/login",
+          "status": 200,
+          "latency_ms": 176,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_login",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/sos",
+          "status": 200,
+          "latency_ms": 182,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_sos",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/chat/conversations",
+          "status": 200,
+          "latency_ms": 181,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_chat_write",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/telemetry/batch",
+          "status": 200,
+          "latency_ms": 185,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_telemetry_write",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/users/me/photos",
+          "status": 200,
+          "latency_ms": 178,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_image_upload",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "OPTIONS",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/admin/media/upload",
+          "status": 200,
+          "latency_ms": 181,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 2
+          },
+          "headers": {
+            "ETag": "W/\"2-nOO9QiTIwXgNtWtBJezz8kv3SLc\"",
+            "Content-Length": "2"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "cors_media_upload",
+          "expected_status": 200,
+          "pass": false
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/blog",
+          "status": 200,
+          "latency_ms": 181,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"31485-aP0nmUT6XNxnsZwy35aqsNQOcOY\"",
+            "Content-Length": "201861"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_blog",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/contact",
+          "status": 200,
+          "latency_ms": 201,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"3178c-RTYlDRLpGp+T2pNQyXn28d6JcKI\"",
+            "Content-Length": "202636"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_contact",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/accedi",
+          "status": 200,
+          "latency_ms": 182,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "no-store",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"1d35c-7Otqg2yZuoD9dKUP3C+wbQt00C8\"",
+            "Content-Length": "119644"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_web_login",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/admin/diagnostics/live",
+          "status": 302,
+          "latency_ms": 182,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "58"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/admin/diagnostics/live",
+          "test": "head_web_admin_diagnostics",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/admin/diagnostics/live",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/privacy-policy",
+          "status": 301,
+          "latency_ms": 183,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "42"
+          },
+          "cookies": [],
+          "location": "/privacy",
+          "test": "head_privacy_policy_redirect",
+          "expected_status": 301,
+          "expected_location": "/privacy",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/pianifica",
+          "status": 302,
+          "latency_ms": 181,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "45"
+          },
+          "cookies": [],
+          "location": "/accedi?next=/pianifica",
+          "test": "head_planner_redirect",
+          "expected_status": 302,
+          "expected_location": "/accedi?next=/pianifica",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/api/download/apk/latest",
+          "status": 302,
+          "latency_ms": 177,
+          "content_type": "text/plain; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Vary": "Accept, Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "Content-Length": "102"
+          },
+          "cookies": [],
+          "location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "test": "head_apk_latest_redirect",
+          "expected_status": 302,
+          "expected_location": "https://drive.google.com/uc?export=download&id=15teG0lCIWFi6YuXtcfIMPjuWcctPc5cH",
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 184,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_r2_source_image",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/favicon.png",
+          "status": 200,
+          "latency_ms": 184,
+          "content_type": "image/png",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=604800",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"469-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Content-Length": "1129",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_favicon",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/leaflet-map.html",
+          "status": 200,
+          "latency_ms": 181,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=3600",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"306e2-AXrcp80VjuDpL+Bf5rAXjbzDb1Y\"",
+            "Content-Length": "198370"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_leaflet_html",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "HEAD",
+          "url": "https://bikerlink-staging-staging.up.railway.app/roadmap.json",
+          "status": 200,
+          "latency_ms": 194,
+          "content_type": "application/json",
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"ab9-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Content-Length": "2745",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "head_roadmap_json",
+          "expected_status": 200,
+          "expected_location": null,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 194,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_none_match",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/assets/images/hero-forest.webp",
+          "status": 304,
+          "latency_ms": 184,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "test": "image_if_modified_since",
+          "expected_status": 304,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/assets/images/hero-forest.webp",
+          "status": 206,
+          "latency_ms": 177,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 16
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Content-Length": "16",
+            "Accept-Ranges": "bytes",
+            "Content-Range": "bytes 0-15/337534"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 16,
+          "body_sha256": "8a6cc95f3f2a214880eb75d8d95420a8815ddb208fb9dfda5c3bbbfd87bcedbe",
+          "test": "image_range",
+          "expected_status": 206,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 201,
+          "content_type": "image/webp",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 337534
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=31536000, immutable",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"5267e-1a1e94e1150\"",
+            "Last-Modified": "Tue, 17 Nov 2026 11:39:30 GMT",
+            "Content-Length": "337534",
+            "Accept-Ranges": "bytes"
+          },
+          "cookies": [],
+          "location": null,
+          "body_bytes": 337534,
+          "body_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+          "test": "image_if_range_stale",
+          "expected_status": 200,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/ws/admin/notifications",
+          "status": 401,
+          "latency_ms": 457,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_admin_notifications",
+          "expected_status": 401,
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://bikerlink-staging-staging.up.railway.app/ws/diagnostic",
+          "status": 401,
+          "latency_ms": 243,
+          "content_type": null,
+          "schema": {
+            "kind": "empty"
+          },
+          "headers": {
+            "connection": "close"
+          },
+          "cookies": [],
+          "location": null,
+          "transport": "anonymous WebSocket upgrade probe via curl",
+          "probe_return_code": 0,
+          "probe_error": null,
+          "test": "ws_diagnostic",
+          "expected_status": 401,
+          "pass": true
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "No authenticated user credentials or session cookie were used.",
+    "No writes, SOS activation, notifications, uploads, or external callbacks were issued.",
+    "SSE endpoints were checked only for their anonymous response; no authenticated stream was opened.",
+    "WebSocket checks were anonymous handshakes expected to be rejected with HTTP 401; they do not validate an authenticated persistent session."
+  ]
+}

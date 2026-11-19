@@ -34,10 +34,16 @@ Evidenza aggiornata in BROWSER_PREVIEW.json, acquisita 2026-11-19T13:19:08Z su d
 - Preview X-Robots-Tag noindex; le pagine conservano canonical e meta robots pubblici.
 - Test su Android fisico non eseguito.
 
+## Verifica anonima Railway staging
+
+Suite read-only acquisita il 2026-11-19T17:31:27Z su https://bikerlink-staging-staging.up.railway.app, revisione cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374. Evidenza completa in API_STAGING_ANON.json: 31/38 PASS, mediana 184,5 ms. I 7 FAIL sono tutti CORS preflight con Origin https://biker-link.net; l’origine non riceve Access-Control-Allow-Origin, anche se OPTIONS restituisce HTTP 200. Verifica separata: 2/2 preflight (login e register) dall’origine staging https://bikerlink-staging-staging.up.railway.app restituiscono ACAO corretto, credenziali abilitate, POST e header content-type/authorization. L’origine bikertest.biker-link.net non viene autorizzata dallo staging.
+
+Queste prove non usano cookie né credenziali e non generano scritture. Non indicano un regressione production: gli stessi test CORS con origine production sul candidate Preview verso il backend production passano 7/7. Non sono però una verifica autenticata dello staging.
+
 ## Limiti e gate
 
 Questo controllo dimostra l’instradamento anonimo sul candidato v9, non l’autenticazione con sessione valida. Non ha eseguito login, modifiche account, matching autenticato, scritture telemetria, upload, SOS, notifiche, webhook o callback. Gli stream SSE/WebSocket con cookie valido non sono stati aperti. Nessun database è stato scritto.
 
-Railway contiene un ambiente staging attivo con servizio backend e Postgres separato, ma il backend di staging usa branch e revisione diversi dalla produzione (feat/telemetry-capability-close-20261103, cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374). Health staging risponde 200 e degraded=false; non è stato possibile attestare un’identità di test/sessione autorizzata e l’isolamento dei flussi/database richiesti. Lo staging ha inoltre una patch già staged che non è stata toccata.
+Il codice esatto del branch staging seleziona DATABASE_URL_CANDIDATE; Railway espone un Postgres separato nello stesso environment. L’host del valore DATABASE_URL_CANDIDATE resta però non verificato perché Railway OAuth oscura i valori. Non è stato possibile reperire una sessione utente autorizzata; la patch staged nello staging non è stata toccata.
 
-Gate 1: BLOCKED, non PASS. Non c’è stata prova autenticata sicura su un account esistente di test. Il cambio DNS e il deploy production restano vietati dai gate del piano. Gate 2 e Gate 3: NOT RUN perché non è avvenuta la pubblicazione.
+Gate 1: BLOCKED, non PASS. Non c’è stata prova autenticata sicura su un account esistente di test né prova dell’host DB staging. Il cambio DNS e il deploy production restano vietati dai gate del piano. Gate 2 e Gate 3: NOT RUN perché non è avvenuta la pubblicazione.
