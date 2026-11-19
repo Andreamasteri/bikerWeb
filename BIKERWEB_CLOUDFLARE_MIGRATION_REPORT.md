@@ -76,10 +76,11 @@ Evidenza browser aggiornata per deployment 9 in [`BROWSER_PREVIEW.json`](docs/cl
 ## GitHub, CI e deployment
 
 - Repository: `Andreamasteri/bikerWeb`.
-- Branch: `codex/bikerweb-cloudflare-production-20261119`; base verificata `main` a `7827790d7f26c8060319e29772d073160fd23af0`.
-- PR #1: <https://github.com/Andreamasteri/bikerWeb/pull/1>, draft e non merged al checkpoint precedente. Stato e commit remoto saranno aggiornati dopo il push delle ultime evidenze.
-- Il repository non contiene `.github/workflows`; non c’è una pipeline CI attiva. I controlli locali obbligatori del candidate sono: `npm run test:routing` (**35/35 PASS**), `npm run dry-run` (**PASS**, 38 file statici e binding `ASSETS`, `SITE_ASSETS`, `RAILWAY_ORIGIN`, `PUBLIC_SITE_ORIGIN`).
-- Wrangler `4.165.0` è fissato nel manifest/lockfile. L’autenticazione OAuth è salvata fuori dal repository; il Worker creato resta Preview, non production.
+- Branch dedicato: `codex/bikerweb-cloudflare-production-20261119`; base verificata `main` a `7827790d7f26c8060319e29772d073160fd23af0`.
+- Commit candidato: `1fec50617a2c6aad9f84bc87ce993f07aba106ab`; push verificato con `git ls-remote` sul branch GitHub. Il codice Worker del Preview 9 corrisponde al sorgente contenuto nel commit.
+- PR #1: <https://github.com/Andreamasteri/bikerWeb/pull/1>, stato OPEN, draft, non merged; la branch contiene il commit candidato e questo report finale. Descrizione PR aggiornata con risultati e gate.
+- Non esistono file `.github/workflows`; la PR non ha check CI automatici (`statusCheckRollup` vuoto). Verifiche locali finali: `npm run test:routing` (**35/35 PASS**), `npm run dry-run` (**PASS**, 38 file statici e binding `ASSETS`, `SITE_ASSETS`, `RAILWAY_ORIGIN`, `PUBLIC_SITE_ORIGIN`).
+- Wrangler `4.165.0` fissato nel lockfile. `wrangler whoami` verifica l’account `Andreamasteri81@gmail.com's Account` (`d116d3d97b133c543d02934be4bc98d2`). L’OAuth è fuori dal repository. Nessun deployment production o dominio collegato al Worker candidate.
 
 ## Decisione
 
