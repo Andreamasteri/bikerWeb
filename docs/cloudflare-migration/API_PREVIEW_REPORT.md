@@ -1,40 +1,43 @@
-# Verifica del Worker Preview Cloudflare
+# Verifica Cloudflare Preview — deployment 9
 
-- Preview URL: <https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev>
-- Preview ID: `fa7a694ccc584f439a2cef32f65be791`.
-- Deployment verificato: `bf714146-cf10-4b69-8b4a-b254ca82303b` (versione 2, 2026-11-19 12:20:45 UTC).
-- Sorgente: branch `codex/bikerweb-cloudflare-production-20261119`; nessun custom domain, route apex o deployment production creato.
-- Origine API: Railway production `bikerlink-production.up.railway.app`, revisione `aedfb278f487105a10567c9efa4c090705b3d801`. Le verifiche hanno eseguito solo GET, HEAD, OPTIONS e handshake WebSocket anonimi.
-- JSON dettagliato: [`API_PREVIEW.json`](API_PREVIEW.json); baseline pre-cutover: [`API_BEFORE.json`](API_BEFORE.json).
+- Preview alias: https://codex-bikerweb-cloudflare-producti-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev
+- URL immutabile del deployment verificato: https://3c35e4a7-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev
+- Preview ID fa7a694ccc584f439a2cef32f65be791; deployment 3c35e4a7-8080-41ef-a23a-71d07f37e30d, versione 9, creato 2026-11-19T13:14:24Z.
+- Variabili Preview: RAILWAY_ORIGIN=https://bikerlink-production.up.railway.app, PUBLIC_SITE_ORIGIN=https://biker-link.net; binding Static Assets ASSETS e R2 SITE_ASSETS → bikerlink-website-assets.
+- Nessun custom domain, route apex o deployment production creato. BikerTest non è stato modificato.
+- Backend Railway: revisione aedfb278f487105a10567c9efa4c090705b3d801 su tutte le origini.
+- Acquisizione API: 2026-11-19T13:14:29Z; evidenza per singola richiesta in API_PREVIEW.json, confronto con API_BEFORE.json.
 
-## Suite API e confronto
+## Gate anonimo e confronto
 
-Acquisizione `API_PREVIEW.json`: `2026-11-19T12:21:09Z`.
-
-| Target | Prove | PASS | FAIL | Mediana | Revisione backend |
+| Target | Controlli | PASS | FAIL | Mediana | Revisione |
 | --- | ---: | ---: | ---: | ---: | --- |
-| Preview Cloudflare | 37 | 37 | 0 | 178 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
-| Dominio apex pre-cutover | 37 | 37 | 0 | 134 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
-| Origine Railway | 37 | 37 | 0 | 187 ms | `aedfb278f487105a10567c9efa4c090705b3d801` |
+| Preview Cloudflare | 38 | 38 | 0 | 192,5 ms | aedfb278f487105a10567c9efa4c090705b3d801 |
+| Dominio apex pre-cutover | 38 | 38 | 0 | 148 ms | aedfb278f487105a10567c9efa4c090705b3d801 |
+| Origine Railway | 38 | 38 | 0 | 186 ms | aedfb278f487105a10567c9efa4c090705b3d801 |
 
-Il confronto automatico Preview → baseline pubblico ha rilevato **0 differenze** nei percorsi API, CORS, redirect applicativi, immagini e handshake WebSocket. Il confronto esclude le sei HEAD delle pagine statiche (`/blog`, `/contact`, `/accedi`, favicon, Leaflet e roadmap) perché quelle risorse passano deliberatamente a Workers Static Assets; le rispettive risposte mantengono comunque i codici attesi nella suite. Il confronto ignora `Content-Length` solo quando dimensione e SHA-256 del body sono identici. Per la sola GET immagine semplice ignora ETag e Last-Modified perché R2 genera validator propri; HEAD, Range e `If-*` restano inoltrati a Railway e confrontati.
+Confronto automatico Preview → baseline apex: 0 differenze. Sono confrontati anche status e headers delle prove HEAD; per le sole HEAD HTML sono ignorati Content-Length ed ETag perché l’HTML viene riscritto e quei valori dell’origine non descrivono la rappresentazione pubblica. Per blog_page sono confrontati status, content type, canonical e assenza dell’hostname Railway; il body dinamico completo non è usato come hash stabile. Per la sola GET immagine semplice si ignorano ETag/Last-Modified R2 se il body è identico; HEAD, Range e If-* restano instradati a Railway e confrontati.
 
-La suite copre health/readiness, rifiuto anonimo di API protette, risposte di configurazione/community, CORS preflight, redirect, asset, hash completo dell’immagine, `If-None-Match`/`If-Modified-Since` (304), Range (206/16 byte), `If-Range` obsoleto (200) e due handshake WebSocket anonimi (401). Nessun login, scrittura, upload, SOS, notifica o callback è stato eseguito. I WebSocket/SSE autenticati non sono provati.
+Copertura: health/readiness, API protette anonime, config/community, CORS preflight, pagina BikerBlog, redirect, HEAD di pagine/asset, immagine completa con hash, validator condizionali 304, Range 206 (16 byte), If-Range stale 200, SSE anonimi e handshake WebSocket anonimi 401. Il probe usa solo GET, HEAD e OPTIONS; i WebSocket sono handshake anonimi senza sessione.
 
-## Smoke test browser
+La pagina /blog sul Preview dichiara canonical https://biker-link.net/blog e non contiene l’hostname Railway. Il controllo aveva trovato una differenza effettiva: Railway generava canonical/OG/JSON-LD sull’hostname *.up.railway.app quando riceveva il proxy. Il Worker riscrive il solo hostname nelle sole risposte HTML non-API e negli eventuali redirect assoluti; le API, JSON, cookie, media, SSE e WebSocket non vengono trasformati. /web-session.js è servito come asset statico JS identico alla sorgente versionata del commit backend aedfb278f487105a10567c9efa4c090705b3d801; le sue chiamate /api/auth/* arrivano ancora a Railway. Il proxy elimina l’header Host fornito dal chiamante, lasciando a fetch l’hostname Railway corretto.
 
-Playwright con Chromium ha caricato la homepage del Preview sia a 1365×900 desktop sia in emulazione Pixel 7 a 412 px:
+## Smoke browser
 
-- HTTP 200; titolo `BikerLink Motorcycle Magazine`; canonical `https://biker-link.net/`; meta robots `index,follow`. La risposta del Preview porta inoltre `X-Robots-Tag: noindex` per non indicizzare l’hostname temporaneo.
-- Nessun overflow orizzontale: larghezza contenuto 1365/1365 desktop e 412/412 mobile.
-- Tutte le 13 istanze immagine della homepage hanno caricato con larghezza naturale positiva; nessun errore JavaScript/console.
-- Menu mobile `details/summary` aperto e link Matching attivato; `/matching` ha restituito 200. `/blog` ha restituito 200 con titolo `Blog BikerLink — Strade, community e vita in moto`.
-- Il browser ha consentito solo GET/HEAD/OPTIONS; zero metodi di scrittura sono stati tentati.
+Evidenza aggiornata in BROWSER_PREVIEW.json, acquisita 2026-11-19T13:19:08Z su deployment 9 con Playwright e Chromium di sistema. Desktop 1365×900 e viewport mobile 412×915; pagine /, /blog, /matching, /community:
 
-Il controllo mobile è emulazione Pixel 7, non un dispositivo Android fisico. Non sono state provate autenticazione, cookie/sessioni, streaming autenticati, form o operazioni di scrittura.
+- 8/8 navigazioni HTTP 200; nessun overflow orizzontale.
+- Homepage canonical https://biker-link.net/, meta robots index,follow; tutte le 13 immagini R2 caricate su entrambi i viewport dopo scorrimento progressivo.
+- /blog canonical https://biker-link.net/blog; nessun hostname Railway nel markup.
+- /web-session.js: 200, text/javascript, 4.827 byte; menu mobile aperto con 10 link.
+- Nessuna eccezione JavaScript, richiesta fallita o metodo di scrittura. Le richieste anonime /api/auth/me ricevono il 401 previsto.
+- Preview X-Robots-Tag noindex; le pagine conservano canonical e meta robots pubblici.
+- Test su Android fisico non eseguito.
 
-## Esito dei gate
+## Limiti e gate
 
-Questo Preview dimostra rendering, asset R2 e routing anonimo sul runtime Cloudflare. **Non sblocca Gate 1**: manca un backend/account sandbox isolato per le verifiche autenticate non distruttive. L’origine attuale è Railway production e non sono state eseguite scritture sul suo database. Gate 2 e Gate 3 restano **NOT RUN**; il dominio ufficiale non è stato pubblicato sul Worker.
+Questo controllo dimostra l’instradamento anonimo sul candidato v9, non l’autenticazione con sessione valida. Non ha eseguito login, modifiche account, matching autenticato, scritture telemetria, upload, SOS, notifiche, webhook o callback. Gli stream SSE/WebSocket con cookie valido non sono stati aperti. Nessun database è stato scritto.
 
-Durante la prima sonda il filtro Cloudflare dei Workers.dev ha risposto con errore 1010 al User-Agent predefinito di Python. Il probe ripetuto con User-Agent `curl/8.0` e il browser Chromium hanno raggiunto il Preview correttamente; i risultati registrati nel JSON sono quelli della ripetizione riuscita.
+Railway contiene un ambiente staging attivo con servizio backend e Postgres separato, ma il backend di staging usa branch e revisione diversi dalla produzione (feat/telemetry-capability-close-20261103, cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374). Health staging risponde 200 e degraded=false; non è stato possibile attestare un’identità di test/sessione autorizzata e l’isolamento dei flussi/database richiesti. Lo staging ha inoltre una patch già staged che non è stata toccata.
+
+Gate 1: BLOCKED, non PASS. Non c’è stata prova autenticata sicura su un account esistente di test. Il cambio DNS e il deploy production restano vietati dai gate del piano. Gate 2 e Gate 3: NOT RUN perché non è avvenuta la pubblicazione.

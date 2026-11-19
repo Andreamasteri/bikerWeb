@@ -19,7 +19,8 @@ const check = (condition, label) => { assert.ok(condition, label); pass++; };
 let r2Options;
 const makeEnv = () => ({
   RAILWAY_ORIGIN: 'https://bikerlink-production.up.railway.app',
-  ASSETS: { fetch: async request => new Response('STATIC:' + new URL(request.url).pathname, {status:200,headers:{'content-type':'text/html','x-fixture':'assets'}}) },
+  PUBLIC_SITE_ORIGIN: 'https://biker-link.net',
+  ASSETS: { fetch: async request => new Response('STATIC:' + new URL(request.url).pathname, {status:200,headers:{'content-type':new URL(request.url).pathname.endsWith('.js')?'application/javascript':'text/html','x-fixture':'assets'}}) },
   SITE_ASSETS: { get: async (key, options) => {
     r2Options=options;
     if (key !== 'assets/images/hero-community.webp') return null;
@@ -32,16 +33,18 @@ globalThis.fetch=async request=>{
   upstream=request;
   const path=new URL(request.url).pathname;
   if (path==='/privacy-policy') return new Response(null,{status:301,headers:{location:'/privacy'}});
+  if (path==='/blog') return new Response('<link rel="canonical" href="https://bikerlink-production.up.railway.app/blog"><meta property="og:url" content="https://bikerlink-production.up.railway.app/blog">',{status:200,headers:{'content-type':'text/html; charset=utf-8','content-length':'160','etag':'W/"origin-html"'}});
   if (path.startsWith('/assets/images/')&&request.headers.has('if-none-match')) return new Response(null,{status:304,headers:{etag:'"origin-etag"'}});
   if (path.startsWith('/assets/images/')&&request.headers.has('range')&&!request.headers.has('if-range')) return new Response('12',{status:206,headers:{'content-type':'image/webp','content-range':'bytes 0-1/9','content-length':'2'}});
   if (path.startsWith('/assets/images/')&&request.headers.has('if-range')) return new Response('fullimage',{status:200,headers:{'content-type':'image/webp','content-length':'9'}});
   return new Response('{"ok":true}',{status:200,headers:{'content-type':'application/json','set-cookie':'connect.sid=fixture; Path=/; HttpOnly; Secure; SameSite=Lax'}});
 };
-let res=await worker.fetch(new FakeRequest('https://biker-link.net/api/health?probe=1',{headers:{authorization:'Bearer fixture','x-trace-id':'trace-1'}}),makeEnv());
+let res=await worker.fetch(new FakeRequest('https://biker-link.net/api/health?probe=1',{headers:{authorization:'Bearer fixture','x-trace-id':'trace-1',host:'spoof.example'}}),makeEnv());
 check(res.status===200&&(await res.json()).ok,'API health response passed through');
 check(upstream.url==='https://bikerlink-production.up.railway.app/api/health?probe=1','API path and query preserved');
 check(upstream.headers.get('authorization')==='Bearer fixture'&&upstream.headers.get('x-trace-id')==='trace-1','authorization and caller headers preserved');
 check(upstream.headers.get('x-forwarded-host')==='biker-link.net'&&upstream.headers.get('x-forwarded-proto')==='https','public forwarded host and scheme preserved');
+check(upstream.headers.get('host')===null,'caller-supplied Host is removed and origin Host comes from Railway URL');
 check(res.headers.get('set-cookie')?.includes('connect.sid=fixture'),'Set-Cookie passed through');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/api/chat/stream?room=demo'),makeEnv());
 check(upstream.url.endsWith('/api/chat/stream?room=demo'),'SSE route remains on Railway');
@@ -69,6 +72,13 @@ check(upstream.url.endsWith('/assets/images/not-in-r2.webp'),'missing R2 image f
 res=await worker.fetch(new FakeRequest('https://biker-link.net/'),makeEnv());
 check(res.status===200&&(await res.text()).startsWith('STATIC:/index.html'),'homepage maps to Workers Static Assets');
 check(res.headers.get('x-content-type-options')==='nosniff'&&res.headers.get('referrer-policy')==='strict-origin-when-cross-origin','static assets retain origin security headers');
+res=await worker.fetch(new FakeRequest('https://biker-link.net/web-session.js'),makeEnv());
+check(res.status===200&&res.headers.get('content-type')==='application/javascript'&&(await res.text()).startsWith('STATIC:/web-session.js'),'session bootstrap script is served as a static JavaScript asset');
+res=await worker.fetch(new FakeRequest('https://biker-link.net/blog',{headers:{accept:'text/html'}}),makeEnv());
+const blogHtml=await res.text();
+check(upstream.headers.get('accept-encoding')==='identity','HTML navigation requests an uncompressed origin body for safe rewriting');
+check(res.status===200&&blogHtml.includes('https://biker-link.net/blog')&&!blogHtml.includes('bikerlink-production.up.railway.app'),'Railway HTML canonical and Open Graph URLs are rewritten to the public domain');
+check(!res.headers.has('etag')&&res.headers.get('content-length')===String(new TextEncoder().encode(blogHtml).byteLength),'rewritten HTML drops stale validators and has the correct content length');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/api'),makeEnv());
 check(upstream.url==='https://bikerlink-production.up.railway.app/api','/api namespace has precedence');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/does-not-exist'),makeEnv());

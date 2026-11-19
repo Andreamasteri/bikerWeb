@@ -11,6 +11,7 @@ import hashlib
 import json
 import statistics
 import time
+import re
 import urllib.request
 import urllib.error
 import subprocess
@@ -39,6 +40,7 @@ HEADS=[("blog","/blog",200,None),("contact","/contact",200,None),("web_login","/
  ("r2_source_image","/assets/images/hero-forest.webp",200,None),("favicon","/favicon.png",200,None),
  ("leaflet_html","/leaflet-map.html",200,None),("roadmap_json","/roadmap.json",200,None)]
 WEBSOCKETS=[("ws_admin_notifications","/ws/admin/notifications"),("ws_diagnostic","/ws/diagnostic")]
+HTML_GETS=[("blog_page","/blog",200)]
 parser=argparse.ArgumentParser()
 parser.add_argument('--output',default='API_BEFORE.json',help='JSON evidence output path')
 parser.add_argument('--compare',help='Compare results with an earlier probe JSON and fail on response regressions')
@@ -91,6 +93,13 @@ def req(base,method,path,headers=None,data=None,timeout=12,capture_body=False):
     if capture_body:
       row["body_bytes"]=len(body)
       row["body_sha256"]=hashlib.sha256(body).hexdigest()
+      if "text/html" in (ct or "").lower():
+        html=body.decode("utf-8",errors="replace")
+        canonical=re.search(r'<link[^>]+rel=["\']canonical["\'][^>]+href=["\']([^"\']+)',html,re.I)
+        if not canonical:
+          canonical=re.search(r'<link[^>]+href=["\']([^"\']+)["\'][^>]+rel=["\']canonical["\']',html,re.I)
+        row["canonical_url"]=canonical.group(1) if canonical else None
+        row["contains_railway_origin"]="bikerlink-production.up.railway.app" in html
     return row
 
 def websocket_probe(base,path):
@@ -129,6 +138,12 @@ for name,base in TARGETS.items():
  items=[]
  for label,path,expected in GETS:
   row=req(base,"GET",path,{"Accept":"application/json, text/event-stream"},timeout=8,capture_body=True); row.update({"test":label,"expected_status":expected,"pass":row.get("status")==expected}); items.append(row)
+ for label,path,expected in HTML_GETS:
+  row=req(base,"GET",path,{"Accept":"text/html,application/xhtml+xml"},timeout=12,capture_body=True)
+  expected_origin="https://biker-link.net" if name in ("public_apex","preview_candidate") else base.rstrip("/")
+  expected_canonical=expected_origin+path
+  row.update({"test":label,"expected_status":expected,"expected_canonical_url":expected_canonical,"pass":row.get("status")==expected and row.get("canonical_url")==expected_canonical and (name=="railway_origin" or not row.get("contains_railway_origin",False))})
+  items.append(row)
  image=req(base,"GET","/assets/images/hero-forest.webp",timeout=12,capture_body=True)
  image.update({"test":"plain_image","expected_status":200,"pass":image.get("status")==200 and image.get("content_type")=="image/webp" and image.get("headers",{}).get("Cache-Control")=="public, max-age=31536000, immutable"})
  items.append(image)
@@ -176,8 +191,8 @@ comparison=None
 if args.compare:
  previous=json.loads(Path(args.compare).read_text())
  rows=[]
- compared_fields=('status','content_type','schema','headers','cookies','location','body_bytes','body_sha256')
- preview_static_tests={'head_blog','head_contact','head_web_login','head_favicon','head_leaflet_html','head_roadmap_json'}
+ compared_fields=('status','content_type','schema','headers','cookies','location','body_bytes','body_sha256','canonical_url','contains_railway_origin')
+ preview_static_tests=set()
  target_sources={target:('public_apex' if target=='preview_candidate' else target) for target in out['targets']}
  for target,current in out['targets'].items():
   source=target_sources[target]
@@ -194,12 +209,18 @@ if args.compare:
     old_value=prior.get(field)
     new_value=current_row.get(field)
     if field=="headers":
+     if current_row.get("method")=="HEAD" and "text/html" in (current_row.get("content_type") or "").lower():
+      old_value={k:v for k,v in (old_value or {}).items() if k.lower() not in ("content-length","etag")}
+      new_value={k:v for k,v in (new_value or {}).items() if k.lower() not in ("content-length","etag")}
      if current_row['test']=="plain_image":
       old_value={k:v for k,v in (old_value or {}).items() if k.lower() not in ("etag","last-modified")}
       new_value={k:v for k,v in (new_value or {}).items() if k.lower() not in ("etag","last-modified")}
      if prior.get("body_sha256") and prior.get("body_sha256")==current_row.get("body_sha256") and prior.get("body_bytes")==current_row.get("body_bytes"):
       old_value={k:v for k,v in (old_value or {}).items() if k.lower()!="content-length"}
       new_value={k:v for k,v in (new_value or {}).items() if k.lower()!="content-length"}
+    if current_row['test']=="blog_page":
+     compared_fields_for_html=('status','content_type','canonical_url','contains_railway_origin','location')
+     if field not in compared_fields_for_html: continue
     if old_value!=new_value:
      rows.append({"target":target,"test":current_row['test'],"field":field,"before":old_value,"after":new_value})
   if current.get('revision')!=before.get('revision'):

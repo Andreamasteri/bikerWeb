@@ -4,7 +4,8 @@
   "compatibility_date": "2026-11-19",
   "workers_dev": true,
   "vars": {
-    "RAILWAY_ORIGIN": "https://bikerlink-production.up.railway.app"
+    "RAILWAY_ORIGIN": "https://bikerlink-production.up.railway.app",
+    "PUBLIC_SITE_ORIGIN": "https://biker-link.net"
   },
   "assets": {
     "directory": "./public",
@@ -21,7 +22,8 @@
   ],
   "previews": {
     "vars": {
-      "RAILWAY_ORIGIN": "https://bikerlink-production.up.railway.app"
+      "RAILWAY_ORIGIN": "https://bikerlink-production.up.railway.app",
+      "PUBLIC_SITE_ORIGIN": "https://biker-link.net"
     },
     "r2_buckets": [
       {

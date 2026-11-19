@@ -19,7 +19,7 @@ const STATIC_PAGES = new Set([
   "/en/download",
 ]);
 
-const STATIC_FILES = new Set(["/robots.txt", "/sitemap.xml"]);
+const STATIC_FILES = new Set(["/robots.txt", "/sitemap.xml", "/web-session.js"]);
 
 const BACKEND_PAGES = new Set([
   "/features",
@@ -111,10 +111,92 @@ function railwayOrigin(env) {
   }
 }
 
-async function proxyToRailway(request, env) {
+function publicSiteOrigin(env) {
+  try {
+    const origin = new URL(env.PUBLIC_SITE_ORIGIN);
+    if (
+      origin.protocol !== "https:" ||
+      origin.hostname !== "biker-link.net" ||
+      origin.pathname !== "/" ||
+      origin.search ||
+      origin.hash
+    ) return null;
+    return origin;
+  } catch {
+    return null;
+  }
+}
+
+async function rewritePublicOrigin(response, request, railway, publicOrigin) {
+  const headers = new Headers(response.headers);
+  let changed = false;
+  const location = headers.get("location");
+  if (location) {
+    try {
+      const target = new URL(location);
+      if (target.origin === railway.origin) {
+        target.protocol = publicOrigin.protocol;
+        target.host = publicOrigin.host;
+        headers.set("location", target.toString());
+        changed = true;
+      }
+    } catch {
+      // Relative and non-URL Location values retain origin behavior.
+    }
+  }
+
+  const contentType = headers.get("content-type") || "";
+  if (
+    request.method !== "GET" ||
+    !/^text\/html\b/i.test(contentType) ||
+    !response.body
+  ) {
+    if (/^text\/html\b/i.test(contentType) && request.method === "HEAD") {
+      // The GET body is rewritten, so the origin's validators/length no longer
+      // describe that representation. A bodyless HEAD remains standards-valid
+      // without them.
+      headers.delete("content-length");
+      headers.delete("etag");
+      changed = true;
+    }
+    if (!changed) return response;
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers,
+    });
+  }
+
+  // The origin can gzip/brotli HTML based on Accept-Encoding. The caller asks
+  // for identity so the body can be safely rewritten without changing API
+  // responses or the origin's dynamic page logic.
+  if (headers.has("content-encoding") && headers.get("content-encoding") !== "identity") {
+    return new Response("Unable to safely rewrite compressed Railway HTML", {
+      status: 502,
+      headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+    });
+  }
+
+  const html = await response.text();
+  const rewritten = html.replaceAll(railway.host, publicOrigin.host);
+  if (rewritten === html && !changed) return response;
+
+  for (const name of ["content-length", "content-encoding", "etag", "content-md5", "digest", "content-digest", "repr-digest"]) {
+    headers.delete(name);
+  }
+  headers.set("content-length", String(new TextEncoder().encode(rewritten).byteLength));
+  return new Response(rewritten, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
+async function proxyToRailway(request, env, options = {}) {
   const incomingUrl = new URL(request.url);
   const origin = railwayOrigin(env);
-  if (!origin) {
+  const publicOrigin = options.rewritePublicOrigin ? publicSiteOrigin(env) : null;
+  if (!origin || (options.rewritePublicOrigin && !publicOrigin)) {
     return new Response("Railway origin is not configured", {
       status: 503,
       headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
@@ -123,9 +205,18 @@ async function proxyToRailway(request, env) {
   const upstreamUrl = new URL(incomingUrl.pathname + incomingUrl.search, origin);
   const headers = new Headers(request.headers);
 
-  // The connection Host is set from RAILWAY_ORIGIN by fetch. Keep the public
-  // host and scheme in the trusted forwarded headers used by the app for
-  // redirects, canonical URLs, secure cookies, and origin checks.
+  const rewriteHtml = options.rewritePublicOrigin && request.method === "GET" &&
+    (request.headers.get("accept") || "").toLowerCase().includes("text/html");
+  if (rewriteHtml) {
+    headers.set("accept-encoding", "identity");
+    headers.delete("if-none-match");
+    headers.delete("if-modified-since");
+  }
+
+  // The origin URL stays on Railway to avoid a loop. Railway's edge replaces
+  // the Host from the origin URL, so do not forward a caller-supplied Host.
+  // Keep forwarded metadata and rewrite Railway's hostname in non-API HTML and
+  // absolute redirects below.
   headers.delete("host");
   headers.set("x-forwarded-host", incomingUrl.host);
   headers.set("x-forwarded-proto", incomingUrl.protocol.slice(0, -1));
@@ -139,9 +230,11 @@ async function proxyToRailway(request, env) {
     init.body = request.body;
   }
 
-  // Return the upstream Response unchanged so Set-Cookie, redirects, SSE
-  // streams, WebSocket upgrades, status codes, and error bodies pass through.
-  return fetch(new Request(upstreamUrl, init));
+  // API, SSE, WebSocket, cookie, and error responses are returned unchanged.
+  const response = await fetch(new Request(upstreamUrl, init));
+  return options.rewritePublicOrigin
+    ? rewritePublicOrigin(response, request, origin, publicOrigin)
+    : response;
 }
 
 function assetRequest(request, path) {
@@ -251,7 +344,7 @@ export default {
     // These legacy and application pages remain on Railway. This is an
     // explicit route family list; unknown paths never receive frontend HTML.
     if (isBackendPage(pathname) && (method === "GET" || method === "HEAD")) {
-      return proxyToRailway(request, env);
+      return proxyToRailway(request, env, { rewritePublicOrigin: true });
     }
 
     // Preserve the website's current image paths while serving the original

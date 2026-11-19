@@ -1,5 +1,5 @@
 {
-  "captured_at_utc": "2026-11-19T12:20:56Z",
+  "captured_at_utc": "2026-11-19T13:03:15Z",
   "backend_revision_expected": "aedfb278f487105a10567c9efa4c090705b3d801",
   "targets": {
     "public_apex": {
@@ -10,7 +10,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/health",
           "status": 200,
-          "latency_ms": 280,
+          "latency_ms": 257,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -48,7 +48,7 @@
           "method": "GET",
           "url": "https://biker-link.net/healthz",
           "status": 200,
-          "latency_ms": 260,
+          "latency_ms": 246,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -65,6 +65,8 @@
           "location": null,
           "body_bytes": 2,
           "body_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+          "canonical_url": null,
+          "contains_railway_origin": false,
           "test": "readiness",
           "expected_status": 200,
           "pass": true
@@ -73,7 +75,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/auth/me",
           "status": 401,
-          "latency_ms": 247,
+          "latency_ms": 203,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -101,7 +103,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/users/me",
           "status": 401,
-          "latency_ms": 166,
+          "latency_ms": 300,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -129,7 +131,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/chat/conversations",
           "status": 401,
-          "latency_ms": 191,
+          "latency_ms": 240,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -157,7 +159,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/chat/stream",
           "status": 401,
-          "latency_ms": 223,
+          "latency_ms": 163,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -185,7 +187,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/auth/session-events",
           "status": 401,
-          "latency_ms": 173,
+          "latency_ms": 166,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -241,7 +243,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/ai/assistant/config",
           "status": 401,
-          "latency_ms": 127,
+          "latency_ms": 180,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -269,7 +271,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/download/apk/status",
           "status": 200,
-          "latency_ms": 200,
+          "latency_ms": 141,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -296,7 +298,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/config",
           "status": 200,
-          "latency_ms": 286,
+          "latency_ms": 287,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -326,7 +328,7 @@
           "method": "GET",
           "url": "https://biker-link.net/api/community/stats",
           "status": 200,
-          "latency_ms": 157,
+          "latency_ms": 164,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -353,9 +355,49 @@
         },
         {
           "method": "GET",
-          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "url": "https://biker-link.net/blog",
           "status": 200,
           "latency_ms": 137,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 201679
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"313cf-Hd262/y3WBJyiYGUsTb+zs+fBaA\"",
+            "Content-Length": "201679"
+          },
+          "cookies": [
+            {
+              "name": "bl_vid",
+              "attributes": [
+                "Path=/",
+                "Max-Age=31536000",
+                "HttpOnly",
+                "SameSite=Lax",
+                "Secure"
+              ]
+            }
+          ],
+          "location": null,
+          "body_bytes": 201679,
+          "body_sha256": "5651faed424975f102d32d8424e2854399753396b55bd6fb9faa586118989a49",
+          "canonical_url": "https://biker-link.net/blog",
+          "contains_railway_origin": false,
+          "test": "blog_page",
+          "expected_status": 200,
+          "expected_canonical_url": "https://biker-link.net/blog",
+          "pass": true
+        },
+        {
+          "method": "GET",
+          "url": "https://biker-link.net/assets/images/hero-forest.webp",
+          "status": 200,
+          "latency_ms": 145,
           "content_type": "image/webp",
           "schema": {
             "kind": "non_json",
@@ -382,7 +424,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/auth/register",
           "status": 200,
-          "latency_ms": 128,
+          "latency_ms": 153,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -406,7 +448,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/auth/login",
           "status": 200,
-          "latency_ms": 142,
+          "latency_ms": 131,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -430,7 +472,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/sos",
           "status": 200,
-          "latency_ms": 179,
+          "latency_ms": 156,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -454,7 +496,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/chat/conversations",
           "status": 200,
-          "latency_ms": 308,
+          "latency_ms": 137,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -478,7 +520,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/telemetry/batch",
           "status": 200,
-          "latency_ms": 137,
+          "latency_ms": 169,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -502,7 +544,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/users/me/photos",
           "status": 200,
-          "latency_ms": 140,
+          "latency_ms": 129,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -526,7 +568,7 @@
           "method": "OPTIONS",
           "url": "https://biker-link.net/api/admin/media/upload",
           "status": 200,
-          "latency_ms": 146,
+          "latency_ms": 134,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -550,7 +592,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/blog",
           "status": 200,
-          "latency_ms": 137,
+          "latency_ms": 146,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -574,7 +616,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/contact",
           "status": 200,
-          "latency_ms": 143,
+          "latency_ms": 127,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -598,7 +640,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/accedi",
           "status": 200,
-          "latency_ms": 141,
+          "latency_ms": 130,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -622,7 +664,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/admin/diagnostics/live",
           "status": 302,
-          "latency_ms": 147,
+          "latency_ms": 150,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -644,7 +686,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/privacy-policy",
           "status": 301,
-          "latency_ms": 145,
+          "latency_ms": 122,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -666,7 +708,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/pianifica",
           "status": 302,
-          "latency_ms": 125,
+          "latency_ms": 152,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -688,7 +730,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/api/download/apk/latest",
           "status": 302,
-          "latency_ms": 135,
+          "latency_ms": 124,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -710,7 +752,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/assets/images/hero-forest.webp",
           "status": 200,
-          "latency_ms": 158,
+          "latency_ms": 157,
           "content_type": "image/webp",
           "schema": {
             "kind": "empty"
@@ -735,7 +777,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/favicon.png",
           "status": 200,
-          "latency_ms": 132,
+          "latency_ms": 137,
           "content_type": "image/png",
           "schema": {
             "kind": "empty"
@@ -760,7 +802,7 @@
           "method": "HEAD",
           "url": "https://biker-link.net/leaflet-map.html",
           "status": 200,
-          "latency_ms": 146,
+          "latency_ms": 126,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -810,7 +852,7 @@
           "method": "GET",
           "url": "https://biker-link.net/assets/images/hero-forest.webp",
           "status": 304,
-          "latency_ms": 125,
+          "latency_ms": 126,
           "content_type": null,
           "schema": {
             "kind": "empty"
@@ -856,7 +898,7 @@
           "method": "GET",
           "url": "https://biker-link.net/assets/images/hero-forest.webp",
           "status": 206,
-          "latency_ms": 144,
+          "latency_ms": 127,
           "content_type": "image/webp",
           "schema": {
             "kind": "non_json",
@@ -884,7 +926,7 @@
           "method": "GET",
           "url": "https://biker-link.net/assets/images/hero-forest.webp",
           "status": 200,
-          "latency_ms": 135,
+          "latency_ms": 138,
           "content_type": "image/webp",
           "schema": {
             "kind": "non_json",
@@ -911,7 +953,7 @@
           "method": "GET",
           "url": "https://biker-link.net/ws/admin/notifications",
           "status": 401,
-          "latency_ms": 375,
+          "latency_ms": 180,
           "content_type": null,
           "schema": {
             "kind": "empty"
@@ -932,7 +974,7 @@
           "method": "GET",
           "url": "https://biker-link.net/ws/diagnostic",
           "status": 401,
-          "latency_ms": 163,
+          "latency_ms": 388,
           "content_type": null,
           "schema": {
             "kind": "empty"
@@ -959,7 +1001,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/health",
           "status": 200,
-          "latency_ms": 233,
+          "latency_ms": 420,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -997,7 +1039,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/healthz",
           "status": 200,
-          "latency_ms": 191,
+          "latency_ms": 186,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1014,6 +1056,8 @@
           "location": null,
           "body_bytes": 2,
           "body_sha256": "2689367b205c16ce32ed4200942b8b8b1e262dfc70d9bc9fbc77c49699a4f1df",
+          "canonical_url": null,
+          "contains_railway_origin": false,
           "test": "readiness",
           "expected_status": 200,
           "pass": true
@@ -1022,7 +1066,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/auth/me",
           "status": 401,
-          "latency_ms": 179,
+          "latency_ms": 170,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1050,7 +1094,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/users/me",
           "status": 401,
-          "latency_ms": 189,
+          "latency_ms": 171,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1078,7 +1122,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/chat/conversations",
           "status": 401,
-          "latency_ms": 176,
+          "latency_ms": 182,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1106,7 +1150,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/chat/stream",
           "status": 401,
-          "latency_ms": 185,
+          "latency_ms": 199,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1134,7 +1178,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/auth/session-events",
           "status": 401,
-          "latency_ms": 189,
+          "latency_ms": 187,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1162,7 +1206,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/notifications",
           "status": 401,
-          "latency_ms": 182,
+          "latency_ms": 172,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1190,7 +1234,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/ai/assistant/config",
           "status": 401,
-          "latency_ms": 184,
+          "latency_ms": 174,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1218,7 +1262,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/download/apk/status",
           "status": 200,
-          "latency_ms": 178,
+          "latency_ms": 692,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1245,7 +1289,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/config",
           "status": 200,
-          "latency_ms": 191,
+          "latency_ms": 209,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1275,7 +1319,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/api/community/stats",
           "status": 200,
-          "latency_ms": 187,
+          "latency_ms": 180,
           "content_type": "application/json; charset=utf-8",
           "schema": {
             "kind": "object",
@@ -1302,9 +1346,49 @@
         },
         {
           "method": "GET",
+          "url": "https://bikerlink-production.up.railway.app/blog",
+          "status": 200,
+          "latency_ms": 198,
+          "content_type": "text/html; charset=utf-8",
+          "schema": {
+            "kind": "non_json",
+            "bytes": 201826
+          },
+          "headers": {
+            "Cache-Control": "public, max-age=300",
+            "Vary": "Accept-Encoding",
+            "X-Content-Type-Options": "nosniff",
+            "Referrer-Policy": "strict-origin-when-cross-origin",
+            "ETag": "W/\"31462-y68uKcMN/MlnvHiFPmgLaM/x84o\"",
+            "Content-Length": "201826"
+          },
+          "cookies": [
+            {
+              "name": "bl_vid",
+              "attributes": [
+                "Path=/",
+                "Max-Age=31536000",
+                "HttpOnly",
+                "SameSite=Lax",
+                "Secure"
+              ]
+            }
+          ],
+          "location": null,
+          "body_bytes": 201826,
+          "body_sha256": "b7af2c87f23d0b2ac7ccb95e70201d85c9f7a96284621bc50a088650d6d2077f",
+          "canonical_url": "https://bikerlink-production.up.railway.app/blog",
+          "contains_railway_origin": true,
+          "test": "blog_page",
+          "expected_status": 200,
+          "expected_canonical_url": "https://bikerlink-production.up.railway.app/blog",
+          "pass": true
+        },
+        {
+          "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
           "status": 200,
-          "latency_ms": 193,
+          "latency_ms": 198,
           "content_type": "image/webp",
           "schema": {
             "kind": "non_json",
@@ -1331,7 +1415,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/auth/register",
           "status": 200,
-          "latency_ms": 190,
+          "latency_ms": 174,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1355,7 +1439,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/auth/login",
           "status": 200,
-          "latency_ms": 193,
+          "latency_ms": 185,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1379,7 +1463,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/sos",
           "status": 200,
-          "latency_ms": 173,
+          "latency_ms": 181,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1403,7 +1487,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/chat/conversations",
           "status": 200,
-          "latency_ms": 195,
+          "latency_ms": 178,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1427,7 +1511,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/telemetry/batch",
           "status": 200,
-          "latency_ms": 183,
+          "latency_ms": 174,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1451,7 +1535,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/users/me/photos",
           "status": 200,
-          "latency_ms": 182,
+          "latency_ms": 179,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1475,7 +1559,7 @@
           "method": "OPTIONS",
           "url": "https://bikerlink-production.up.railway.app/api/admin/media/upload",
           "status": 200,
-          "latency_ms": 175,
+          "latency_ms": 177,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "non_json",
@@ -1499,7 +1583,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/blog",
           "status": 200,
-          "latency_ms": 181,
+          "latency_ms": 200,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1523,7 +1607,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/contact",
           "status": 200,
-          "latency_ms": 195,
+          "latency_ms": 176,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1547,7 +1631,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/accedi",
           "status": 200,
-          "latency_ms": 200,
+          "latency_ms": 173,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1571,7 +1655,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/admin/diagnostics/live",
           "status": 302,
-          "latency_ms": 183,
+          "latency_ms": 184,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1593,7 +1677,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/privacy-policy",
           "status": 301,
-          "latency_ms": 177,
+          "latency_ms": 179,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1615,7 +1699,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/pianifica",
           "status": 302,
-          "latency_ms": 197,
+          "latency_ms": 425,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1637,7 +1721,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/api/download/apk/latest",
           "status": 302,
-          "latency_ms": 186,
+          "latency_ms": 183,
           "content_type": "text/plain; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1659,7 +1743,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
           "status": 200,
-          "latency_ms": 183,
+          "latency_ms": 191,
           "content_type": "image/webp",
           "schema": {
             "kind": "empty"
@@ -1684,7 +1768,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/favicon.png",
           "status": 200,
-          "latency_ms": 171,
+          "latency_ms": 177,
           "content_type": "image/png",
           "schema": {
             "kind": "empty"
@@ -1709,7 +1793,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/leaflet-map.html",
           "status": 200,
-          "latency_ms": 181,
+          "latency_ms": 189,
           "content_type": "text/html; charset=utf-8",
           "schema": {
             "kind": "empty"
@@ -1733,7 +1817,7 @@
           "method": "HEAD",
           "url": "https://bikerlink-production.up.railway.app/roadmap.json",
           "status": 200,
-          "latency_ms": 204,
+          "latency_ms": 191,
           "content_type": "application/json",
           "schema": {
             "kind": "empty"
@@ -1759,7 +1843,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
           "status": 304,
-          "latency_ms": 175,
+          "latency_ms": 182,
           "content_type": null,
           "schema": {
             "kind": "empty"
@@ -1782,7 +1866,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
           "status": 304,
-          "latency_ms": 183,
+          "latency_ms": 168,
           "content_type": null,
           "schema": {
             "kind": "empty"
@@ -1805,7 +1889,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
           "status": 206,
-          "latency_ms": 179,
+          "latency_ms": 174,
           "content_type": "image/webp",
           "schema": {
             "kind": "non_json",
@@ -1833,7 +1917,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/assets/images/hero-forest.webp",
           "status": 200,
-          "latency_ms": 185,
+          "latency_ms": 202,
           "content_type": "image/webp",
           "schema": {
             "kind": "non_json",
@@ -1860,7 +1944,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/ws/admin/notifications",
           "status": 401,
-          "latency_ms": 205,
+          "latency_ms": 416,
           "content_type": null,
           "schema": {
             "kind": "empty"
@@ -1881,7 +1965,7 @@
           "method": "GET",
           "url": "https://bikerlink-production.up.railway.app/ws/diagnostic",
           "status": 401,
-          "latency_ms": 429,
+          "latency_ms": 232,
           "content_type": null,
           "schema": {
             "kind": "empty"
