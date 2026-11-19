@@ -269,6 +269,17 @@ function withSecurityHeaders(response) {
   });
 }
 
+function withPreviewNoIndex(response, request) {
+  if (!new URL(request.url).hostname.endsWith(".workers.dev")) return response;
+  const headers = new Headers(response.headers);
+  headers.set("x-robots-tag", "noindex");
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
+
 function notFound() {
   return withSecurityHeaders(new Response("Not Found", {
     status: 404,
@@ -358,13 +369,19 @@ export default {
     // still wins for every method and path in the /api namespace.
     const staticPage = STATIC_PAGES.get(pathname);
     if (staticPage && (method === "GET" || method === "HEAD")) {
-      return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, staticPage)));
+      return withPreviewNoIndex(
+        withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, staticPage))),
+        request,
+      );
     }
 
     // These legacy and application pages remain on Railway. This is an
     // explicit route family list; unknown paths never receive frontend HTML.
     if (isBackendPage(pathname) && (method === "GET" || method === "HEAD")) {
-      return proxyToRailway(request, env, { rewritePublicOrigin: true });
+      return withPreviewNoIndex(
+        await proxyToRailway(request, env, { rewritePublicOrigin: true }),
+        request,
+      );
     }
 
     // Preserve the website's current image paths while serving the original
@@ -385,7 +402,10 @@ export default {
 
     if (STATIC_FILES.has(pathname) && (method === "GET" || method === "HEAD")) {
       const file = pathname;
-      return withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, file)));
+      return withPreviewNoIndex(
+        withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, file))),
+        request,
+      );
     }
 
     return notFound();

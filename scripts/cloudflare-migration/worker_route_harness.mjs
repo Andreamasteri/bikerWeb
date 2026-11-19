@@ -79,6 +79,10 @@ res=await worker.fetch(new FakeRequest('https://biker-link.net/blog',{headers:{a
 const blogStaticBody=await res.text();
 check(res.status===200&&blogStaticBody==='STATIC:/blog/index.html','legacy blog index is served from Workers Static Assets');
 check(!upstream.url.endsWith('/blog'),'legacy blog no longer falls through to the Railway frontend');
+res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-preview.example.workers.dev/'),makeEnv());
+check(res.status===200&&res.headers.get('x-robots-tag')==='noindex','workers.dev preview pages are excluded from indexing');
+res=await worker.fetch(new FakeRequest('https://biker-link.net/'),makeEnv());
+check(res.status===200&&!res.headers.has('x-robots-tag'),'official custom domain remains indexable');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/matching/come-funziona'),makeEnv());
 check(res.status===200&&(await res.text())==='STATIC:/matching/come-funziona/index.html','legacy matching detail page is served from Workers Static Assets');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/features'),makeEnv());
@@ -90,6 +94,8 @@ check(upstream.url==='https://bikerlink-production.up.railway.app/delete-account
 const accountHtml=await res.text();
 check(res.status===200&&accountHtml.includes('Delete account')&&accountHtml.includes('https://biker-link.net/delete-account')&&!accountHtml.includes('bikerlink-production.up.railway.app'),'application-owned HTML is readable and its public host is rewritten');
 check(upstream.headers.get('accept-encoding')==='identity'&&!res.headers.has('etag')&&res.headers.get('content-length')===String(new TextEncoder().encode(accountHtml).byteLength),'rewritten account HTML has correct encoding and entity headers');
+res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-preview.example.workers.dev/delete-account',{headers:{accept:'text/html'}}),makeEnv());
+check(res.headers.get('x-robots-tag')==='noindex','Railway HTML previews are excluded from indexing');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/blog/new-article'),makeEnv());
 check(upstream.url==='https://bikerlink-production.up.railway.app/blog/new-article','unlisted blog routes retain the existing Railway handling');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/docs'),makeEnv());
