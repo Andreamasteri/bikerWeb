@@ -44,6 +44,14 @@ Cloudflare module update succeeded at 14:08:34 UTC and returned deployment ID
   passed the local route harness; it has not been published to the official
   domain. The isolated Worker update completed at 17:02:05 UTC with deployment
   ID `223c2c4a43aa4696893a7af589a21400`.
+- The following browser run again passed registration (`201`), `/api/auth/me`
+  (`200`), and the empty-conversation check. The Worker client aborted after 15
+  seconds; Railway logged `/api/chat/stream` as HTTP `200` with a 14,981 ms
+  duration. The isolated Worker now also exposes `/__sse-selftest`, a synthetic
+  stream that emits `event: connected` immediately, to separate generic Worker
+  streaming from the Railway upstream path. This diagnostic route was added
+  only to the temporary Worker (deployment `63ae9e8fbd914ef59269c88c1878bb60`,
+  17:08:41 UTC).
 - The authenticated registration and Chat SSE probe must be rerun from Chrome.
   Gate 1 remains blocked until its result reports registration 201, authenticated
   `/api/auth/me` 200, zero conversations, and a successful Chat SSE connection.
@@ -56,3 +64,14 @@ fetch("/__probe.js").then(r => r.text()).then(code => eval(code))
 
 The probe opens Chat SSE only after it confirms the newly registered test
 account has no conversations.
+
+Before repeating that probe, check the Worker streaming path without touching
+Railway or the database:
+
+```js
+(async()=>{const c=new AbortController();const t=setTimeout(()=>c.abort(),5000);try{const r=await fetch("/__sse-selftest",{signal:c.signal});const rd=r.body.getReader();const x=await rd.read();console.log("GATE1_SSE_SELFTEST",JSON.stringify({status:r.status,type:r.headers.get("content-type"),first_chunk:new TextDecoder().decode(x.value)}));await rd.cancel()}catch(e){console.log("GATE1_SSE_SELFTEST",JSON.stringify({error:e.name}))}finally{clearTimeout(t)}})()
+```
+
+Expected: HTTP `200`, `text/event-stream`, and an `event: connected` first
+chunk. If that passes, rerun the authenticated `/api/chat/stream` probe; if it
+fails, stop and keep the production deployment blocked.
