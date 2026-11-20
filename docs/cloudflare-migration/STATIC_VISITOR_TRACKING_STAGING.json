@@ -1,0 +1,69 @@
+{
+  "captured_at_utc": "2026-11-20T11:56:14Z",
+  "source_repository": "Andreamasteri/bikerWeb",
+  "source_branch": "codex/bikerweb-visitor-tracking-preservation-20261120",
+  "source_commit": "f4c3ebac97d36ffa58691d238878f5e0dd905dfd",
+  "worker": "bikerlink-website-gate1-staging",
+  "worker_version": "f8f61d8d-5704-432e-8e02-994113dd666c",
+  "worker_host": "bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+  "railway_environment": "staging",
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/blog",
+      "status": 200,
+      "content_type": "text/html",
+      "body_bytes": 201679,
+      "x_robots_tag": "noindex",
+      "visitor_cookie": {
+        "name": "bl_vid",
+        "attributes": [
+          "Path=/",
+          "Max-Age=31536000",
+          "HttpOnly",
+          "SameSite=Lax",
+          "Secure"
+        ],
+        "value_recorded": false
+      },
+      "background_tracking_get_scheduled": true,
+      "tracking_database_row_verified": false,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "backend_revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+      "state": "READY",
+      "degraded": false,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "expected_status": 401,
+      "pass": true
+    }
+  ],
+  "local_route_harness": {
+    "passed": 91,
+    "failed": 0,
+    "checks": [
+      "static page content remains on Workers Static Assets",
+      "bl_vid cookie attributes and stable visitor-id reuse",
+      "visit tracking forwards only to production on the exact apex origin",
+      "production-backed workers.dev preview causes no visitor write",
+      "Gate 1 visitor tracking is constrained to Railway staging"
+    ]
+  },
+  "wrangler_dry_runs": {
+    "production": "PASS",
+    "gate1_staging": "PASS",
+    "version": "4.165.0"
+  },
+  "production_worker_or_dns_changed": false
+}
