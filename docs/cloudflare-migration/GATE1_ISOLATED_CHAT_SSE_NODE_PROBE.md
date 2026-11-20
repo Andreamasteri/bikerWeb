@@ -145,3 +145,14 @@ Accept-Encoding identity. È stata pubblicata alle 19:20:30Z come deployment
 `cc27009f-f9a9-4101-8475-b6832b7238b2`; binding API verificato sul backend usa e
 getta. Il source è stato pushato su GitHub, ma il nuovo test autenticato non è
 ancora stato eseguito. Gate 1 resta BLOCKED.
+
+Il probe successivo, alle 19:25:07Z, ha ricevuto `POST /api/auth/register`
+HTTP 429 e si è fermato prima di creare una sessione o aprire SSE. I log HTTP
+Railway in sola lettura confermano 429 alle 19:25:10Z e tre registrazioni
+accettate dallo stesso IP: 18:53:34Z, 19:00:03Z e 19:12:32Z. La route
+staging applica `max: 3` su `windowMs: 3.600.000`; il quarto tentativo è stato
+respinto dal limiter. Nessun altro tentativo è stato eseguito. Non rilanciare
+il probe durante questa finestra; il riferimento più sicuro per un'eventuale
+prova successiva è dopo le 19:54Z. L'errore è un limite di registrazione
+isolato, non un nuovo risultato SSE; il test raw resta in attesa e Gate 1 è
+ancora BLOCKED.

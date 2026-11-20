@@ -164,7 +164,13 @@ dalla fetch Worker di base. Il candidato Cloudflare aggiornato è deployment
 `cc27009f-f9a9-4101-8475-b6832b7238b2`; il binding verso il solo backend usa e
 getta è stato riverificato. L'host Workers non è raggiungibile dai runner del
 workspace, quindi per il controllo autenticato serve il probe Windows già
-aggiornato sul branch. Gate 1 completo rimane **BLOCKED**; non si eseguono
+aggiornato sul branch. Il tentativo delle 19:25:07Z è stato fermato dal limite
+staging `POST /api/auth/register` (429) prima di creare sessione o aprire SSE.
+I log Railway verificano tre registrazioni ammesse dallo stesso IP alle
+18:53:34Z, 19:00:03Z e 19:12:32Z e il 429 alle 19:25:10Z. Il codice della
+route imposta `max: 3` e una finestra di un'ora; la diagnostica raw rimane in
+attesa e non va rilanciata prima della scadenza della finestra. Gate 1 completo
+rimane **BLOCKED**; non si eseguono
 deployment production, modifiche DNS, Gate 2 o Gate 3. Lo staging e il database
 isolato non sono stati modificati; gli account usa e getta creati dal probe
 appartengono soltanto al database del backend isolato.
