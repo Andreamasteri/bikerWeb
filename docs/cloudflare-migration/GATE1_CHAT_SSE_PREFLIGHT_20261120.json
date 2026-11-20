@@ -1,0 +1,21 @@
+{
+  "captured_at_utc": "2026-11-20T12:20:32.804Z",
+  "target": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+  "conversations": {
+    "status": 200,
+    "count": 1,
+    "pass": true
+  },
+  "chat_sse": {
+    "attempted": false,
+    "status": 0,
+    "content_type": null,
+    "connected_event": false,
+    "pass": false
+  },
+  "all_pass": false,
+  "skip_reason": "active_conversation_present_presence_probe_skipped",
+  "stream_opened": false,
+  "presence_events_sent": false,
+  "identifiers_or_credentials_recorded": false
+}
