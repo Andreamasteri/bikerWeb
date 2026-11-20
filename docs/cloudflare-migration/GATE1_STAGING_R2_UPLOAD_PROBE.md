@@ -11,16 +11,18 @@ The backend storage helper prepends `R2_KEY_PREFIX` to object keys. The AI image
 
 An independent Cloudflare R2 control probe in the EU private bucket passed: a 70-byte 1×1 PNG was uploaded under a unique `__codex_gate1_probe/` key, downloaded with matching SHA-256 `4ff6ab670a58c14270e034e2090d9a432caa263a14e0a25785386b0c12f880b5`, deleted by exact key, and verified absent afterward. The object has been removed. This proves R2 read/write and exact-key cleanup; it does not replace the application upload test.
 
-## Run the authenticated application probe
+## Authenticated application probe and cleanup — PASS
 
-1. Open the authenticated Gate 1 staging Worker tab: <https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev/area-utente>.
-2. Open DevTools → Console on that same tab and paste the **entire one-line contents** of [`GATE1_STAGING_R2_UPLOAD_PROBE.js`](GATE1_STAGING_R2_UPLOAD_PROBE.js).
-3. Return only the line beginning `GATE1_STAGING_R2_UPLOAD_RESULT`.
+The operator ran the one-line browser probe on the authenticated staging Worker on 20 November 2026:
 
-The script refuses to run on any other hostname. It uploads only a synthetic 1×1 PNG through the authenticated `/api/ai/assistant/images` endpoint using the route's `image` multipart field; then it reads the new image back through the same authenticated Worker, checking MIME, 70-byte size and SHA-256. It prints only status, the random object key and integrity result. It does not print cookies, tokens, response bodies, or profile data, and it does not touch the database or send a message/SOS/notification. Once the output is returned, delete only that reported key from `bikerlink-private` in the EU jurisdiction and verify it is absent.
+- POST `/api/ai/assistant/images`: HTTP 200.
+- Authenticated GET of the returned image path: HTTP 200, `image/png`, 70 bytes.
+- Browser SHA-256: `4ff6ab670a58c14270e034e2090d9a432caa263a14e0a25785386b0c12f880b5` (matches the expected synthetic PNG).
+- Exact staging R2 key: `private/assistant-images/1795174467908-fyid2e3tfet.png` in `bikerlink-private` (EU).
+- Wrangler readback from R2 matched size and SHA-256. The exact key was deleted; a subsequent GET returned `The specified key does not exist`.
 
-If the output has `pass:false`, do not retry repeatedly. Record the HTTP status and reported key, if any; clean up that exact key before diagnosing the cause.
+No database or profile data was written. The probe created only the temporary image object, which has been removed. Its source remains in [`GATE1_STAGING_R2_UPLOAD_PROBE.js`](GATE1_STAGING_R2_UPLOAD_PROBE.js) for traceability.
 
 ## Current boundary
 
-The authenticated read/API routing probe remains 19/19 PASS. The independent R2 control probe is PASS and makes a controlled app upload safe to test. Gate 1 remains blocked until the authenticated app upload is read back and cleaned up, and until Chat SSE is reviewed or safely tested without sending presence to unrelated participants. Production DNS and the production Worker have not been changed.
+The authenticated read/API routing probe is 19/19 PASS, and the application upload/readback/exact-key cleanup is PASS. Chat SSE is not opened because its connect/disconnect path can broadcast presence; the Worker route and local harness confirm `/api/chat/stream` uses the same unmodified `/api/*` Railway pass-through, while authenticated session SSE and notifications WSS passed live. Gate 1 is PASS for Cloudflare routing/storage. Production DNS and the production Worker have not been changed.

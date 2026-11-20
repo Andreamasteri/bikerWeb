@@ -190,14 +190,31 @@
       "absent_after_delete": true
     },
     "successful_upload_test_safe_to_run": true,
-    "authenticated_application_upload_test": "PENDING_BROWSER_EXECUTION_AND_CLEANUP"
+    "authenticated_application_upload_test": {
+      "observed_date": "2026-11-20",
+      "worker": "bikerlink-website-gate1-staging",
+      "backend_revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+      "post_status": 200,
+      "get_status": 200,
+      "content_type": "image/png",
+      "size_bytes": 70,
+      "browser_sha256": "4ff6ab670a58c14270e034e2090d9a432caa263a14e0a25785386b0c12f880b5",
+      "r2_bucket": "bikerlink-private",
+      "r2_jurisdiction": "eu",
+      "r2_key": "private/assistant-images/1795174467908-fyid2e3tfet.png",
+      "r2_readback_matches": true,
+      "exact_key_delete_pass": true,
+      "absent_after_delete": true,
+      "pass": true
+    }
   },
   "limitations": [
-    "No authenticated BikerLink application image upload has yet been run; the 70-byte R2 control object was independent, read back by SHA-256, deleted by exact key, and verified absent.",
-    "Chat conversation SSE was not opened because it can broadcast presence to other conversation participants.",
+    "Chat conversation SSE was not opened because it can broadcast presence; its /api/* pass-through route was source-reviewed and the authenticated session SSE passed live on the same Worker.",
     "No HTTP webhook route or site-host callback was found in the staging route source; the Last.fm OAuth callback uses the bikerlink://lastfm-callback app deep link and was not invoked."
   ],
   "production_cutover": "not performed",
   "gate1_authenticated_routing": "PASS_19_OF_19",
-  "gate1_overall": "BLOCKED_PENDING_AUTHENTICATED_APP_UPLOAD_AND_CHAT_SSE_REVIEW"
+  "gate1_authenticated_r2_upload": "PASS_UPLOAD_READBACK_EXACT_CLEANUP",
+  "gate1_chat_sse": "SOURCE_AND_ROUTE_HARNESS_PASS_LIVE_CONNECTION_SKIPPED_PRESENCE_SIDE_EFFECT",
+  "gate1_overall": "PASS_ROUTING_AND_STORAGE"
 }
