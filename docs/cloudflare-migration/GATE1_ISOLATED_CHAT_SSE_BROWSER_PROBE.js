@@ -5,11 +5,12 @@
 (() => {
   const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const suffix = Array.from(crypto.getRandomValues(new Uint8Array(6)), (x) => x.toString(16).padStart(2, "0")).join("");
+  const digits = Array.from(crypto.getRandomValues(new Uint32Array(2)), (x) => String(x % 1_000_000_000).padStart(9, "0")).join("");
   const passwordBytes = crypto.getRandomValues(new Uint8Array(16));
   const password = `Aa9!${Array.from(passwordBytes, (x) => x.toString(16).padStart(2, "0")).join("")}`;
   const credentials = {
     email: `smoke+${suffix}@bikerlink.test`,
-    nickname: `smoke${suffix}`,
+    nickname: `smoke${digits}`,
     password,
     userType: "biker",
     eulaAccepted: true,
