@@ -11,6 +11,7 @@ async function diagnoseChatSse(request, env, ctx) {
   const result = {
     authenticated: false,
     conversations_empty: false,
+    fetch_mode: "raw_worker_fetch_to_isolated_railway",
     upstream_status: 0,
     content_type: null,
     content_encoding: null,
@@ -50,22 +51,37 @@ async function diagnoseChatSse(request, env, ctx) {
   }
   if (!result.conversations_empty) return Response.json(result, { status: 409 });
 
-  const streamHeaders = new Headers(request.headers);
+  let railwayOrigin;
+  try {
+    railwayOrigin = new URL(env.RAILWAY_ORIGIN);
+  } catch {
+    result.error = "InvalidIsolatedOrigin";
+    return Response.json(result, { status: 503 });
+  }
+  if (railwayOrigin.origin !== "https://bikerlink-chat-sse-test-backend-gate1-chat-sse-test.up.railway.app") {
+    result.error = "UnexpectedIsolatedOrigin";
+    return Response.json(result, { status: 503 });
+  }
+
+  // Bypass proxyToRailway for one diagnostic request. This isolates Cloudflare's
+  // raw outbound fetch from the forwarded metadata and response reconstruction
+  // used by the production proxy.
+  const streamHeaders = new Headers();
   streamHeaders.set("accept", "text/event-stream");
   streamHeaders.set("accept-encoding", "identity");
-  streamHeaders.set("cache-control", "no-transform");
+  const cookie = request.headers.get("cookie");
+  if (cookie) streamHeaders.set("cookie", cookie);
   const started = performance.now();
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 8_000);
   let streamResponse;
   try {
-    streamResponse = await worker.fetch(
-      new Request(new URL(ALLOWED_PATH, request.url), {
+    streamResponse = await fetch(
+      new Request(new URL(ALLOWED_PATH, railwayOrigin), {
         headers: streamHeaders,
+        redirect: "manual",
         signal: controller.signal,
       }),
-      env,
-      ctx,
     );
     result.headers_ms = elapsed(started);
     result.upstream_status = streamResponse.status;
