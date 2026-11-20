@@ -56,6 +56,7 @@ async function main() {
     }
 
     const suffix = randomBytes(8).toString("hex");
+    const nicknameDigits = String(randomBytes(4).readUInt32BE(0) % 1_000_000_000).padStart(9, "0");
     const password = `Aa9!${randomBytes(24).toString("hex")}`;
     const registrationStart = performance.now();
     const registration = await request("/api/auth/register", {
@@ -63,7 +64,7 @@ async function main() {
       headers: jsonHeaders,
       body: JSON.stringify({
         email: `smoke+${suffix}@bikerlink.test`,
-        nickname: `smoke${suffix}`,
+        nickname: `smoke${nicknameDigits}`,
         password,
         userType: "biker",
         eulaAccepted: true,

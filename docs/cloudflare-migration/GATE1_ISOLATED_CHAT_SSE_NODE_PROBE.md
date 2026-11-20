@@ -49,9 +49,10 @@ riporta `Registrazione non consentita` e il blocco della creazione dell'account
 smoke. Non è un errore di connessione né una prova sul percorso SSE.
 
 Lo stesso database isolato aveva già accettato un account usa e getta da una
-precedente prova browser; il motivo preciso per cui la successiva registrazione
-Node è stata respinta non è dimostrato dai log disponibili. Non ripetere la
-registrazione e non aggiungere header `Origin`/browser falsificati per superare
-il controllo. La procedura va prima adattata a un account/test autorizzato senza
-crearne altri, oppure a un ambiente isolato nuovo predisposto per il probe.
-Produzione e DNS ufficiali non sono stati toccati.
+precedente prova browser. La causa del 403 è stata individuata nel probe: usava
+il suffisso esadecimale anche nel nickname (`smoke` seguito da lettere e cifre),
+mentre il backend alla revisione `cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374`
+richiede per l'identità smoke un nickname `smoke` seguito da almeno sei sole
+cifre. La validazione è stata corretta nel probe Node. Non sono stati aggiunti
+header `Origin` o identità browser falsificati; il controllo e il token smoke
+restano invariati. Produzione e DNS ufficiali non sono stati toccati.
