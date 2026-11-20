@@ -77,7 +77,7 @@ async function diagnoseChatSse(request, env, ctx) {
   let streamResponse;
   try {
     streamResponse = await fetch(
-      new Request(new URL(ALLOWED_PATH, railwayOrigin), {
+      new Request(new URL("/api/chat/stream", railwayOrigin), {
         headers: streamHeaders,
         redirect: "manual",
         signal: controller.signal,
