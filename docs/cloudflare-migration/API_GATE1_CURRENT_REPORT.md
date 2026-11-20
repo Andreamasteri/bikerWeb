@@ -38,3 +38,19 @@ I `401` osservati nella Console erano della pagina appena aperta, prima del logi
 Restano da verificare: routing autenticato su hostname Cloudflare/production, upload effettivo isolato, callback/webhook applicabili, Chat SSE e WebSocket autenticati. Chat SSE e WebSocket possono segnalare presenza; le richieste con effetti (upload, invio, SOS) richiedono un test controllato che non coinvolga dati o utenti reali. Nessun DNS, Worker BikerTest, backend, variabile o database è stato modificato da questa acquisizione.
 
 **Gate 1 resta BLOCKED.** La baseline anonima e la copertura autenticata read-only staging passano; mancano prove sul percorso autenticato Cloudflare e alcuni percorsi persistenti o con effetti. Non eseguire il cutover prima di chiudere questi punti.
+
+## Nuovo Worker Cloudflare isolato per Gate 1 — 20 novembre 2026
+
+Per provare l’autenticazione senza usare la revisione production né cambiare DNS, è stato creato e pubblicato il Worker separato `bikerlink-website-gate1-staging`. Il suo `RAILWAY_ORIGIN` è `https://bikerlink-staging-staging.up.railway.app`; l’health live conferma la revisione `cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374`, `ready`, `degraded=false`. Il Worker usa solo `workers.dev`, senza route o hostname personalizzati, e non sovrascrive né il Worker BikerTest né il preview dei contenuti.
+
+- Sorgente GitHub verificata: commit `b7a76c3d7a3e2505f259a3ccf3cec5ec00af4c40`, PR [#10](https://github.com/Andreamasteri/bikerWeb/pull/10) unita a `main`.
+- Deployment Cloudflare: ID `28a875e9-f5c4-4269-89a7-81bd05c5db00`, versione `b0adebc9-5c8f-4eee-97a7-6be89e83dba7` al 100%.
+- `/api/health`: HTTP 200 JSON; `/api/auth/me` senza cookie: 401 JSON; `/accedi`: 200 HTML, `X-Robots-Tag: noindex`, markup decompresso verificato senza hostname Railway.
+- `/matching`, `/robots.txt` e `/sitemap.xml`: HTTP 200; pagine Preview noindex.
+- L’immagine R2 `assets/images/hero-forest.webp` risponde HTTP 200 (`image/webp`, 337.534 byte); SHA-256 scaricato dal Worker e dall’oggetto remoto R2 identico: `8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659`.
+- POST anonimi a `/api/sos`, `/api/chat/conversations` e `/api/ai/assistant/images` restituiscono tutti 401 JSON, non HTML del frontend. Anche l’handshake WebSocket anonimo raggiunge Railway e viene rifiutato 401.
+- Il test locale aggiornato del routing è 85/85 PASS. La configurazione Wrangler di staging ha superato il dry-run e il deploy. Evidenza live sanitizzata: [`API_GATE1_CLOUDFLARE_PREVIEW.json`](API_GATE1_CLOUDFLARE_PREVIEW.json).
+
+Il controllo anonimo dimostra precedenza e instradamento verso l’API, ma non dimostra l’autenticazione con cookie. Per quella verifica il browser deve creare la sessione sullo stesso hostname workers.dev; il cookie del dominio Railway staging è limitato al suo hostname e non è trasferibile. Le istruzioni e lo script che non stampa segreti o dati del profilo sono in [`GATE1_BROWSER_PROBE.md`](GATE1_BROWSER_PROBE.md) e [`GATE1_BROWSER_PROBE.js`](GATE1_BROWSER_PROBE.js).
+
+Il codice Railway staging è stato ispezionato alla revisione sopra indicata: i body invalidi SOS e chat falliscono Zod prima della persistenza; l’enum messaggio invalido fallisce prima delle query DB; la form upload senza file risponde 400 prima di `uploadBuffer`. Lo script invia solo questi payload rifiutati, GET read-only, l’apertura/chiusura dell’SSE e del WebSocket notifiche. Non invia un messaggio, non crea un SOS o una conversazione, non carica file e non invoca webhook. La suite autenticata sul nuovo hostname deve ancora essere eseguita; Gate 1 resta BLOCKED e non va avviato alcun cutover finché non passa.

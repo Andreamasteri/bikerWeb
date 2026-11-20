@@ -1,0 +1,127 @@
+{
+  "captured_at": "2026-11-20T10:20:14Z",
+  "source_commit": "b7a76c3d7a3e2505f259a3ccf3cec5ec00af4c40",
+  "worker": {
+    "name": "bikerlink-website-gate1-staging",
+    "url": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+    "deployment_id": "28a875e9-f5c4-4269-89a7-81bd05c5db00",
+    "version_id": "b0adebc9-5c8f-4eee-97a7-6be89e83dba7",
+    "traffic_percent": 100,
+    "workers_dev_only": true
+  },
+  "backend": {
+    "origin": "https://bikerlink-staging-staging.up.railway.app",
+    "health_status": 200,
+    "health": "ready",
+    "degraded": false,
+    "revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374"
+  },
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 401,
+      "expected": 401,
+      "context": "anonymous request",
+      "content_type": "application/json; charset=utf-8",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/accedi",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "x_robots_tag": "noindex",
+      "compressed": true,
+      "decompressed_html_verified": true,
+      "railway_hostname_in_markup": false,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/matching",
+      "status": 200,
+      "content_type": "text/html",
+      "x_robots_tag": "noindex",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/robots.txt",
+      "status": 200,
+      "content_type": "text/plain",
+      "x_robots_tag": "noindex",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/sitemap.xml",
+      "status": 200,
+      "content_type": "application/xml",
+      "x_robots_tag": "noindex",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/assets/images/hero-forest.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "bytes": 337534,
+      "worker_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+      "r2_sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+      "served_bytes_match_r2": true,
+      "pass": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/sos",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "context": "anonymous request; proves API proxy/auth response, not authenticated write semantics",
+      "pass": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/chat/conversations",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "context": "anonymous request; proves API proxy/auth response, not authenticated write semantics",
+      "pass": true
+    },
+    {
+      "method": "POST",
+      "path": "/api/ai/assistant/images",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "context": "anonymous request; proves API proxy/auth response, not authenticated upload semantics",
+      "pass": true
+    },
+    {
+      "method": "WSS",
+      "path": "/ws/admin/notifications",
+      "status": 401,
+      "context": "anonymous handshake rejected by Railway; authenticated WebSocket probe pending",
+      "pass": true
+    }
+  ],
+  "automated_checks": {
+    "local_route_harness": "85/85 PASS",
+    "wrangler_version": "4.165.0",
+    "wrangler_deploy_dry_run": "PASS",
+    "wrangler_deploy": "PASS"
+  },
+  "limitations": [
+    "No authenticated browser cookie was available on this workers.dev hostname.",
+    "Authenticated API reads, SSE, WebSocket, and validation-only POST probes are pending the operator's sign-in on this isolated preview.",
+    "No successful write, upload, chat message, SOS, callback, or webhook was triggered."
+  ],
+  "production_cutover": "not performed",
+  "gate1": "BLOCKED_PENDING_AUTHENTICATED_CLOUDFLARE_PREVIEW_PROBE"
+}
