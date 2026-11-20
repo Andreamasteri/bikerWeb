@@ -131,4 +131,36 @@ Verifiche del deployment 9 (storiche):
 
 ## Decisione
 
-Il ripristino completo del sito è verificato sul Worker Preview isolato; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti operativi e non modificati da questa attività. Routing API, storage e altre prove autenticate passano, ma il gate completo resta bloccato perché il probe Chat SSE ha rilevato una conversazione e non ha aperto lo stream; evidenza: [`GATE1_CHAT_SSE_PREFLIGHT_20261120.json`](docs/cloudflare-migration/GATE1_CHAT_SSE_PREFLIGHT_20261120.json). Nessun utente è stato creato e nessuna tabella o schema è stato modificato direttamente. Il test `bl_vid` ha inviato un GET al middleware di visita staging; la persistenza della riga analytics non è stata interrogata. L’unico oggetto R2 di prova è stato eliminato e verificato assente. Nessun segreto è stato salvato. Non sono stati eseguiti il cutover DNS né Gate 2/3.
+Il ripristino completo del sito è verificato sul Worker Preview isolato; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti operativi e non modificati da questa attività. Routing API, storage e altre prove autenticate passano, ma il gate completo resta bloccato dal test autenticato Chat SSE via Worker; evidenza e diagnosi corrente sono riportate nell’aggiornamento Gate 1 qui sotto. Nessun utente staging o production è stato creato e nessuna tabella o schema è stato modificato direttamente; il probe Node ha creato account usa e getta soltanto nel database del servizio Railway isolato. Il test `bl_vid` ha inviato un GET al middleware di visita staging; la persistenza della riga analytics non è stata interrogata. L’unico oggetto R2 di prova è stato eliminato e verificato assente. Nessun segreto è stato salvato. Non sono stati eseguiti il cutover DNS né Gate 2/3.
+
+## Aggiornamento Gate 1 — diagnosi SSE isolata (20 novembre 2026)
+
+La prova Node eseguita dall’operatore alle 19:00Z ha avuto registrazione,
+autenticazione, sessione, conversazioni vuote e logout PASS. L’SSE diretto al
+backend Railway isolato ha risposto 200 con evento `connected` in 1.117 ms;
+lo stesso flusso attraverso il Worker candidato Cloudflare è scaduto a 15.007 s
+senza ricevere gli header. I log Railway riportano il 200 sul percorso Worker
+alla chiusura del client dopo circa 14.6 s. L’host Railway non è cambiato.
+
+Per localizzare il buffering senza esporre cookie o contenuti, il branch attivo
+aggiunge una diagnostica confinata al Worker SSE isolato: autentica la sessione,
+verifica zero conversazioni, legge solo l’evento iniziale e restituisce status,
+content type e latenze. Il candidato Cloudflare
+`bikerlink-chat-sse-gate1-isolated-20261120` usa esclusivamente il backend
+Railway usa e getta; deployment `14a1da83-5a97-4c4c-af6c-c27e4f9e63d2`, versione
+`4eb850e4-df11-4edf-afb1-343dcc0f6465`. Il probe aggiornato chiama la diagnosi
+su quel candidato separato, mantenendo la sessione registrata sull’hostname di
+test. I controlli locali sono 95/95 PASS; il test Node dei sorgenti passa la
+sintassi. Il proxy propaga il segnale di abort alla richiesta Railway.
+
+La nuova diagnosi non è ancora stata eseguita. Il runtime del workspace non
+riesce a connettersi al Workers hostname (ECONNREFUSED), quindi manca la verifica
+live del nuovo percorso. Gate 1 completo rimane **BLOCKED**; non si eseguono
+deployment production, modifiche DNS, Gate 2 o Gate 3. Lo staging e il database
+isolato non sono stati modificati; gli account usa e getta creati dal probe
+appartengono soltanto al database del backend isolato.
+
+Checkpoint GitHub aggiornato: repository `Andreamasteri/bikerWeb`, branch
+`codex/bikerweb-isolated-chat-sse-gate1-20261120`, commit `38e1eeb`
+(`38e1eeb5364b525318134a28d72e4a56f695d5e9`), push verificato. Non ci sono
+workflow in `.github/workflows`; nessuna CI è partita.

@@ -34,11 +34,11 @@ function sessionCookie(response) {
     .join("; ");
 }
 
-async function request(path, options = {}, timeoutMs = 15_000) {
+async function requestAt(base, path, options = {}, timeoutMs = 15_000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
-    return await fetch(new URL(path, origin), {
+    return await fetch(new URL(path, base), {
       ...options,
       cache: "no-store",
       signal: controller.signal,
@@ -47,6 +47,10 @@ async function request(path, options = {}, timeoutMs = 15_000) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+async function request(path, options = {}, timeoutMs = 15_000) {
+  return requestAt(origin, path, options, timeoutMs);
 }
 
 async function probeSse(target, cookie, timeoutMs) {
@@ -184,7 +188,7 @@ async function main() {
     await new Promise((resolve) => setTimeout(resolve, 3_200));
     try {
       const diagnosticStart = performance.now();
-      const diagnosticResponse = await request("/__diag/chat-sse", {
+      const diagnosticResponse = await requestAt(candidateWorkerOrigin, "/__diag/chat-sse", {
         headers: { Accept: "application/json", Cookie: cookie },
       }, 20_000);
       let diagnostic = null;

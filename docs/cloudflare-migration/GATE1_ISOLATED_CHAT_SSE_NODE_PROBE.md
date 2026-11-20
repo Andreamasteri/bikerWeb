@@ -118,3 +118,10 @@ booleani ed eventuale classe dell'errore. Il proxy inoltra il segnale di abort
 al subrequest per chiudere connessioni interrotte. Non sono stati modificati
 DNS, backend Railway o Worker ufficiale. Gate 1 resta bloccato fino al risultato
 di questo confronto.
+
+Il candidato diagnostico è pubblicato come
+`bikerlink-chat-sse-gate1-isolated-20261120`, deployment
+`14a1da83-5a97-4c4c-af6c-c27e4f9e63d2`, versione
+`4eb850e4-df11-4edf-afb1-343dcc0f6465`; binding confermato verso il solo
+backend Railway isolato. La route diagnostica è chiamata direttamente su
+questo candidato, non sul Worker usato per creare la sessione di test.
