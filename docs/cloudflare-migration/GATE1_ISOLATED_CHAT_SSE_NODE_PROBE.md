@@ -86,6 +86,13 @@ solo `GET /api/chat/stream`; il root restituisce 404 e la route senza cookie
 restituisce 401. La verifica HTTP non autenticata ha confermato entrambi gli
 esiti. Il routing locale passa 94 controlli.
 
+Alle 18:57:28Z il candidato è stato aggiornato con la direttiva
+`Cache-Control: no-transform` anche sulla richiesta upstream SSE, oltre che
+sulla risposta; deployment `9f810119140042e3a3d9ba3e752057a1`. La route senza
+cookie continua a restituire 401. Il routing locale aggiornato passa 95
+controlli; serve un nuovo confronto autenticato per stabilire se il buffering è
+risolto.
+
 Il backend applica un limite di registrazione di 3 tentativi per ora per
 indirizzo client; la prova delle 18:53Z è comunque stata accettata. Se un probe
 successivo restituisce HTTP 429, fermarsi e attendere la scadenza del limite
