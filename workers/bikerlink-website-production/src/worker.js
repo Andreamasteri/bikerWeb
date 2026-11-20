@@ -37,6 +37,31 @@ const STATIC_PAGES = new Map([
 
 const STATIC_FILES = new Set(["/robots.txt", "/sitemap.xml", "/web-session.js"]);
 
+// Keep the existing Railway visitor counters and the bl_vid identifier for
+// pages that were tracked by the application before they moved to Static
+// Assets. New BikerTest-only pages are intentionally excluded.
+const TRACKED_STATIC_PAGES = new Set([
+  "/",
+  "/features",
+  "/sos",
+  "/motoclub",
+  "/community",
+  "/download",
+  "/about",
+  "/faq",
+  "/contact",
+  "/blog",
+  "/matching",
+  "/matching/come-funziona",
+  "/matching/tipi-di-match",
+  "/matching/come-impara",
+  "/matching/intelligenza-artificiale",
+  "/matching/privacy",
+  "/matching/per-investitori",
+  "/privacy",
+  "/terms",
+]);
+
 const BACKEND_PAGES = new Set([
   "/privacy-policy",
   "/matching/pdf",
@@ -96,6 +121,85 @@ function isWebSocketPath(pathname) {
     pathname === "/ws/diagnostic" ||
     pathname.startsWith("/ws/diagnostic/")
   );
+}
+
+function trackedStaticPage(pathname) {
+  return TRACKED_STATIC_PAGES.has(pathname) || pathname.startsWith("/blog/");
+}
+
+function visitorCookieId(request) {
+  const raw = request.headers.get("cookie") || "";
+  for (const part of raw.split(";")) {
+    const separator = part.indexOf("=");
+    if (separator < 0 || part.slice(0, separator).trim() !== "bl_vid") continue;
+    const value = part.slice(separator + 1).trim();
+    if (/^[a-f0-9]{16,64}$/i.test(value)) return value.toLowerCase();
+  }
+  const bytes = crypto.getRandomValues(new Uint8Array(16));
+  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
+}
+
+function shouldPreserveVisitorTracking(request, env) {
+  const url = new URL(request.url);
+  const origin = railwayOrigin(env);
+  if (!origin) return false;
+
+  const publicOrigin = publicSiteOrigin(env);
+  if (
+    publicOrigin &&
+    url.origin === publicOrigin.origin &&
+    origin.origin === "https://bikerlink-production.up.railway.app"
+  ) return true;
+
+  // The isolated Gate 1 Worker may exercise the same behavior only against
+  // the staging Railway service; previews must never write visitor records
+  // to production.
+  return (
+    env.GATE1_STAGING_ORIGIN_OVERRIDE === GATE1_STAGING_ORIGIN &&
+    origin.origin === GATE1_STAGING_ORIGIN &&
+    url.hostname.startsWith(GATE1_STAGING_WORKER_PREFIX) &&
+    url.hostname.endsWith(".workers.dev")
+  );
+}
+
+function preserveVisitorTracking(response, request, env, ctx, pathname) {
+  if (
+    request.method !== "GET" ||
+    !trackedStaticPage(pathname) ||
+    !shouldPreserveVisitorTracking(request, env) ||
+    typeof ctx?.waitUntil !== "function"
+  ) return response;
+
+  const rawCookie = request.headers.get("cookie") || "";
+  const existingCookie = rawCookie.split(";").some((part) => {
+    const separator = part.indexOf("=");
+    return separator >= 0 && part.slice(0, separator).trim() === "bl_vid" &&
+      /^[a-f0-9]{16,64}$/i.test(part.slice(separator + 1).trim());
+  });
+  const visitorId = visitorCookieId(request);
+  const cookieParts = rawCookie.split(";").map((part) => part.trim()).filter(Boolean)
+    .filter((part) => part.slice(0, part.indexOf("=")).trim() !== "bl_vid");
+  cookieParts.push(`bl_vid=${visitorId}`);
+
+  const trackingHeaders = new Headers(request.headers);
+  trackingHeaders.set("cookie", cookieParts.join("; "));
+  const trackingRequest = new Request(request.url, { method: "GET", headers: trackingHeaders });
+  const tracking = proxyToRailway(trackingRequest, env)
+    .then((trackingResponse) => trackingResponse.body?.cancel())
+    .catch(() => undefined);
+  ctx.waitUntil(tracking);
+
+  if (existingCookie) return response;
+  const headers = new Headers(response.headers);
+  headers.append(
+    "set-cookie",
+    `bl_vid=${visitorId}; Path=/; Max-Age=31536000; HttpOnly; SameSite=Lax; Secure`,
+  );
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
 }
 
 const GATE1_STAGING_ORIGIN = "https://bikerlink-staging-staging.up.railway.app";
@@ -371,7 +475,7 @@ async function serveR2Image(request, env, pathname) {
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const pathname = normalizePath(url.pathname);
     const method = request.method.toUpperCase();
@@ -401,10 +505,11 @@ export default {
     // still wins for every method and path in the /api namespace.
     const staticPage = STATIC_PAGES.get(pathname);
     if (staticPage && (method === "GET" || method === "HEAD")) {
-      return withPreviewNoIndex(
+      const response = withPreviewNoIndex(
         withSecurityHeaders(await env.ASSETS.fetch(assetRequest(request, staticPage))),
         request,
       );
+      return preserveVisitorTracking(response, request, env, ctx, pathname);
     }
 
     // These legacy and application pages remain on Railway. This is an
