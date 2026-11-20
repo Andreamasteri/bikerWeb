@@ -117,11 +117,65 @@
     "wrangler_deploy_dry_run": "PASS",
     "wrangler_deploy": "PASS"
   },
+  "authenticated_browser_probe": {
+    "captured_at": "2026-11-20T10:39:43.003Z",
+    "target": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+    "authenticated": true,
+    "backend_revision": "cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374",
+    "pass_count": 19,
+    "fail_count": 0,
+    "all_pass": true,
+    "checks": [
+      { "method": "GET", "path": "/api/auth/me", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 1590, "pass": true },
+      { "method": "GET", "path": "/api/health", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 434, "pass": true },
+      { "method": "GET", "path": "/api/users/me", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 1035, "pass": true },
+      { "method": "GET", "path": "/api/match-preferences", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 546, "pass": true },
+      { "method": "GET", "path": "/api/match-preferences/gate", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 529, "pass": true },
+      { "method": "GET", "path": "/api/proposals/matches/accepted", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 369, "pass": true },
+      { "method": "GET", "path": "/api/telemetry/sensor-settings", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 532, "pass": true },
+      { "method": "GET", "path": "/api/telemetry/calibration", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 542, "pass": true },
+      { "method": "GET", "path": "/api/telemetry/dr-correction", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 563, "pass": true },
+      { "method": "GET", "path": "/api/chat/conversations?limit=1&offset=0", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 882, "pass": true },
+      { "method": "GET", "path": "/api/notifications", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 547, "pass": true },
+      { "method": "GET", "path": "/api/sos/my", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 559, "pass": true },
+      { "method": "GET", "path": "/api/ai/assistant/config?platform=web", "status": 200, "expected": 200, "content_type": "application/json; charset=utf-8", "latency_ms": 719, "pass": true },
+      { "method": "GET", "path": "/api/auth/session-events", "status": 200, "expected": 200, "content_type": "text/event-stream", "connected_event_received": true, "latency_ms": 399, "pass": true },
+      { "method": "POST", "path": "/api/sos", "status": 400, "expected": 400, "content_type": "application/json; charset=utf-8", "latency_ms": 389, "pass": true },
+      { "method": "POST", "path": "/api/chat/conversations", "status": 400, "expected": 400, "content_type": "application/json; charset=utf-8", "latency_ms": 407, "pass": true },
+      { "method": "POST", "path": "/api/chat/conversations/00000000-0000-0000-0000-000000000000/messages", "status": 400, "expected": 400, "content_type": "application/json; charset=utf-8", "latency_ms": 402, "pass": true },
+      { "method": "POST", "path": "/api/ai/assistant/images", "status": 400, "expected": 400, "content_type": "application/json; charset=utf-8", "latency_ms": 588, "pass": true },
+      { "method": "WSS", "path": "/ws/admin/notifications", "connected": true, "hello_received": true, "latency_ms": 703, "pass": true }
+    ]
+  },
+  "railway_storage_isolation_audit": {
+    "staging_environment": "staging",
+    "staging_service": "Bikerlink-Staging",
+    "staging_database_service": "Postgres",
+    "staging_database_volume_mb": 500,
+    "staging_railway_managed_buckets": [],
+    "staging_r2_variable_names": [
+      "R2_ACCESS_KEY_ID",
+      "R2_ACCOUNT_ID",
+      "R2_ENDPOINT",
+      "R2_JURISDICTION",
+      "R2_PRIVATE_BUCKET",
+      "R2_PUBLIC_BASE_URL",
+      "R2_PUBLIC_BUCKET",
+      "R2_SECRET_ACCESS_KEY"
+    ],
+    "staging_r2_key_prefix_variable_present": false,
+    "production_r2_key_prefix_variable_present": true,
+    "r2_variable_values_redacted_by_connector": true,
+    "bucket_and_prefix_equality_verified": false,
+    "successful_upload_test_safe_to_run": false
+  },
   "limitations": [
-    "No authenticated browser cookie was available on this workers.dev hostname.",
-    "Authenticated API reads, SSE, WebSocket, and validation-only POST probes are pending the operator's sign-in on this isolated preview.",
-    "No successful write, upload, chat message, SOS, callback, or webhook was triggered."
+    "No successful data write or file upload was triggered; POST probes verified authenticated routing and rejection before persistence.",
+    "Staging R2 bucket names and endpoint are redacted by Railway; staging has no R2_KEY_PREFIX variable while production does, so storage isolation for a positive upload has not been proved.",
+    "Chat conversation SSE was not opened because it can broadcast presence to other conversation participants.",
+    "No HTTP webhook route or site-host callback was found in the staging route source; the Last.fm OAuth callback uses the bikerlink://lastfm-callback app deep link and was not invoked."
   ],
   "production_cutover": "not performed",
-  "gate1": "BLOCKED_PENDING_AUTHENTICATED_CLOUDFLARE_PREVIEW_PROBE"
+  "gate1_authenticated_routing": "PASS_19_OF_19",
+  "gate1_overall": "BLOCKED_PENDING_R2_ISOLATION_SAFE_WRITE_PATH_AND_CHAT_SSE_REVIEW"
 }
