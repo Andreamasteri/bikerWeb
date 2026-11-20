@@ -166,16 +166,38 @@
     "staging_r2_key_prefix_variable_present": false,
     "production_r2_key_prefix_variable_present": true,
     "r2_variable_values_redacted_by_connector": true,
-    "bucket_and_prefix_equality_verified": false,
-    "successful_upload_test_safe_to_run": false
+    "r2_endpoint_host_same_in_staging_and_production": true,
+    "staging_private_bucket": "bikerlink-private",
+    "staging_public_bucket": "bikerlink-public",
+    "production_private_bucket": "bikerlink-private",
+    "production_public_bucket": "bikerlink-public",
+    "jurisdiction": "eu",
+    "staging_r2_key_prefix": "",
+    "production_r2_key_prefix": "production",
+    "bucket_and_namespace_configuration_verified": true,
+    "object_namespace_separated": true,
+    "staging_ai_image_key_pattern": "private/assistant-images/<filename>",
+    "production_ai_image_key_pattern": "production/private/assistant-images/<filename>",
+    "r2_control_probe": {
+      "captured_at": "2026-11-20T11:05Z",
+      "bucket": "bikerlink-private",
+      "jurisdiction": "eu",
+      "object_key": "__codex_gate1_probe/5db3e28fde944f589449f08ad201a8f0.png",
+      "size_bytes": 70,
+      "sha256": "4ff6ab670a58c14270e034e2090d9a432caa263a14e0a25785386b0c12f880b5",
+      "upload_readback_pass": true,
+      "exact_key_delete_pass": true,
+      "absent_after_delete": true
+    },
+    "successful_upload_test_safe_to_run": true,
+    "authenticated_application_upload_test": "PENDING_BROWSER_EXECUTION_AND_CLEANUP"
   },
   "limitations": [
-    "No successful data write or file upload was triggered; POST probes verified authenticated routing and rejection before persistence.",
-    "Staging R2 bucket names and endpoint are redacted by Railway; staging has no R2_KEY_PREFIX variable while production does, so storage isolation for a positive upload has not been proved.",
+    "No authenticated BikerLink application image upload has yet been run; the 70-byte R2 control object was independent, read back by SHA-256, deleted by exact key, and verified absent.",
     "Chat conversation SSE was not opened because it can broadcast presence to other conversation participants.",
     "No HTTP webhook route or site-host callback was found in the staging route source; the Last.fm OAuth callback uses the bikerlink://lastfm-callback app deep link and was not invoked."
   ],
   "production_cutover": "not performed",
   "gate1_authenticated_routing": "PASS_19_OF_19",
-  "gate1_overall": "BLOCKED_PENDING_R2_ISOLATION_SAFE_WRITE_PATH_AND_CHAT_SSE_REVIEW"
+  "gate1_overall": "BLOCKED_PENDING_AUTHENTICATED_APP_UPLOAD_AND_CHAT_SSE_REVIEW"
 }
