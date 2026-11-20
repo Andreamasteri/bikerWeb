@@ -30,6 +30,20 @@ Cloudflare module update succeeded at 14:08:34 UTC and returned deployment ID
 - The second Worker update must still be verified by rerunning the browser
   probe. The execution environment cannot verify the registration request from
   Chrome.
+- The browser probe then confirmed registration `201`, authenticated
+  `/api/auth/me` `200`, and zero conversations. Its Chat SSE request was
+  aborted after five seconds before the browser received response headers.
+  Railway logs show `/api/chat/stream` completed with HTTP `200` at 5008 ms;
+  the pinned backend route calls `flushHeaders()` and writes `event: connected`
+  immediately. This points to buffering or delayed delivery along the proxy
+  path, rather than an absent endpoint or failed authentication.
+- For the next isolated check, the test Worker sends `Accept-Encoding: identity`
+  for `Accept: text/event-stream` requests and the probe allows up to 15 seconds
+  for the response (12 seconds to read the initial event). The production Worker
+  candidate has the same SSE encoding behavior in source. This candidate change
+  passed the local route harness; it has not been published to the official
+  domain. The isolated Worker update completed at 17:02:05 UTC with deployment
+  ID `223c2c4a43aa4696893a7af589a21400`.
 - The authenticated registration and Chat SSE probe must be rerun from Chrome.
   Gate 1 remains blocked until its result reports registration 201, authenticated
   `/api/auth/me` 200, zero conversations, and a successful Chat SSE connection.

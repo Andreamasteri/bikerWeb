@@ -352,6 +352,13 @@ async function proxyToRailway(request, env, options = {}) {
     });
   }
 
+  // Keep server-sent event responses uncompressed so the initial event and
+  // heartbeats are flushed through Railway and Cloudflare without buffering.
+  // The response itself is still returned as a streaming body below.
+  if ((headers.get("accept") || "").toLowerCase().includes("text/event-stream")) {
+    headers.set("accept-encoding", "identity");
+  }
+
   const rewriteHtml = options.rewritePublicOrigin && request.method === "GET" &&
     (request.headers.get("accept") || "").toLowerCase().includes("text/html");
   if (rewriteHtml) {

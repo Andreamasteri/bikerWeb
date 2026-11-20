@@ -62,8 +62,9 @@ res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-previe
 check(res.status===503&&upstream===lastUpstream,'staging Origin override fails closed on any other Worker host');
 res=await worker.fetch(new FakeRequest(`${gate1Host}/api/auth/login`,{method:'POST',headers:{origin:'https://attacker.example'},body:'{}'}),gate1Env);
 check(upstream.headers.get('origin')==='https://attacker.example','cross-site Origin is never rewritten by the staging override');
-res=await worker.fetch(new FakeRequest('https://biker-link.net/api/chat/stream?room=demo'),makeEnv());
+res=await worker.fetch(new FakeRequest('https://biker-link.net/api/chat/stream?room=demo',{headers:{accept:'text/event-stream'}}),makeEnv());
 check(upstream.url.endsWith('/api/chat/stream?room=demo'),'SSE route remains on Railway');
+check(upstream.headers.get('accept-encoding')==='identity','SSE request disables upstream compression buffering');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/ws/admin/notifications'),makeEnv());
 check(upstream.url==='https://bikerlink-production.up.railway.app/ws/admin/notifications','WebSocket route selects Railway');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/assets/images/hero-community.webp'),makeEnv());

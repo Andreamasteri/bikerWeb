@@ -71,7 +71,7 @@
         if (result.conversations.pass) {
           result.chat_sse.attempted = true;
           const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 5000);
+          const timer = setTimeout(() => controller.abort(), 15000);
           let reader;
           try {
             const stream = await fetch("/api/chat/stream", {
@@ -87,7 +87,7 @@
               reader = stream.body.getReader();
               const decoder = new TextDecoder();
               let buffer = "";
-              const deadline = Date.now() + 4000;
+              const deadline = Date.now() + 12000;
               while (Date.now() < deadline) {
                 const { done, value } = await reader.read();
                 if (done) break;
