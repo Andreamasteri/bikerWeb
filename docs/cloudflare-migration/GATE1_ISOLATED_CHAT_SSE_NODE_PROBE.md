@@ -170,3 +170,38 @@ Il Worker candidato accetta soltanto `GET` su queste due rotte SSE. Il test
 locale verifica inoltre che gli altri percorsi, inclusa la registrazione,
 restino negati dal Worker candidato. Il test online deve essere eseguito solo
 contro il backend usa e getta configurato nel binding `RAILWAY_ORIGIN`.
+
+## Diagnosi comparativa SSE — 20 novembre 2026, 20:51 UTC
+
+Il probe Node sul Worker isolato, con una sola sessione autenticata usa e
+getta, ha superato registrazione (201), `/api/auth/me` (200), zero conversazioni
+e logout (200). La Chat SSE diretta al Railway isolato ha restituito `200`,
+`text/event-stream` ed evento `connected` dopo 1.06–1.61 s. La stessa Chat via
+Worker è scaduta a 15 s prima degli header; la `fetch` raw dal Worker è scaduta
+a 9.27 s senza header. Il controllo raw è stato ripetuto dopo la correzione del
+riferimento alla rotta e ha restituito `AbortError`, quindi il risultato non è
+un errore della diagnostica.
+
+Nella stessa sessione `/api/auth/session-events` ha restituito `200`,
+`text/event-stream` e `connected` sia direttamente (1.14 s) sia tramite Worker
+(0.47 s). Il Worker candidato, quindi, riesce a inoltrare una SSE autenticata
+verso lo stesso backend isolato.
+
+Le risposte dirette differiscono negli header: Chat ha `Cache-Control: no-cache`
+e `Vary: Accept-Encoding`; la SSE di sessione ha `Cache-Control: no-store,
+no-transform` e nessun `Vary`. Il sorgente backend alla revisione distribuita
+`cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374` mostra middleware globale
+`compression()`. La route di sessione commenta che imposta `no-transform` per
+saltare compressione e trasformazioni proxy; la route Chat chiama
+`flushHeaders()` e scrive `connected`, ma non imposta quella direttiva. Le
+prove indicano dunque un problema specifico nella risposta Chat lungo il
+percorso origin/proxy, associato al comportamento di compressione/trasformazione;
+non un limite del piano Cloudflare né un guasto generale dello streaming Worker.
+
+Non ho modificato backend o database. Per il vincolo operativo del task, il
+cutover resta BLOCKED: la correzione da valutare è esclusivamente di trasporto
+sulla risposta Chat SSE (allineare le direttive `no-store, no-transform` e
+verificare il flush), ma va trattata nel checkout e nel flusso di rilascio del
+backend, con test staging prima del nuovo probe. Nessun DNS, Worker production,
+BikerTest o servizio Railway è stato modificato. Il Worker di prova rimane
+`workers.dev` only e punta al backend usa e getta.

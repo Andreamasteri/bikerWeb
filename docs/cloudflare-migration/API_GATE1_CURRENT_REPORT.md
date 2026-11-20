@@ -116,3 +116,17 @@ Il probe browser autenticato ha ottenuto `GET /api/chat/conversations?limit=1&of
 Ho verificato il percorso di registrazione: gli utenti standard staging ricevono una conversazione di benvenuto e una notifica email; il login staging è riservato agli admin. Creare un utente ordinario non produrrebbe quindi un account di test utilizzabile senza conversazioni, mentre forzare un account admin richiederebbe modifiche DB. Non ho creato account, aperto stream, né modificato dati o schema.
 
 **Stato gate:** gli altri controlli Gate 1 (19/19 HTTP autenticati, R2 upload/readback/cleanup, SSE sessione, WebSocket notifiche e visitor cookie) restano PASS. **Gate 1 completo e cutover rimangono BLOCKED** finché non si autentica un account admin staging già esistente e autorizzato con zero conversazioni. Nessun Worker production o DNS è stato pubblicato.
+
+## Aggiornamento diagnostico Chat SSE — 20 novembre 2026, 20:51 UTC
+
+Una prova autenticata sul Worker e backend Railway isolati ha verificato che
+Chat SSE passa direttamente a Railway (200, evento `connected`) ma scade prima
+degli header attraverso Worker; la fetch raw del Worker ripete il timeout.
+Nella stessa sessione, `/api/auth/session-events` passa sia diretto sia via
+Worker. Il sorgente backend distribuito applica `compression()` globalmente;
+la route sessione imposta `no-store, no-transform` con commento esplicito sul
+bypass delle trasformazioni, mentre la route Chat usa `no-cache` e non imposta
+`no-transform`. Gli header diretti confermano `Vary: Accept-Encoding` solo per
+Chat. Evidenze e tempi completi: sezione Diagnosi comparativa SSE nel report di
+migrazione e nel report del probe. Gate 1 completo e cutover restano BLOCKED in
+attesa di una correzione di trasporto Chat SSE verificata sul backend staging.
