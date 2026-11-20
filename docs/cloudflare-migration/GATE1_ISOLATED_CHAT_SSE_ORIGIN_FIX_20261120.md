@@ -52,9 +52,16 @@ Cloudflare module update succeeded at 14:08:34 UTC and returned deployment ID
   streaming from the Railway upstream path. This diagnostic route was added
   only to the temporary Worker (deployment `63ae9e8fbd914ef59269c88c1878bb60`,
   17:08:41 UTC).
-- The authenticated registration and Chat SSE probe must be rerun from Chrome.
-  Gate 1 remains blocked until its result reports registration 201, authenticated
-  `/api/auth/me` 200, zero conversations, and a successful Chat SSE connection.
+- The synthetic Worker SSE check passed in Chrome: HTTP `200`,
+  `text/event-stream`, immediate `event: connected`. A subsequent application
+  probe at 17:21:23 again passed registration, authentication and the empty
+  conversation check, but aborted while waiting for Chat SSE. Railway logged
+  `/api/chat/stream` as HTTP `200` after 14,964 ms, matching the browser timeout.
+  Generic Worker-to-browser SSE therefore works; the Railway-backed Chat SSE
+  path still does not deliver headers or the first event within 15 seconds.
+- Gate 1 remains blocked. The SSE origin/proxy behavior must be resolved and
+  then verified with HTTP `200`, `text/event-stream`, and the `connected` event;
+  the repeated 15-second timeout is not a passing result.
 
 Run this in DevTools Console on the isolated Worker page:
 
