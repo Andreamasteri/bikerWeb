@@ -35,6 +35,7 @@ globalThis.fetch=async request=>{
   const path=new URL(request.url).pathname;
   if (path==='/privacy-policy') return new Response(null,{status:301,headers:{location:'/privacy'}});
   if (path==='/delete-account') return new Response('<title>Delete account</title><a href="https://bikerlink-production.up.railway.app/delete-account">Open</a>',{status:200,headers:{'content-type':'text/html; charset=utf-8','content-length':'101','etag':'W/"origin-html"'}});
+  if (path==='/api/chat/stream') return new Response(new ReadableStream({start(controller){controller.enqueue(new TextEncoder().encode(['event: connected','data: {}','',''].join('\n')));controller.close();}}),{status:200,headers:{'content-type':'text/event-stream','cache-control':'no-cache','x-accel-buffering':'no'}});
   if (path.startsWith('/assets/images/')&&request.headers.has('if-none-match')) return new Response(null,{status:304,headers:{etag:'"origin-etag"'}});
   if (path.startsWith('/assets/images/')&&request.headers.has('range')&&!request.headers.has('if-range')) return new Response('12',{status:206,headers:{'content-type':'image/webp','content-range':'bytes 0-1/9','content-length':'2'}});
   if (path.startsWith('/assets/images/')&&request.headers.has('if-range')) return new Response('fullimage',{status:200,headers:{'content-type':'image/webp','content-length':'9'}});
@@ -65,6 +66,8 @@ check(upstream.headers.get('origin')==='https://attacker.example','cross-site Or
 res=await worker.fetch(new FakeRequest('https://biker-link.net/api/chat/stream?room=demo',{headers:{accept:'text/event-stream'}}),makeEnv());
 check(upstream.url.endsWith('/api/chat/stream?room=demo'),'SSE route remains on Railway');
 check(upstream.headers.get('accept-encoding')==='identity','SSE request disables upstream compression buffering');
+check(res.headers.get('cache-control')==='no-store, no-transform'&&res.headers.get('x-accel-buffering')==='no','SSE response disables intermediary transformation and buffering');
+check((await res.text()).includes('event: connected'),'SSE response body remains readable and unbuffered');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/ws/admin/notifications'),makeEnv());
 check(upstream.url==='https://bikerlink-production.up.railway.app/ws/admin/notifications','WebSocket route selects Railway');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/assets/images/hero-community.webp'),makeEnv());

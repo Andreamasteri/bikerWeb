@@ -33,11 +33,13 @@ spoofed browser identity or otherwise attempt to evade Cloudflare controls.
 ## Expected passing evidence
 
 `registration.status` is 201, `auth_me.status` is 200, `conversations.count` is
-0, and both `chat_sse.direct_railway` and `chat_sse.via_worker` report status
+0, and both `chat_sse.direct_railway` and `chat_sse.via_candidate_worker` report status
 200, `text/event-stream`, and `connected_event: true`. `all_pass` requires the
-Cloudflare `via_worker` stream to pass. The direct Railway result isolates any
-Worker forwarding delay. The Worker root may return 404; that is expected and
-unrelated because this probe requests API paths.
+isolated candidate Worker's stream to pass. The direct Railway result isolates
+any Worker forwarding delay. The candidate Worker is restricted to the
+authenticated Chat SSE `GET` path and adds `Cache-Control: no-store,
+no-transform` to SSE responses. The Worker root may return 404; that is
+expected and unrelated because this probe requests API paths.
 
 This is a diagnostic of the isolated Railway-origin stream through the
 temporary Cloudflare Worker. It does not itself authorize or perform production
@@ -67,4 +69,8 @@ I log Railway mostrano `/api/chat/stream` HTTP 200 terminata dopo 14.968
 secondi, in corrispondenza dell'abort del client. Il probe ora confronta nella
 stessa sessione lo stream sul backend Railway isolato diretto (timeout 5 s) e
 quello via Worker (timeout 15 s), per localizzare il ritardo senza dati di altri
-utenti. Gate 1 rimane bloccato finché il flusso via Worker non passa.
+utenti. Il risultato Windows delle 18:35Z ha confermato Railway diretto PASS
+(evento `connected` in 1.108 ms) e il Worker isolato originale FAIL (timeout a
+15.008 s). Il candidato separato applica `no-store, no-transform`; il prossimo
+probe verifica questa risposta candidata senza toccare il Worker BikerTest o
+il dominio ufficiale. Gate 1 resta bloccato finché il candidato non passa.

@@ -3,6 +3,7 @@ import { randomBytes } from "node:crypto";
 
 const origin = "https://bikerlink-chat-sse-isolation-20261120.andreamasteri-nadir-radio.workers.dev";
 const railwayOrigin = "https://bikerlink-chat-sse-test-backend-gate1-chat-sse-test.up.railway.app";
+const candidateWorkerOrigin = "https://bikerlink-chat-sse-gate1-isolated-20261120.andreamasteri-nadir-radio.workers.dev";
 const jsonHeaders = { Accept: "application/json", "Content-Type": "application/json" };
 const result = {
   target: origin,
@@ -181,8 +182,8 @@ async function main() {
     // through Cloudflare to localize where headers/events are delayed.
     result.chat_sse.direct_railway = await probeSse(railwayOrigin, cookie, 5_000);
     await new Promise((resolve) => setTimeout(resolve, 3_200));
-    result.chat_sse.via_worker = await probeSse(origin, cookie, 15_000);
-    result.chat_sse.pass = result.chat_sse.via_worker.pass;
+    result.chat_sse.via_candidate_worker = await probeSse(candidateWorkerOrigin, cookie, 15_000);
+    result.chat_sse.pass = result.chat_sse.via_candidate_worker.pass;
 
     // The preflight confirmed zero conversations, so neither connection can
     // emit presence to another participant. Let close-triggered work settle.
