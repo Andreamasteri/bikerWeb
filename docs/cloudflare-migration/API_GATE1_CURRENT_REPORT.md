@@ -130,3 +130,9 @@ bypass delle trasformazioni, mentre la route Chat usa `no-cache` e non imposta
 Chat. Evidenze e tempi completi: sezione Diagnosi comparativa SSE nel report di
 migrazione e nel report del probe. Gate 1 completo e cutover restano BLOCKED in
 attesa di una correzione di trasporto Chat SSE verificata sul backend staging.
+
+## Aggiornamento Chat SSE dopo il fix — 20 novembre 2026, 22:57 UTC
+
+Il blocco transport Chat SSE descritto sopra è stato superato nel backend Railway isolato e nel candidato Cloudflare workers.dev. Il backend ora risponde con Cache-Control: no-cache, no-transform; l’evento connected è arrivato via Worker in 97 ms (43 ms per la fetch upstream interna). Test completo isolato all_pass=true, incluso Session SSE e logout. Evidenza: [GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json](GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json).
+
+PR BikerLink [#468](https://github.com/Andreamasteri/Bikerlink/pull/468) è stata unita con c277eebb; Railway staging e production sono READY alla stessa revisione, con DB circuit CLOSED. Questo non equivale al rerun completo del Gate 1 sul Worker ufficiale. **Cutover non eseguito; Gate 1 post-deploy completo da riverificare; Gate 2 e Gate 3 NOT RUN.** Nessun Worker production o record DNS è stato pubblicato.

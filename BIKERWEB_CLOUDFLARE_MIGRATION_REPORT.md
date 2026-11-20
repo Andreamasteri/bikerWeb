@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 20 novembre 2026, 12:22 UTC
-**Stato:** 19/19 controlli autenticati, upload R2 con readback e cleanup, routing locale 91/91, preservazione `bl_vid` su Gate 1 staging e baseline pre-cutover 38/38 su apex/Railway/preview sono PASS. Il probe Chat SSE ha autenticato correttamente l’account staging, ma ha trovato una conversazione e ha saltato lo stream; non è stato aperto né inviato alcun evento di presenza. Il cutover resta bloccato in attesa di un account staging admin già autorizzato senza conversazioni. Il browser condiviso non è accessibile dal runtime Codex web. Non è stato cambiato alcun Worker production, DNS, backend o database production; Gate 2 e Gate 3 non sono eseguiti.
+**Aggiornato:** 20 novembre 2026, 22:57 UTC
+**Stato:** il sottogate di trasporto Chat SSE è PASS su Railway e Worker isolati. Il fix header è stato integrato in BikerLink PR #468 (commit c277eebb) e distribuito su Railway staging e production; entrambi gli health check sono 200 READY, degraded=false, DB circuit CLOSED. Il cutover Cloudflare/DNS non è stato eseguito: la suite Gate 1 completa non è stata ripetuta sul Worker ufficiale dopo il deploy e Gate 2/3 restano NOT RUN.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -90,7 +90,7 @@ Verifiche della correzione: test routing 91/91 PASS; dry-run Wrangler production
 
 La verifica pre-cutover del commit candidato, con il preview `workers.dev` appena pubblicato, passa 38/38 su apex, origine Railway e preview; tutte e tre mostrano la revisione backend production `579c84d85a436f3fde485625294560e6be977d8b`. Le differenze automatizzate restano cinque intestazioni statiche `/blog` e `/contact` (MIME/cache); nessuna regressione API, 404 o 500. Evidenza: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md), [`API_BEFORE.json`](docs/cloudflare-migration/API_BEFORE.json) e [`API_PRECUTOVER_COMPARE_20261120.json`](docs/cloudflare-migration/API_PRECUTOVER_COMPARE_20261120.json). PR #15 è stata unita alle 12:05:21Z (merge `2d9adeceb35dbc552cfa15b5e1d26a668d7555b5`); la baseline è stata poi aggiornata con PR #16 alle 12:07:07Z (merge `26718382d563baf1944775bbd8c50786aa777bb7`).
 
-## Gate 1 rimanente: Chat SSE autenticata
+## Stato storico pre-fix: blocco Chat SSE (20 novembre, 12:20 UTC)
 
 Il Worker inoltra `/api/chat/stream` senza trasformazioni e l’SSE autenticata `/api/auth/session-events` è PASS. Il probe [`GATE1_CHAT_SSE_SAFE_PROBE.js`](docs/cloudflare-migration/GATE1_CHAT_SSE_SAFE_PROBE.js) è stato eseguito nella scheda staging autenticata il 20 novembre alle 12:20:32Z: `/api/chat/conversations?limit=1&offset=0` ha risposto 200 con `count=1`; il probe ha impostato `attempted=false`, `skip_reason=active_conversation_present_presence_probe_skipped`. Nessun stream è stato aperto e nessun evento di presenza inviato. Evidenza sanitizzata: [`GATE1_CHAT_SSE_PREFLIGHT_20261120.json`](docs/cloudflare-migration/GATE1_CHAT_SSE_PREFLIGHT_20261120.json). Il runtime browser condiviso continua a non essere accessibile (`gaas-browser node_repl sandbox cannot be disabled`).
 
@@ -214,3 +214,18 @@ verificare il flush), ma va trattata nel checkout e nel flusso di rilascio del
 backend, con test staging prima del nuovo probe. Nessun DNS, Worker production,
 BikerTest o servizio Railway è stato modificato. Il Worker di prova rimane
 `workers.dev` only e punta al backend usa e getta.
+
+## Risoluzione del buffering Chat SSE — 20 novembre 2026, 22:57 UTC
+
+La causa era nella risposta backend: compression() è middleware globale; la route Chat impostava Cache-Control: no-cache, mentre /api/auth/session-events impostava no-store, no-transform. Sul test isolato, aggiungere no-transform alla Chat SSE ha rimosso Vary: Accept-Encoding e consentito la consegna immediata del frame connected. Non serve un upgrade del piano Cloudflare; il Worker inoltra correttamente lo stream una volta che l’origine non lo bufferizza.
+
+Il fix di trasporto è nel repository Andreamasteri/Bikerlink, PR [#468](https://github.com/Andreamasteri/Bikerlink/pull/468), commit sorgente e8a5f4f24256d9da017e4a3d211a79d5e5725a2b, merge commit c277eebb07c53ff7526749887a7350bddc9ded24. La route Chat ora invia Cache-Control: no-cache, no-transform prima di flushHeaders(); metodi, path, body, cookie, auth e logica delle conversazioni non cambiano. Test mirati: 10/10 Vitest, Oxlint e build server PASS. I quattro controlli GitHub richiesti sono PASS; il controllo non richiesto Matching surface inventory fallisce per docs/matching-surface-inventory.current.json stale su main. Nessun file matching è stato modificato.
+
+Deploy Railway verificati sul merge commit c277eebb:
+- Test isolato: deployment 450b1998-9aef-4b18-9adf-8aabcabe0cb9, commit e8a5f4f.
+- Staging: deployment e9e82ea9-867e-4b82-a567-cddcb05e62aa; health HTTP 200, revisione c277eebb, READY, degraded=false, DB circuit CLOSED.
+- Production: deployment 5c7c66d1-d185-40f2-b060-ae381cb236ea; health HTTP 200, revisione c277eebb, READY, degraded=false, DB circuit CLOSED.
+
+Il probe isolato autenticato ha superato registrazione 201, auth 200, preflight zero conversazioni, Chat SSE diretto Railway 200 (connected, primo chunk 1.081 ms), diagnostica upstream del Worker 200 (primo chunk 43 ms), Chat SSE via Worker 200 (connected, primo chunk 97 ms), Session SSE in entrambi i percorsi e logout 200; all_pass=true. Evidenza senza credenziali: [GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json](docs/cloudflare-migration/GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json) e [GATE1_ISOLATED_CHAT_SSE_NODE_PROBE.md](docs/cloudflare-migration/GATE1_ISOLATED_CHAT_SSE_NODE_PROBE.md).
+
+Questo supera il precedente blocco tecnico del buffering Chat SSE nell’ambiente isolato. La suite completa post-deploy sul Worker Gate 1 ufficiale resta da ripetere; non dichiaro il Gate 1 complessivo o il cutover conclusi. Nessun Worker Cloudflare production o record DNS è stato modificato; BikerTest resta invariato. Gate 2 e Gate 3 non sono stati eseguiti.

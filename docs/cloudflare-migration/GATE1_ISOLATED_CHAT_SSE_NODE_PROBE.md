@@ -205,3 +205,13 @@ verificare il flush), ma va trattata nel checkout e nel flusso di rilascio del
 backend, con test staging prima del nuovo probe. Nessun DNS, Worker production,
 BikerTest o servizio Railway è stato modificato. Il Worker di prova rimane
 `workers.dev` only e punta al backend usa e getta.
+
+## Risoluzione e probe riuscito — 20 novembre 2026, 22:47 UTC
+
+Dopo il merge del fix backend no-transform, il probe Node è stato eseguito dal runner Forge sul solo ambiente Railway isolato Bikerlink-SSE-Test-20261120, deployment 450b1998-9aef-4b18-9adf-8aabcabe0cb9, revision e8a5f4f24256d9da017e4a3d211a79d5e5725a2b.
+
+Risultato: registrazione 201; /api/auth/me 200; conversazioni 0; Chat SSE diretta Railway 200 e connected al primo chunk in 1.081 ms; diagnostica worker.fetch 200 e connected in 43 ms; percorso pubblico del Worker candidato 200 e connected al primo chunk in 97 ms. Session SSE diretta 200/1.102 ms e via Worker 200/442 ms; logout 200; all_pass=true. L’header diretto era no-cache, no-transform; la risposta del Worker era no-store, no-transform, entrambe senza Content-Encoding. Nessun cookie, token, account, conversazione o corpo applicativo è incluso nel risultato. L’account usa e getta è rimasto solo nel database di test e ha zero conversazioni.
+
+Il probe mostra che il buffering era a monte del Worker, associato alla compressione globale Express: no-transform sulla risposta Chat impedisce che i piccoli frame restino bufferizzati. Il risultato live non supporta un upgrade Cloudflare.
+
+Evidenza JSON: [GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json](GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json). Il test è limitato al backend e Worker isolati; non è il rerun completo del Gate 1 sul Worker ufficiale.
