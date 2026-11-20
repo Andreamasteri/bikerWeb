@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "bikerlink-chat-sse-gate1-isolated-20261120",
+  "main": "src/chat-sse-isolated-entry.js",
+  "account_id": "d116d3d97b133c543d02934be4bc98d2",
+  "compatibility_date": "2026-11-20",
+  "workers_dev": true,
+  "vars": {
+    "RAILWAY_ORIGIN": "https://bikerlink-chat-sse-test-backend-gate1-chat-sse-test.up.railway.app"
+  }
+}

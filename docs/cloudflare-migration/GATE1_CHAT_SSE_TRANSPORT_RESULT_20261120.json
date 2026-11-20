@@ -1,0 +1,88 @@
+{
+  "captured_at": "2026-11-20T22:47:37.444Z",
+  "scope": "isolated Gate 1 Chat SSE transport check",
+  "backend": {
+    "railway_project": "Bikerlink-SSE-Test-20261120",
+    "environment": "gate1-chat-sse-test",
+    "service": "Bikerlink-Chat-SSE-Test-Backend",
+    "deployment_id": "450b1998-9aef-4b18-9adf-8aabcabe0cb9",
+    "backend_commit": "e8a5f4f24256d9da017e4a3d211a79d5e5725a2b",
+    "revision": "e8a5f4f24256d9da017e4a3d211a79d5e5725a2b"
+  },
+  "checks": {
+    "registration": {
+      "status": 201,
+      "pass": true,
+      "session_cookie": true
+    },
+    "auth_me": {
+      "status": 200,
+      "pass": true
+    },
+    "conversations": {
+      "status": 200,
+      "count": 0,
+      "pass": true
+    },
+    "chat_sse_direct_railway": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 1080,
+      "first_chunk_ms": 1081,
+      "event": "connected",
+      "cache_control": "no-cache, no-transform",
+      "content_encoding": null,
+      "pass": true
+    },
+    "worker_internal_upstream_diagnostic": {
+      "http_status": 200,
+      "authenticated": true,
+      "conversations_empty": true,
+      "upstream_status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 43,
+      "first_chunk_ms": 43,
+      "event": "connected",
+      "cache_control": "no-cache, no-transform",
+      "content_encoding": null,
+      "pass": true
+    },
+    "chat_sse_via_cloudflare_candidate": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 96,
+      "first_chunk_ms": 97,
+      "event": "connected",
+      "cache_control": "no-store, no-transform",
+      "content_encoding": null,
+      "cf_ray": "a5daff9568b0ea58-FCO",
+      "pass": true
+    },
+    "session_sse_direct_railway": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 1101,
+      "first_chunk_ms": 1102,
+      "event": "connected",
+      "pass": true
+    },
+    "session_sse_via_cloudflare_candidate": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 442,
+      "first_chunk_ms": 442,
+      "event": "connected",
+      "pass": true
+    },
+    "logout": {
+      "status": 200,
+      "pass": true
+    }
+  },
+  "all_pass": true,
+  "limitations": [
+    "The probe used only the dedicated isolated Railway test project and isolated workers.dev candidate.",
+    "The disposable account remains only in that test database; it had zero conversations and was logged out.",
+    "This is not a full post-deployment Gate 1 run against the official staging Worker."
+  ]
+}

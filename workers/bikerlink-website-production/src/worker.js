@@ -352,6 +352,15 @@ async function proxyToRailway(request, env, options = {}) {
     });
   }
 
+  // Keep server-sent event responses uncompressed so the initial event and
+  // heartbeats are flushed through Railway and Cloudflare without buffering.
+  // The response itself is still returned as a streaming body below.
+  const isSseRequest = (headers.get("accept") || "").toLowerCase().includes("text/event-stream");
+  if (isSseRequest) {
+    headers.set("accept-encoding", "identity");
+    headers.set("cache-control", "no-transform");
+  }
+
   const rewriteHtml = options.rewritePublicOrigin && request.method === "GET" &&
     (request.headers.get("accept") || "").toLowerCase().includes("text/html");
   if (rewriteHtml) {
@@ -372,13 +381,31 @@ async function proxyToRailway(request, env, options = {}) {
     method: request.method,
     headers,
     redirect: "manual",
+    signal: request.signal,
   };
   if (request.method !== "GET" && request.method !== "HEAD") {
     init.body = request.body;
   }
 
-  // API, SSE, WebSocket, cookie, and error responses are returned unchanged.
+  // API, cookie, WebSocket, and error responses remain unchanged. SSE bodies
+  // stay streamed, with intermediary transformations explicitly disabled.
   const response = await fetch(new Request(upstreamUrl, init));
+  if (
+    isSseRequest &&
+    (response.headers.get("content-type") || "").toLowerCase().includes("text/event-stream")
+  ) {
+    // Keep Cloudflare and downstream intermediaries from buffering or
+    // transforming small SSE frames. Match the backend's session-events SSE
+    // policy while preserving the origin status and streaming body.
+    const sseHeaders = new Headers(response.headers);
+    sseHeaders.set("cache-control", "no-store, no-transform");
+    sseHeaders.set("x-accel-buffering", "no");
+    return new Response(response.body, {
+      status: response.status,
+      statusText: response.statusText,
+      headers: sseHeaders,
+    });
+  }
   return options.rewritePublicOrigin
     ? rewritePublicOrigin(response, request, origin, publicOrigin)
     : response;
