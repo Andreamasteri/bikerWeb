@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 20 novembre 2026, 09:45 UTC
-**Stato:** contenuti originali ripristinati, uniti in `main` e pubblicati su un Worker Preview isolato; **cutover production non eseguito**. Host DB staging, login/sessione admin e 14 controlli autenticati read-only sullo staging sono verificati. Gate 1 resta bloccato perché manca la prova autenticata attraverso Cloudflare e i test isolati dei percorsi persistenti o con effetti. Il sito ufficiale continua a essere servito da Railway; Railway è rimasto l’origine applicativa.
+**Aggiornato:** 20 novembre 2026, 10:20 UTC
+**Stato:** contenuti originali ripristinati e pubblicati su Worker Preview; un Worker Cloudflare separato ora inoltra a Railway staging per la prova Gate 1. Sono verificati salute, pagine, API anonime, asset R2 e test locali del routing. Il cutover production non è stato eseguito. Gate 1 resta bloccato finché non si completa la prova autenticata sul nuovo hostname Cloudflare; il sito ufficiale continua a essere servito da Railway e il backend è rimasto l’origine applicativa.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -19,6 +19,7 @@ La modifica di contenuti è stata unita in `main` tramite [PR #4](https://github
 | BikerTest | `https://bikertest.biker-link.net/` HTTP 200; Worker distinto e non modificato. Il record AAAA `100::` resta proxied. |
 | Cloudflare R2 | Bucket `bikerlink-website-assets`: 49 oggetti, 6.044.133 byte, manifest allineato alla sorgente Railway verificata. Nessun oggetto modificato durante questa fase. |
 | Worker candidato | Worker separato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`, URL <https://bikerlink-website-content-preview.andreamasteri-nadir-radio.workers.dev>. Wrangler mostra zero trigger; nessun custom domain o route apex collegato. Il precedente Preview 9 è rimasto distinto e non è stato sovrascritto. |
+| Worker prova Gate 1 | `bikerlink-website-gate1-staging`, versione `b0adebc9-5c8f-4eee-97a7-6be89e83dba7`, deployment `28a875e9-f5c4-4269-89a7-81bd05c5db00`; URL <https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev>. Solo `workers.dev`, nessun trigger o hostname personalizzato; `RAILWAY_ORIGIN` è esclusivamente Railway staging. Il Worker production e BikerTest non sono stati modificati. |
 | Static Assets e variabili | Il candidate serve i file in `workers/bikerlink-website-production/public` tramite `ASSETS`, usa R2 via `SITE_ASSETS`, `RAILWAY_ORIGIN=https://bikerlink-production.up.railway.app` e `PUBLIC_SITE_ORIGIN=https://biker-link.net`. Variabili non segrete nel file Wrangler; nessun segreto nel repository. |
 | TLS e connessioni persistenti | La zona usa SSL Full e WebSockets attivi secondo l’audit precedente; il candidate apre TLS direttamente verso l’hostname Railway, senza fetch del dominio apex e quindi senza loop. Le prove WebSocket sono state anonime. |
 
@@ -67,7 +68,7 @@ Verifica read-only successiva, 19 novembre 2026 alle 22:59Z: il nuovo Worker Pre
 
 Suite read-only aggiornata, 19 novembre 2026 alle 23:29Z: 38/38 PASS su apex, Railway e Worker Preview, con revisione backend `34f03bb77e631907aa6c9ada6846bff064b9f977`. Il confronto API/readiness/WebSocket non mostra regressioni funzionali. Le cinque differenze rilevate sono limitate a MIME/cache delle pagine HTML statiche `/blog` e `/contact`; `/api/health` restituisce lo stesso corpo di 711 byte ma il Worker non inoltra `Content-Length`. Il report completo e le evidenze sono in [`API_GATE1_CURRENT_REPORT.md`](docs/cloudflare-migration/API_GATE1_CURRENT_REPORT.md).
 
-**Gate 1: BLOCKED, non PASS.** La suite anonima aggiornata passa su tutte e tre le origini; una sessione staging autenticata ha superato 14/14 prove read-only su matching, telemetria, chat/notifiche, stato SOS, configurazione AI e SSE di sessione. Mancano ancora il routing autenticato attraverso Cloudflare/hostname ufficiale e test isolati di upload, Chat SSE e WebSocket; i callback/webhook non sono stati invocati.
+**Gate 1: BLOCKED, non PASS.** La suite anonima precedente passa su tutte e tre le origini; la sessione Railway staging autenticata ha superato 14/14 prove read-only. Il nuovo Worker isolato passa `/api/health`, pagine, proxy API anonime e una verifica SHA-256 di un’immagine R2 contro l’oggetto nel bucket. Il test locale del routing passa 85/85. Restano da eseguire dal browser autenticato sul hostname Cloudflare i GET autenticati, SSE, WebSocket e i payload di scrittura deliberatamente invalidi che il codice staging rifiuta prima di qualsiasi persistenza. Callback e webhook non sono stati invocati. Evidenze: [`API_GATE1_CLOUDFLARE_PREVIEW.json`](docs/cloudflare-migration/API_GATE1_CLOUDFLARE_PREVIEW.json) e istruzioni [`GATE1_BROWSER_PROBE.md`](docs/cloudflare-migration/GATE1_BROWSER_PROBE.md).
 
 I `401` nella Console all’apertura della pagina erano i controlli iniziali di sessione di `web-session.js`, eseguiti prima del login. L’operatore conferma un tentativo di login con password errata; il successivo login riuscito e la prova autenticata hanno restituito HTTP 200. Non sono errori della suite autenticata.
 
