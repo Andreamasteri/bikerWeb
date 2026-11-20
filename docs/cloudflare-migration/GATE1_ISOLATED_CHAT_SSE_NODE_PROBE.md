@@ -8,7 +8,11 @@ staging or production.
 
 The probe creates one random disposable account in the isolated Gate 1 test
 database, confirms its authenticated session and zero conversations, and only
-then opens `/api/chat/stream`. It logs out afterward. The disposable user row
+then opens `/api/chat/stream`. Before the public stream check, it asks the
+candidate Worker to make an internal authenticated request, confirm zero
+conversations, and read only the first SSE chunk. This distinguishes delayed
+Railway subrequest headers/chunks from delayed Worker-to-client delivery. It
+logs out afterward. The disposable user row
 remains in that isolated test database; do not reuse this probe against another
 environment. It prints status, content type, latency, and pass/fail only. It
 never prints the generated email, password, session cookie, or response bodies.
@@ -33,11 +37,13 @@ spoofed browser identity or otherwise attempt to evade Cloudflare controls.
 ## Expected passing evidence
 
 `registration.status` is 201, `auth_me.status` is 200, `conversations.count` is
-0, and both `chat_sse.direct_railway` and `chat_sse.via_candidate_worker` report status
-200, `text/event-stream`, and `connected_event: true`. `all_pass` requires the
-isolated candidate Worker's stream to pass. The direct Railway result isolates
-any Worker forwarding delay. The candidate Worker is restricted to the
-authenticated Chat SSE `GET` path and adds `Cache-Control: no-store,
+0, and both `chat_sse.direct_railway` and `chat_sse.via_candidate_worker` report
+status 200, `text/event-stream`, and `connected_event: true`. `all_pass`
+requires the isolated candidate Worker's stream to pass. The
+`worker_internal_diagnostic` result reports only whether the candidate Worker
+received response headers and the first `connected` frame, with timings and
+safe response metadata. The candidate Worker is restricted to Chat SSE `GET`
+and an authenticated diagnostic path, and adds `Cache-Control: no-store,
 no-transform` to SSE responses. The Worker root may return 404; that is
 expected and unrelated because this probe requests API paths.
 
@@ -98,3 +104,17 @@ indirizzo client; la prova delle 18:53Z è comunque stata accettata. Se un probe
 successivo restituisce HTTP 429, fermarsi e attendere la scadenza del limite
 prima di riprovare. Ogni esecuzione valida confronta Railway diretto e il
 Worker candidato autenticato; logout viene eseguito alla fine.
+
+## Diagnostica Worker dopo il risultato delle 19:00Z
+
+La prova del 20 novembre alle 19:00Z ha confermato nuovamente Railway diretto
+PASS (SSE in 1.117 ms) e Worker candidato FAIL (abort del client a 15.007 s).
+Il log Railway mostra il 200 via Worker solo dopo circa 14.6 s, all'abort del
+client. Il candidato isolato è stato aggiornato con una diagnostica
+`GET /__diag/chat-sse`: dopo aver verificato autenticazione e zero conversazioni,
+misura quando il Worker riceve gli header upstream e il primo evento `connected`.
+La risposta contiene solo status, content type, header cache/encoding, latenze,
+booleani ed eventuale classe dell'errore. Il proxy inoltra il segnale di abort
+al subrequest per chiudere connessioni interrotte. Non sono stati modificati
+DNS, backend Railway o Worker ufficiale. Gate 1 resta bloccato fino al risultato
+di questo confronto.

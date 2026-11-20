@@ -182,6 +182,37 @@ async function main() {
     // through Cloudflare to localize where headers/events are delayed.
     result.chat_sse.direct_railway = await probeSse(railwayOrigin, cookie, 5_000);
     await new Promise((resolve) => setTimeout(resolve, 3_200));
+    try {
+      const diagnosticStart = performance.now();
+      const diagnosticResponse = await request("/__diag/chat-sse", {
+        headers: { Accept: "application/json", Cookie: cookie },
+      }, 20_000);
+      let diagnostic = null;
+      if (contentType(diagnosticResponse).includes("application/json")) {
+        diagnostic = await diagnosticResponse.json();
+      } else {
+        await diagnosticResponse.body?.cancel();
+      }
+      result.chat_sse.worker_internal_diagnostic = {
+        http_status: diagnosticResponse.status,
+        authenticated: diagnostic?.authenticated === true,
+        conversations_empty: diagnostic?.conversations_empty === true,
+        stream_status: diagnostic?.upstream_status ?? 0,
+        content_type: diagnostic?.content_type ?? null,
+        content_encoding: diagnostic?.content_encoding ?? null,
+        cache_control: diagnostic?.cache_control ?? null,
+        headers_ms: diagnostic?.headers_ms ?? null,
+        first_chunk_ms: diagnostic?.first_chunk_ms ?? null,
+        connected_event: diagnostic?.connected_event === true,
+        error: diagnostic?.error ?? null,
+        latency_ms: elapsed(diagnosticStart),
+      };
+    } catch (error) {
+      result.chat_sse.worker_internal_diagnostic = {
+        error: error?.name || "DiagnosticError",
+      };
+    }
+    await new Promise((resolve) => setTimeout(resolve, 3_200));
     result.chat_sse.via_candidate_worker = await probeSse(candidateWorkerOrigin, cookie, 15_000);
     result.chat_sse.pass = result.chat_sse.via_candidate_worker.pass;
 
