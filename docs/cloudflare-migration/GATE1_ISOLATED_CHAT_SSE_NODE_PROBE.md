@@ -112,16 +112,36 @@ PASS (SSE in 1.117 ms) e Worker candidato FAIL (abort del client a 15.007 s).
 Il log Railway mostra il 200 via Worker solo dopo circa 14.6 s, all'abort del
 client. Il candidato isolato è stato aggiornato con una diagnostica
 `GET /__diag/chat-sse`: dopo aver verificato autenticazione e zero conversazioni,
-misura quando il Worker riceve gli header upstream e il primo evento `connected`.
+esegue una `fetch` Worker diretta e minimale verso Railway (senza il proxy
+generale, gli header forwarded o la ricostruzione della Response), misurando
+header e primo evento `connected`. Questo separa il comportamento base delle
+fetch in Workers dai dettagli del proxy del sito.
 La risposta contiene solo status, content type, header cache/encoding, latenze,
 booleani ed eventuale classe dell'errore. Il proxy inoltra il segnale di abort
 al subrequest per chiudere connessioni interrotte. Non sono stati modificati
 DNS, backend Railway o Worker ufficiale. Gate 1 resta bloccato fino al risultato
 di questo confronto.
 
-Il candidato diagnostico è pubblicato come
+Il primo deployment diagnostico era
 `bikerlink-chat-sse-gate1-isolated-20261120`, deployment
 `14a1da83-5a97-4c4c-af6c-c27e4f9e63d2`, versione
 `4eb850e4-df11-4edf-afb1-343dcc0f6465`; binding confermato verso il solo
 backend Railway isolato. La route diagnostica è chiamata direttamente su
 questo candidato, non sul Worker usato per creare la sessione di test.
+
+## Risultato delle 19:12Z e prova raw in attesa
+
+Il run delle 19:12:28Z ha superato registrazione (201), auth (200), sessione,
+conversazioni vuote e logout (200). Railway diretto ha ricevuto l'evento SSE
+`connected` in 1.102 ms. La diagnosi precedente via `worker.fetch` è scaduta
+prima degli header dopo 8.550 ms; la chiamata pubblica al candidato è scaduta a
+15.009 s. I log HTTP Railway registrano il 200 della diagnosi dopo 7.996 ms e
+quello del candidato dopo 14.970 s, in corrispondenza degli abort del client.
+
+La nuova versione diagnostica esegue invece una `fetch` Worker minimale
+direttamente all'origine Railway isolata, mantenendo solo cookie, Accept SSE e
+Accept-Encoding identity. È stata pubblicata alle 19:20:30Z come deployment
+`ccad2b1d-b77e-43d4-b5de-d95afdc803db`, versione
+`cc27009f-f9a9-4101-8475-b6832b7238b2`; binding API verificato sul backend usa e
+getta. Il source è stato pushato su GitHub, ma il nuovo test autenticato non è
+ancora stato eseguito. Gate 1 resta BLOCKED.

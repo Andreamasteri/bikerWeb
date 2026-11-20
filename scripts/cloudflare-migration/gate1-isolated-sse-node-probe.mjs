@@ -199,6 +199,7 @@ async function main() {
       }
       result.chat_sse.worker_internal_diagnostic = {
         http_status: diagnosticResponse.status,
+        fetch_mode: diagnostic?.fetch_mode ?? null,
         authenticated: diagnostic?.authenticated === true,
         conversations_empty: diagnostic?.conversations_empty === true,
         stream_status: diagnostic?.upstream_status ?? 0,

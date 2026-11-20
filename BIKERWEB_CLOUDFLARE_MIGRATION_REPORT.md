@@ -153,14 +153,23 @@ su quel candidato separato, mantenendo la sessione registrata sull’hostname di
 test. I controlli locali sono 95/95 PASS; il test Node dei sorgenti passa la
 sintassi. Il proxy propaga il segnale di abort alla richiesta Railway.
 
-La nuova diagnosi non è ancora stata eseguita. Il runtime del workspace non
-riesce a connettersi al Workers hostname (ECONNREFUSED), quindi manca la verifica
-live del nuovo percorso. Gate 1 completo rimane **BLOCKED**; non si eseguono
+La diagnosi via `worker.fetch` eseguita alle 19:12:28Z è scaduta prima degli
+header dopo 8.550 ms; il percorso pubblico del candidato è scaduto a 15.009 s.
+La suite Railway mostra gli SSE completati a 7.996 ms e 14.970 ms,
+corrispondenti agli abort. Il successivo test diagnostico, ancora da eseguire,
+esegue dal Worker una `fetch` minimale all'origine Railway isolata mantenendo
+solo i cookie e gli header SSE essenziali; questo distinguerà il proxy generico
+dalla fetch Worker di base. Il candidato Cloudflare aggiornato è deployment
+`ccad2b1d-b77e-43d4-b5de-d95afdc803db`, versione
+`cc27009f-f9a9-4101-8475-b6832b7238b2`; il binding verso il solo backend usa e
+getta è stato riverificato. L'host Workers non è raggiungibile dai runner del
+workspace, quindi per il controllo autenticato serve il probe Windows già
+aggiornato sul branch. Gate 1 completo rimane **BLOCKED**; non si eseguono
 deployment production, modifiche DNS, Gate 2 o Gate 3. Lo staging e il database
 isolato non sono stati modificati; gli account usa e getta creati dal probe
 appartengono soltanto al database del backend isolato.
 
 Checkpoint GitHub aggiornato: repository `Andreamasteri/bikerWeb`, branch
-`codex/bikerweb-isolated-chat-sse-gate1-20261120`, commit `38e1eeb`
-(`38e1eeb5364b525318134a28d72e4a56f695d5e9`), push verificato. Non ci sono
+`codex/bikerweb-isolated-chat-sse-gate1-20261120`, commit `eb86457`
+(`eb864578540e0ff7065c9bb4a3829345c910fc89`), push verificato. Non ci sono
 workflow in `.github/workflows`; nessuna CI è partita.
