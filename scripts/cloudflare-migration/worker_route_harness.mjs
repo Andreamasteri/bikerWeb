@@ -66,6 +66,7 @@ check(upstream.headers.get('origin')==='https://attacker.example','cross-site Or
 res=await worker.fetch(new FakeRequest('https://biker-link.net/api/chat/stream?room=demo',{headers:{accept:'text/event-stream'}}),makeEnv());
 check(upstream.url.endsWith('/api/chat/stream?room=demo'),'SSE route remains on Railway');
 check(upstream.headers.get('accept-encoding')==='identity','SSE request disables upstream compression buffering');
+check(upstream.headers.get('cache-control')==='no-transform','SSE request asks intermediaries not to transform the response');
 check(res.headers.get('cache-control')==='no-store, no-transform'&&res.headers.get('x-accel-buffering')==='no','SSE response disables intermediary transformation and buffering');
 check((await res.text()).includes('event: connected'),'SSE response body remains readable and unbuffered');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/ws/admin/notifications'),makeEnv());

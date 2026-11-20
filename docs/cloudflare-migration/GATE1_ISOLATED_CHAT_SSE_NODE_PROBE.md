@@ -71,9 +71,13 @@ stessa sessione lo stream sul backend Railway isolato diretto (timeout 5 s) e
 quello via Worker (timeout 15 s), per localizzare il ritardo senza dati di altri
 utenti. Il risultato Windows delle 18:35Z ha confermato Railway diretto PASS
 (evento `connected` in 1.108 ms) e il Worker isolato originale FAIL (timeout a
-15.008 s). Il candidato separato applica `no-store, no-transform`; il prossimo
-probe verifica questa risposta candidata senza toccare il Worker BikerTest o
-il dominio ufficiale. Gate 1 resta bloccato finché il candidato non passa.
+15.008 s). Il risultato delle 18:53Z ha confermato Railway diretto PASS
+(1.079 s) e il primo candidato FAIL (timeout 15.009 s); i log Railway mostrano
+il `200` via Worker solo alla chiusura del client dopo 14.595 s. La direttiva
+solo sulla risposta non ha risolto il ritardo. Il candidato è stato aggiornato
+per chiedere `no-transform` anche sulla richiesta upstream SSE; la risposta
+mantiene `no-store, no-transform`. Gate 1 resta bloccato in attesa di un nuovo
+risultato autenticato.
 
 Il Worker candidato è stato distribuito alle 18:48:55Z come
 `bikerlink-chat-sse-gate1-isolated-20261120` (deployment
@@ -82,8 +86,8 @@ solo `GET /api/chat/stream`; il root restituisce 404 e la route senza cookie
 restituisce 401. La verifica HTTP non autenticata ha confermato entrambi gli
 esiti. Il routing locale passa 94 controlli.
 
-Non eseguire subito un'altra registrazione: il backend limita le registrazioni
-a 3 tentativi per ora e i tentativi precedenti sono avvenuti tra le 18:21Z e le
-18:35Z. Rilanciare il probe dopo le 19:22Z (20:22 ora di Roma) evita di farlo
-fallire per rate limit. Il nuovo run confronta Railway diretto e il Worker
-candidato autenticato; logout viene eseguito alla fine.
+Il backend applica un limite di registrazione di 3 tentativi per ora per
+indirizzo client; la prova delle 18:53Z è comunque stata accettata. Se un probe
+successivo restituisce HTTP 429, fermarsi e attendere la scadenza del limite
+prima di riprovare. Ogni esecuzione valida confronta Railway diretto e il
+Worker candidato autenticato; logout viene eseguito alla fine.

@@ -358,6 +358,7 @@ async function proxyToRailway(request, env, options = {}) {
   const isSseRequest = (headers.get("accept") || "").toLowerCase().includes("text/event-stream");
   if (isSseRequest) {
     headers.set("accept-encoding", "identity");
+    headers.set("cache-control", "no-transform");
   }
 
   const rewriteHtml = options.rewritePublicOrigin && request.method === "GET" &&
