@@ -1,0 +1,28 @@
+{
+  "captured_at_utc": "2026-11-20T12:00:19Z",
+  "backend_revision": "579c84d85a436f3fde485625294560e6be977d8b",
+  "targets": {
+    "public_apex": {"checks": 38, "pass": 38, "fail": 0, "median_latency_ms": 144.5},
+    "railway_origin": {"checks": 38, "pass": 38, "fail": 0, "median_latency_ms": 180.0},
+    "production_worker_preview": {"checks": 38, "pass": 38, "fail": 0, "median_latency_ms": 189.5}
+  },
+  "comparison_against_immediate_preceding_probe": {
+    "automated_static_header_differences": [
+      {"path": "/blog", "field": "Content-Type", "before": "text/html; charset=utf-8", "after": "text/html"},
+      {"path": "/blog", "field": "Cache-Control", "before": "public, max-age=300", "after": "public, max-age=0, must-revalidate", "method": "HEAD"},
+      {"path": "/blog", "field": "Content-Type", "before": "text/html; charset=utf-8", "after": "text/html", "method": "HEAD"},
+      {"path": "/contact", "field": "Content-Type", "before": "text/html; charset=utf-8", "after": "text/html", "method": "HEAD"},
+      {"path": "/contact", "field": "Cache-Control", "before": "public, max-age=300", "after": "public, max-age=0, must-revalidate", "method": "HEAD"}
+    ],
+    "new_api_status_schema_or_body_regressions": 0,
+    "new_404_or_500": 0,
+    "visitor_cookie_note": "The production-backed workers.dev preview intentionally does not issue bl_vid or write production visit records. The custom-domain code path was checked on the isolated Gate 1 staging Worker, which returned the expected bl_vid attributes and staged Railway origin."
+  },
+  "worker_preview": {
+    "url": "https://codex-bikerweb-visitor-tracking-pr-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev",
+    "preview_id": "73302bca73b74977b0b83e8a4796ad9c",
+    "deployment_id": "e0c1d261-7e38-4e3a-b219-68a0943a6672",
+    "source_commit": "39ed4bb025396023477d1f3d2a333fdfc33a52eb"
+  },
+  "scope": "Anonymous GET, HEAD, OPTIONS, and WebSocket probes; no authenticated credentials, writes, or SOS/chat messages were used."
+}
