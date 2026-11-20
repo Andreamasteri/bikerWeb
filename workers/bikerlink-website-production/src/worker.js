@@ -98,6 +98,32 @@ function isWebSocketPath(pathname) {
   );
 }
 
+const GATE1_STAGING_ORIGIN = "https://bikerlink-staging-staging.up.railway.app";
+const GATE1_STAGING_WORKER_PREFIX = "bikerlink-website-gate1-staging.";
+
+function applyGate1StagingOriginOverride(request, headers, railway, env) {
+  const configuredOrigin = env.GATE1_STAGING_ORIGIN_OVERRIDE;
+  if (!configuredOrigin) return true;
+
+  const incomingUrl = new URL(request.url);
+  const isDedicatedWorkersDevHost =
+    incomingUrl.hostname.startsWith(GATE1_STAGING_WORKER_PREFIX) &&
+    incomingUrl.hostname.endsWith(".workers.dev");
+  if (
+    configuredOrigin !== GATE1_STAGING_ORIGIN ||
+    railway.origin !== GATE1_STAGING_ORIGIN ||
+    !isDedicatedWorkersDevHost
+  ) return false;
+
+  // Staging accepts its own origin only. This opt-in exists solely for the
+  // isolated Gate 1 worker, so its same-origin browser requests remain valid
+  // upstream without broadening the staging or production allowlists.
+  if (headers.get("origin") === incomingUrl.origin) {
+    headers.set("origin", railway.origin);
+  }
+  return true;
+}
+
 function railwayOrigin(env) {
   try {
     const origin = new URL(env.RAILWAY_ORIGIN);
@@ -215,6 +241,12 @@ async function proxyToRailway(request, env, options = {}) {
   }
   const upstreamUrl = new URL(incomingUrl.pathname + incomingUrl.search, origin);
   const headers = new Headers(request.headers);
+  if (!applyGate1StagingOriginOverride(request, headers, origin, env)) {
+    return new Response("Invalid Gate 1 staging Worker configuration", {
+      status: 503,
+      headers: { "content-type": "text/plain; charset=utf-8", "cache-control": "no-store" },
+    });
+  }
 
   const rewriteHtml = options.rewritePublicOrigin && request.method === "GET" &&
     (request.headers.get("accept") || "").toLowerCase().includes("text/html");
