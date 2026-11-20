@@ -39,3 +39,19 @@ spoofed browser identity or otherwise attempt to evade Cloudflare controls.
 This is a diagnostic of the isolated Railway-origin stream through the
 temporary Cloudflare Worker. It does not itself authorize or perform production
 DNS changes.
+
+## Esito dell'esecuzione Windows del 20 novembre 2026
+
+Con Node `v22.23.1`, il probe ha ricevuto HTTP 403 su `POST /api/auth/register`
+e si è fermato prima di autenticazione e Chat SSE. I log HTTP Railway
+confermano che la richiesta ha raggiunto il backend isolato; il log applicativo
+riporta `Registrazione non consentita` e il blocco della creazione dell'account
+smoke. Non è un errore di connessione né una prova sul percorso SSE.
+
+Lo stesso database isolato aveva già accettato un account usa e getta da una
+precedente prova browser; il motivo preciso per cui la successiva registrazione
+Node è stata respinta non è dimostrato dai log disponibili. Non ripetere la
+registrazione e non aggiungere header `Origin`/browser falsificati per superare
+il controllo. La procedura va prima adattata a un account/test autorizzato senza
+crearne altri, oppure a un ambiente isolato nuovo predisposto per il probe.
+Produzione e DNS ufficiali non sono stati toccati.
