@@ -2,7 +2,7 @@
 import { randomBytes } from "node:crypto";
 
 const origin = "https://bikerlink-chat-sse-isolation-20261120.andreamasteri-nadir-radio.workers.dev";
-const timeoutMs = 15_000;
+const railwayOrigin = "https://bikerlink-chat-sse-test-backend-gate1-chat-sse-test.up.railway.app";
 const jsonHeaders = { Accept: "application/json", "Content-Type": "application/json" };
 const result = {
   target: origin,
@@ -46,6 +46,55 @@ async function request(path, options = {}) {
   } finally {
     clearTimeout(timer);
   }
+}
+
+async function probeSse(target, cookie, timeoutMs) {
+  const result = { status: 0, content_type: null, connected_event: false, pass: false };
+  const started = performance.now();
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  let response;
+  let reader;
+  try {
+    response = await fetch(new URL("/api/chat/stream", target), {
+      method: "GET",
+      headers: {
+        Accept: "text/event-stream",
+        "Accept-Encoding": "identity",
+        Cookie: cookie,
+      },
+      cache: "no-store",
+      redirect: "manual",
+      signal: controller.signal,
+    });
+    result.status = response.status;
+    result.content_type = contentType(response);
+    if (response.ok && result.content_type.includes("text/event-stream") && response.body) {
+      reader = response.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = "";
+      const deadline = Date.now() + timeoutMs - 500;
+      while (Date.now() < deadline) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        if (/event:\s*connected\b/.test(buffer)) {
+          result.connected_event = true;
+          break;
+        }
+      }
+    }
+  } catch (error) {
+    result.error = error?.name || "ProbeError";
+  } finally {
+    clearTimeout(timer);
+    controller.abort();
+    try { await reader?.cancel(); } catch {}
+    try { await response?.body?.cancel(); } catch {}
+    result.latency_ms = elapsed(started);
+  }
+  result.pass = result.status === 200 && result.content_type.includes("text/event-stream") && result.connected_event;
+  return result;
 }
 
 async function main() {
@@ -128,57 +177,15 @@ async function main() {
     }
 
     result.chat_sse.attempted = true;
-    const sseStart = performance.now();
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), timeoutMs);
-    let streamResponse;
-    try {
-      streamResponse = await fetch(new URL("/api/chat/stream", origin), {
-        method: "GET",
-        headers: {
-          Accept: "text/event-stream",
-          "Accept-Encoding": "identity",
-          Cookie: cookie,
-        },
-        cache: "no-store",
-        redirect: "manual",
-        signal: controller.signal,
-      });
-      result.chat_sse.status = streamResponse.status;
-      result.chat_sse.content_type = contentType(streamResponse);
-      if (streamResponse.ok && result.chat_sse.content_type.includes("text/event-stream") && streamResponse.body) {
-        const reader = streamResponse.body.getReader();
-        const decoder = new TextDecoder();
-        let buffer = "";
-        const deadline = Date.now() + 12_000;
-        try {
-          while (Date.now() < deadline) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            buffer += decoder.decode(value, { stream: true });
-            if (/event:\s*connected\b/.test(buffer)) {
-              result.chat_sse.connected_event = true;
-              break;
-            }
-          }
-        } finally {
-          try { await reader.cancel(); } catch {}
-        }
-      } else {
-        await streamResponse.body?.cancel();
-      }
-    } catch (error) {
-      result.chat_sse.error = error?.name || "ProbeError";
-    } finally {
-      clearTimeout(timer);
-      controller.abort();
-      result.chat_sse.latency_ms = elapsed(sseStart);
-    }
-    result.chat_sse.pass = result.chat_sse.status === 200 &&
-      result.chat_sse.content_type.includes("text/event-stream") && result.chat_sse.connected_event;
+    // Compare the same authenticated stream at the isolated Railway origin and
+    // through Cloudflare to localize where headers/events are delayed.
+    result.chat_sse.direct_railway = await probeSse(railwayOrigin, cookie, 5_000);
+    await new Promise((resolve) => setTimeout(resolve, 3_200));
+    result.chat_sse.via_worker = await probeSse(origin, cookie, 15_000);
+    result.chat_sse.pass = result.chat_sse.via_worker.pass;
 
-    // No conversations were found, so opening/closing this isolated user's stream
-    // cannot emit presence to another participant. Allow the backend debounce to settle.
+    // The preflight confirmed zero conversations, so neither connection can
+    // emit presence to another participant. Let close-triggered work settle.
     await new Promise((resolve) => setTimeout(resolve, 3_200));
   } catch (error) {
     result.error = error?.name === "AbortError" ? "TimeoutError" : (error?.message || "ProbeError");

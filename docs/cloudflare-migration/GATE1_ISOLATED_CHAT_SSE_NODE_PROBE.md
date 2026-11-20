@@ -2,8 +2,9 @@
 
 This probe runs Node directly on the operator's Windows machine. It sends HTTP
 requests only to the disposable Worker
-`bikerlink-chat-sse-isolation-20261120`; it does not use Chrome, DevTools, or the
-Codex web runtime. It does not call staging or production.
+`bikerlink-chat-sse-isolation-20261120` and its dedicated Railway backend; it
+does not use Chrome, DevTools, or the Codex web runtime. It does not call
+staging or production.
 
 The probe creates one random disposable account in the isolated Gate 1 test
 database, confirms its authenticated session and zero conversations, and only
@@ -32,9 +33,11 @@ spoofed browser identity or otherwise attempt to evade Cloudflare controls.
 ## Expected passing evidence
 
 `registration.status` is 201, `auth_me.status` is 200, `conversations.count` is
-0, and `chat_sse` reports status 200, `text/event-stream`, and
-`connected_event: true`. `all_pass` must be true. The Worker root may return
-404; that is expected and unrelated because this probe requests API paths.
+0, and both `chat_sse.direct_railway` and `chat_sse.via_worker` report status
+200, `text/event-stream`, and `connected_event: true`. `all_pass` requires the
+Cloudflare `via_worker` stream to pass. The direct Railway result isolates any
+Worker forwarding delay. The Worker root may return 404; that is expected and
+unrelated because this probe requests API paths.
 
 This is a diagnostic of the isolated Railway-origin stream through the
 temporary Cloudflare Worker. It does not itself authorize or perform production
@@ -56,3 +59,12 @@ richiede per l'identità smoke un nickname `smoke` seguito da almeno sei sole
 cifre. La validazione è stata corretta nel probe Node. Non sono stati aggiunti
 header `Origin` o identità browser falsificati; il controllo e il token smoke
 restano invariati. Produzione e DNS ufficiali non sono stati toccati.
+
+Con il nickname corretto, la prova Windows delle 18:29Z ha superato
+registrazione (`201`), autenticazione (`200`), zero conversazioni e logout
+(`200`). La Chat SSE via Worker è scaduta dopo 15.004 secondi senza headers.
+I log Railway mostrano `/api/chat/stream` HTTP 200 terminata dopo 14.968
+secondi, in corrispondenza dell'abort del client. Il probe ora confronta nella
+stessa sessione lo stream sul backend Railway isolato diretto (timeout 5 s) e
+quello via Worker (timeout 15 s), per localizzare il ritardo senza dati di altri
+utenti. Gate 1 rimane bloccato finché il flusso via Worker non passa.
