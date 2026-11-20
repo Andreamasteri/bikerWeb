@@ -74,3 +74,16 @@ utenti. Il risultato Windows delle 18:35Z ha confermato Railway diretto PASS
 15.008 s). Il candidato separato applica `no-store, no-transform`; il prossimo
 probe verifica questa risposta candidata senza toccare il Worker BikerTest o
 il dominio ufficiale. Gate 1 resta bloccato finché il candidato non passa.
+
+Il Worker candidato è stato distribuito alle 18:48:55Z come
+`bikerlink-chat-sse-gate1-isolated-20261120` (deployment
+`e815f74244d740f3b24b5e7d8731b197`) esclusivamente su `workers.dev`. Accetta
+solo `GET /api/chat/stream`; il root restituisce 404 e la route senza cookie
+restituisce 401. La verifica HTTP non autenticata ha confermato entrambi gli
+esiti. Il routing locale passa 94 controlli.
+
+Non eseguire subito un'altra registrazione: il backend limita le registrazioni
+a 3 tentativi per ora e i tentativi precedenti sono avvenuti tra le 18:21Z e le
+18:35Z. Rilanciare il probe dopo le 19:22Z (20:22 ora di Roma) evita di farlo
+fallire per rate limit. Il nuovo run confronta Railway diretto e il Worker
+candidato autenticato; logout viene eseguito alla fine.
