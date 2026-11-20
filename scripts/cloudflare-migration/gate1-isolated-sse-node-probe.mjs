@@ -12,6 +12,7 @@ const result = {
   auth_me: { status: 0, pass: false },
   conversations: { status: 0, count: null, pass: false },
   chat_sse: { attempted: false, status: 0, content_type: null, connected_event: false, pass: false },
+  session_sse: { attempted: false, direct_railway: null, via_candidate_worker: null, pass: false },
   logout: { status: 0, pass: false },
   all_pass: false,
 };
@@ -53,27 +54,42 @@ async function request(path, options = {}, timeoutMs = 15_000) {
   return requestAt(origin, path, options, timeoutMs);
 }
 
-async function probeSse(target, cookie, timeoutMs) {
-  const result = { status: 0, content_type: null, connected_event: false, pass: false };
+async function probeSse(target, path, cookie, timeoutMs) {
+  const result = {
+    path,
+    status: 0,
+    content_type: null,
+    headers_ms: null,
+    first_chunk_ms: null,
+    first_event: null,
+    connected_event: false,
+    headers: {},
+    pass: false,
+  };
   const started = performance.now();
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   let response;
   let reader;
   try {
-    response = await fetch(new URL("/api/chat/stream", target), {
+    response = await fetch(new URL(path, target), {
       method: "GET",
       headers: {
         Accept: "text/event-stream",
         "Accept-Encoding": "identity",
+        "Cache-Control": "no-transform",
         Cookie: cookie,
       },
       cache: "no-store",
       redirect: "manual",
       signal: controller.signal,
     });
+    result.headers_ms = elapsed(started);
     result.status = response.status;
     result.content_type = contentType(response);
+    for (const name of ["content-encoding", "cache-control", "vary", "x-accel-buffering", "server", "cf-ray"]) {
+      result.headers[name] = response.headers.get(name);
+    }
     if (response.ok && result.content_type.includes("text/event-stream") && response.body) {
       reader = response.body.getReader();
       const decoder = new TextDecoder();
@@ -82,9 +98,12 @@ async function probeSse(target, cookie, timeoutMs) {
       while (Date.now() < deadline) {
         const { done, value } = await reader.read();
         if (done) break;
+        if (result.first_chunk_ms === null) result.first_chunk_ms = elapsed(started);
         buffer += decoder.decode(value, { stream: true });
-        if (/event:\s*connected\b/.test(buffer)) {
-          result.connected_event = true;
+        const event = buffer.match(/(?:^|\n)event:\s*([^\r\n]+)/);
+        if (event) {
+          result.first_event = event[1].trim().slice(0, 40);
+          result.connected_event = result.first_event === "connected";
           break;
         }
       }
@@ -184,7 +203,7 @@ async function main() {
     result.chat_sse.attempted = true;
     // Compare the same authenticated stream at the isolated Railway origin and
     // through Cloudflare to localize where headers/events are delayed.
-    result.chat_sse.direct_railway = await probeSse(railwayOrigin, cookie, 5_000);
+    result.chat_sse.direct_railway = await probeSse(railwayOrigin, "/api/chat/stream", cookie, 5_000);
     await new Promise((resolve) => setTimeout(resolve, 3_200));
     try {
       const diagnosticStart = performance.now();
@@ -218,8 +237,14 @@ async function main() {
       };
     }
     await new Promise((resolve) => setTimeout(resolve, 3_200));
-    result.chat_sse.via_candidate_worker = await probeSse(candidateWorkerOrigin, cookie, 15_000);
+    result.chat_sse.via_candidate_worker = await probeSse(candidateWorkerOrigin, "/api/chat/stream", cookie, 15_000);
     result.chat_sse.pass = result.chat_sse.via_candidate_worker.pass;
+
+    result.session_sse.attempted = true;
+    result.session_sse.direct_railway = await probeSse(railwayOrigin, "/api/auth/session-events", cookie, 5_000);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    result.session_sse.via_candidate_worker = await probeSse(candidateWorkerOrigin, "/api/auth/session-events", cookie, 15_000);
+    result.session_sse.pass = result.session_sse.direct_railway.pass && result.session_sse.via_candidate_worker.pass;
 
     // The preflight confirmed zero conversations, so neither connection can
     // emit presence to another participant. Let close-triggered work settle.
@@ -243,7 +268,7 @@ async function main() {
       }
     }
     result.all_pass = result.registration.pass && result.auth_me.pass &&
-      result.conversations.pass && result.chat_sse.pass;
+      result.conversations.pass && result.chat_sse.pass && result.session_sse.pass;
     // Deliberately emit only sanitized fields: never credentials, cookies, or bodies.
     console.log(`GATE1_ISOLATED_CHAT_SSE_RESULT ${JSON.stringify(result)}`);
   }

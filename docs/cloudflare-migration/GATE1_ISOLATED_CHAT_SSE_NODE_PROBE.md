@@ -156,3 +156,17 @@ il probe durante questa finestra; il riferimento più sicuro per un'eventuale
 prova successiva è dopo le 19:54Z. L'errore è un limite di registrazione
 isolato, non un nuovo risultato SSE; il test raw resta in attesa e Gate 1 è
 ancora BLOCKED.
+
+## Confronto delle due rotte SSE
+
+Il probe confronta nella stessa sessione usa e getta `/api/chat/stream` e
+`/api/auth/session-events`, prima direttamente con il Railway isolato e poi
+attraverso il Worker candidato isolato. Prima di aprire Chat SSE verifica che
+l’account non abbia conversazioni. Per entrambe le rotte registra status,
+header di trasporto selezionati, tempo fino agli header e al primo chunk, e il
+nome del primo evento, senza salvare cookie o contenuto degli eventi.
+
+Il Worker candidato accetta soltanto `GET` su queste due rotte SSE. Il test
+locale verifica inoltre che gli altri percorsi, inclusa la registrazione,
+restino negati dal Worker candidato. Il test online deve essere eseguito solo
+contro il backend usa e getta configurato nel binding `RAILWAY_ORIGIN`.

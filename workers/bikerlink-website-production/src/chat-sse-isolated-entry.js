@@ -1,6 +1,6 @@
 import worker from "./worker.js";
 
-const ALLOWED_PATH = "/api/chat/stream";
+const ALLOWED_PATHS = new Set(["/api/chat/stream", "/api/auth/session-events"]);
 const DIAGNOSTIC_PATH = "/__diag/chat-sse";
 
 function elapsed(start) {
@@ -128,7 +128,7 @@ export default {
       }
       return diagnoseChatSse(request, env, ctx);
     }
-    if (url.pathname !== ALLOWED_PATH) {
+    if (!ALLOWED_PATHS.has(url.pathname)) {
       return new Response("Not Found", {
         status: 404,
         headers: { "cache-control": "no-store", "content-type": "text/plain; charset=utf-8" },
