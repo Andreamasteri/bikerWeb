@@ -75,12 +75,20 @@ async function diagnoseChatSse(request, env, ctx) {
     if (!streamResponse.body) return Response.json(result);
 
     const reader = streamResponse.body.getReader();
-    const firstChunk = await reader.read();
-    result.first_chunk_ms = elapsed(started);
-    if (!firstChunk.done) {
-      const firstText = new TextDecoder().decode(firstChunk.value);
-      result.connected_event = /event:\s*connected\b/.test(firstText);
+    const decoder = new TextDecoder();
+    let firstText = "";
+    const chunkDeadline = Date.now() + 5_000;
+    for (let chunkCount = 0; chunkCount < 8 && Date.now() < chunkDeadline; chunkCount += 1) {
+      const chunk = await reader.read();
+      if (chunk.done) break;
+      firstText += decoder.decode(chunk.value, { stream: true });
+      if (firstText.length > 4096) firstText = firstText.slice(-4096);
+      if (/event:\s*connected\b/.test(firstText)) {
+        result.connected_event = true;
+        break;
+      }
     }
+    result.first_chunk_ms = elapsed(started);
     try { await reader.cancel(); } catch {}
   } catch (error) {
     result.error = error?.name || "StreamReadError";
