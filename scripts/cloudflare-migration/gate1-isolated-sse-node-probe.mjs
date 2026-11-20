@@ -33,7 +33,7 @@ function sessionCookie(response) {
     .join("; ");
 }
 
-async function request(path, options = {}) {
+async function request(path, options = {}, timeoutMs = 15_000) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
