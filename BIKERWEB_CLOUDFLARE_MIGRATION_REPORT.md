@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 19 novembre 2026, 22:59 UTC
-**Stato:** contenuti originali ripristinati, uniti in `main` e pubblicati su un Worker Preview isolato; **cutover production non eseguito**. Host DB staging e login/sessione admin staging verificati; Gate 1 resta bloccato perché manca la copertura completa delle API autenticate. Il sito ufficiale continua a essere servito da Railway; Railway è rimasto l’origine applicativa.
+**Aggiornato:** 20 novembre 2026, 09:45 UTC
+**Stato:** contenuti originali ripristinati, uniti in `main` e pubblicati su un Worker Preview isolato; **cutover production non eseguito**. Host DB staging, login/sessione admin e 14 controlli autenticati read-only sullo staging sono verificati. Gate 1 resta bloccato perché manca la prova autenticata attraverso Cloudflare e i test isolati dei percorsi persistenti o con effetti. Il sito ufficiale continua a essere servito da Railway; Railway è rimasto l’origine applicativa.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -51,7 +51,7 @@ Rollback documentato in `RESTORE.md`: mantenere Railway attivo, ripristinare il 
 
 ## API — Gate 1
 
-Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md), [`API_PREVIEW_REPORT.md`](docs/cloudflare-migration/API_PREVIEW_REPORT.md), [`API_GATE1_CURRENT_REPORT.md`](docs/cloudflare-migration/API_GATE1_CURRENT_REPORT.md), le acquisizioni anonime [`API_GATE1_ANON_CURRENT.json`](docs/cloudflare-migration/API_GATE1_ANON_CURRENT.json)/[`API_GATE1_ANON_RECHECK.json`](docs/cloudflare-migration/API_GATE1_ANON_RECHECK.json), lo staging read-only [`API_GATE1_STAGING_READONLY.json`](docs/cloudflare-migration/API_GATE1_STAGING_READONLY.json), e la verifica admin staging [`API_AUTH_STAGING_REPORT.md`](docs/cloudflare-migration/API_AUTH_STAGING_REPORT.md)/[`API_AUTH_STAGING.json`](docs/cloudflare-migration/API_AUTH_STAGING.json).
+Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md), [`API_PREVIEW_REPORT.md`](docs/cloudflare-migration/API_PREVIEW_REPORT.md), [`API_GATE1_CURRENT_REPORT.md`](docs/cloudflare-migration/API_GATE1_CURRENT_REPORT.md), le acquisizioni anonime [`API_GATE1_ANON_CURRENT.json`](docs/cloudflare-migration/API_GATE1_ANON_CURRENT.json)/[`API_GATE1_ANON_RECHECK.json`](docs/cloudflare-migration/API_GATE1_ANON_RECHECK.json), lo staging anonimo [`API_GATE1_STAGING_READONLY.json`](docs/cloudflare-migration/API_GATE1_STAGING_READONLY.json), l’autenticazione admin [`API_AUTH_STAGING_REPORT.md`](docs/cloudflare-migration/API_AUTH_STAGING_REPORT.md)/[`API_AUTH_STAGING.json`](docs/cloudflare-migration/API_AUTH_STAGING.json) e il nuovo smoke autenticato minimizzato [`API_GATE1_AUTHENTICATED_READONLY.json`](docs/cloudflare-migration/API_GATE1_AUTHENTICATED_READONLY.json).
 
 | Target e acquisizione | Controlli | PASS | FAIL | Mediana | Revisione backend |
 | --- | ---: | ---: | ---: | ---: | --- |
@@ -67,7 +67,9 @@ Verifica read-only successiva, 19 novembre 2026 alle 22:59Z: il nuovo Worker Pre
 
 Suite read-only aggiornata, 19 novembre 2026 alle 23:29Z: 38/38 PASS su apex, Railway e Worker Preview, con revisione backend `34f03bb77e631907aa6c9ada6846bff064b9f977`. Il confronto API/readiness/WebSocket non mostra regressioni funzionali. Le cinque differenze rilevate sono limitate a MIME/cache delle pagine HTML statiche `/blog` e `/contact`; `/api/health` restituisce lo stesso corpo di 711 byte ma il Worker non inoltra `Content-Length`. Il report completo e le evidenze sono in [`API_GATE1_CURRENT_REPORT.md`](docs/cloudflare-migration/API_GATE1_CURRENT_REPORT.md).
 
-**Gate 1: BLOCKED, non PASS.** La suite anonima aggiornata passa su tutte e tre le origini. Il login admin staging e una richiesta autenticata `GET /api/auth/me` sono stati verificati in precedenza; la lettura del selettore credenziali nel vault non è riuscita (`vault_selector_rejected`) e la richiesta senza selettore è stata respinta dal controllo automatico per ambito dati indefinito. Non è stata tentata un’altra via di recupero. Mancano i test autenticati di matching, telemetria, chat/notifiche, upload, SOS e SSE/WebSocket.
+**Gate 1: BLOCKED, non PASS.** La suite anonima aggiornata passa su tutte e tre le origini; una sessione staging autenticata ha superato 14/14 prove read-only su matching, telemetria, chat/notifiche, stato SOS, configurazione AI e SSE di sessione. Mancano ancora il routing autenticato attraverso Cloudflare/hostname ufficiale e test isolati di upload, Chat SSE e WebSocket; i callback/webhook non sono stati invocati.
+
+I `401` nella Console all’apertura della pagina erano i controlli iniziali di sessione di `web-session.js`, eseguiti prima del login. L’operatore conferma un tentativo di login con password errata; il successivo login riuscito e la prova autenticata hanno restituito HTTP 200. Non sono errori della suite autenticata.
 
 Il backend staging servito al momento dei test è il branch feat/telemetry-capability-close-20261103, revisione cfd0f224d2718eb1a4ae95d4c8910c3b31bfc374. Il codice di quella revisione mappa staging su DATABASE_URL_CANDIDATE e rifiuta l’uso della variabile DATABASE_URL generica. L’operatore ha eseguito `railway run --environment staging --service Bikerlink-Staging` e ha riportato l’host `postgres.railway.internal`; Railway mostra il servizio `Postgres` e il volume da 500 MB nello stesso environment staging. L’host candidato è verificato come staging.
 
@@ -112,4 +114,4 @@ Verifiche del deployment 9 (storiche):
 
 ## Decisione
 
-Il ripristino completo del sito è verificato sul Worker Preview isolato; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti operativi e non modificati da questa attività. Il login admin staging funziona, ma restano da eseguire i test autenticati sui percorsi critici. Nessun utente è stato creato in questa fase di pubblicazione del preview e nessun segreto è stato salvato. Gate 1 resta BLOCKED fino al completamento della suite; non sono stati eseguiti il cutover DNS né Gate 2/3.
+Il ripristino completo del sito è verificato sul Worker Preview isolato; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti operativi e non modificati da questa attività. La sessione admin staging e la copertura autenticata read-only sono PASS; Gate 1 resta BLOCKED fino alle prove mancanti del routing Cloudflare autenticato e dei percorsi persistenti o di scrittura. Nessun utente o dato applicativo è stato creato/modificato da questo smoke; nessun segreto è stato salvato. Non sono stati eseguiti il cutover DNS né Gate 2/3.
