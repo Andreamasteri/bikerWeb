@@ -29,3 +29,9 @@ The API namespace and WebSocket selection remain ahead of static routing. `/down
 The origin URL is the Railway-generated hostname, so TLS connects directly to Railway and cannot loop through the public site. The Worker sets `X-Forwarded-Host` and `X-Forwarded-Proto` from the original request. Existing API JSON, cookies, media, SSE, and WebSocket responses are not rewritten. Non-API Railway HTML redirects retain the current public-host rewrite behavior. Existing DNS records and the BikerTest Worker are outside this change.
 
 The candidate is still isolated on `workers.dev`; the apex DNS and official domain have not been changed by this content restoration.
+
+## Gate 1 staging verification Worker
+
+`wrangler.gate1-staging.jsonc` deploys the same Worker source and Static Assets as a separate `bikerlink-website-gate1-staging` Worker. It has only a `workers.dev` hostname, points API and app traffic to the verified Railway staging service, and binds the existing R2 bucket for reads. It has no route or custom domain and does not replace BikerTest or the production/content-preview Workers.
+
+The staging service allows its own origin but rejects the public and preview origins. The optional `GATE1_STAGING_ORIGIN_OVERRIDE` is set only in this test Worker config; source code accepts it only with the exact staging Railway origin and the exact test Worker name prefix on `workers.dev`. It rewrites the `Origin` header only when it equals the incoming same-origin Worker host. Production config does not set this variable, and cross-site origins are never rewritten. Remove this isolated Worker after Gate 1 evidence has been captured.
