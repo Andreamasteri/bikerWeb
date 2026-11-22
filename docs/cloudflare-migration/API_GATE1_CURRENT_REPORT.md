@@ -152,3 +152,16 @@ Risultati: registrazione 201 con cookie di sessione; /api/auth/me 200; elenco co
 Il probe ha anche interrogato il solo endpoint diagnostico temporaneo /__diag/chat-sse, che ha risposto 404 perché non è incluso nell’entrypoint applicativo corrente. È un path diagnostico escluso dalla suite e non un endpoint BikerLink; i due stream SSE e tutte le verifiche richieste sono PASS.
 
 **Stato Gate 1 ufficiale:** ancora BLOCKED fino al deploy della versione candidata sul Worker bikerlink-website-gate1-staging e alla ripetizione della suite sul relativo hostname. Nessun deploy Cloudflare production o cambio DNS è stato eseguito.
+
+
+## Verifica post-deploy sul Worker Gate 1 ufficiale — 22 novembre 2026, 16:33 UTC
+
+Il codice del fix SSE è ora effettivamente distribuito sul Worker ufficiale di verifica, non solo sul Worker isolato. Deployment 20e7a310-8bd4-427b-b1a4-bba51002a959, versione bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b; hostname workers.dev, nessuna route o dominio personalizzato. L’origine è esclusivamente Railway staging.
+
+Le verifiche anonime hanno restituito i 401 JSON previsti per /api/auth/me, /api/auth/session-events e /api/chat/conversations. Home, /blog, /robots.txt e l’immagine R2 hero-forest.webp hanno restituito 200. L’immagine ha 337.534 byte e SHA-256 8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659.
+
+Il health endpoint risponde 200 ma è DEGRADED sia passando dal Worker sia interrogando Railway staging direttamente, stessa revisione 6ad354ff2af155929549c6d15ddc6c100f6a740b, circuito DB CLOSED. Il backend indica scheduler matching non eseguito da circa 2.973 minuti e una violazione alta di integrità DB. Railway production, sulla stessa revisione, è READY e degraded=false. Questa anomalia non proviene dal proxy; non ho modificato database o backend.
+
+Il preflight dall’origine ufficiale restituisce 200 ma nessun header CORS sia dal Worker Gate 1 sia da Railway staging diretta. Railway production diretta restituisce ACAO https://biker-link.net e credenziali abilitate. È una differenza di configurazione staging; il Worker inoltra la risposta osservata.
+
+**Gate 1 post-deploy resta BLOCKED:** il health staging è degradato e la suite autenticata completa sul Worker ufficiale non è stata ripetuta, perché qui non è disponibile una sessione applicativa BikerLink. La prova Chat SSE del codice corrente su backend isolato resta PASS ma non sostituisce questo gate. Il risultato anonimo, i dettagli di health/CORS, DNS e host pubblici sono in [API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json](API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json). Non sono stati cambiati il DNS o il Worker production; Gate 2/3 non eseguiti.

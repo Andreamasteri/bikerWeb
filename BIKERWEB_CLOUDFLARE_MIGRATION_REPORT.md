@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 22 novembre 2026, 15:57 UTC
-**Stato:** il proxy SSE trasparente è stato provato con l’entrypoint Worker corrente su un backend Railway isolato: registrazione 201, auth 200, zero conversazioni, Chat SSE 200/evento connected (primo chunk 140 ms via Worker), SSE sessione 200 e logout 200; all_pass=true. Il fix backend resta su Railway. La baseline API anonima pre-cutover è 38/38 su apice e origine. Gate 1 ufficiale va ora ripetuto sul Worker staging; production Worker, DNS, backend e BikerTest non sono stati modificati. Gate 2/3 NOT RUN.
+**Aggiornato:** 22 novembre 2026, 16:33 UTC
+**Stato:** PR 20 è unita e il Worker Gate 1 ufficiale è stato pubblicato su workers.dev. Le verifiche live confermano home/API statiche e asset R2 funzionanti; il backend staging è però DEGRADED anche interrogato direttamente su Railway e manca la suite autenticata post-deploy sul Worker ufficiale. Gate 1 resta BLOCKED; nessun Worker production o DNS apex è stato attivato, Gate 2/3 NOT RUN.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -19,7 +19,7 @@ La modifica di contenuti è stata unita in `main` tramite [PR #4](https://github
 | BikerTest | `https://bikertest.biker-link.net/` HTTP 200; Worker distinto e non modificato. Il record AAAA `100::` resta proxied. |
 | Cloudflare R2 | Bucket `bikerlink-website-assets`: 49 oggetti, 6.044.133 byte, manifest allineato alla sorgente Railway verificata. Nessun oggetto modificato durante questa fase. |
 | Worker candidato | Worker separato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`, URL <https://bikerlink-website-content-preview.andreamasteri-nadir-radio.workers.dev>. Wrangler mostra zero trigger; nessun custom domain o route apex collegato. Il precedente Preview 9 è rimasto distinto e non è stato sovrascritto. |
-| Worker prova Gate 1 | `bikerlink-website-gate1-staging`, versione `b0adebc9-5c8f-4eee-97a7-6be89e83dba7`, deployment `28a875e9-f5c4-4269-89a7-81bd05c5db00`; URL <https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev>. Solo `workers.dev`, nessun trigger o hostname personalizzato; `RAILWAY_ORIGIN` è esclusivamente Railway staging. Il Worker production e BikerTest non sono stati modificati. |
+| Worker Gate 1 ufficiale | bikerlink-website-gate1-staging; deployment 20e7a310-8bd4-427b-b1a4-bba51002a959, versione bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b; solo workers.dev, origine Railway staging, nessuna route o dominio personalizzato. |
 | Static Assets e variabili | Il candidate serve i file in `workers/bikerlink-website-production/public` tramite `ASSETS`, usa R2 via `SITE_ASSETS`, `RAILWAY_ORIGIN=https://bikerlink-production.up.railway.app` e `PUBLIC_SITE_ORIGIN=https://biker-link.net`. Variabili non segrete nel file Wrangler; nessun segreto nel repository. |
 | TLS e connessioni persistenti | La zona usa SSL Full e WebSockets attivi secondo l’audit precedente; il candidate apre TLS direttamente verso l’hostname Railway, senza fetch del dominio apex e quindi senza loop. Le prove WebSocket sono state anonime. |
 
@@ -242,3 +242,21 @@ Il probe isolato autenticato ha superato registrazione 201, auth 200, preflight 
 Questo supera il precedente blocco tecnico del buffering Chat SSE nell’ambiente isolato. La suite completa post-deploy sul Worker Gate 1 ufficiale resta da ripetere; non dichiaro il Gate 1 complessivo o il cutover conclusi. Nessun Worker Cloudflare production o record DNS è stato modificato; BikerTest resta invariato. Gate 2 e Gate 3 non sono stati eseguiti.
 
 Il cutover resta sospeso finché i controlli autenticati sul Worker Gate 1 aggiornato non sono ripetuti e PASS. Railway rimane il backend applicativo; nessun deploy backend, modifica DNS, Worker production o BikerTest è stato eseguito in questa fase. Il rollback resta basato su Railway attivo e sul ripristino del record apex DNS-only, come descritto nel backup. Gate 2 e Gate 3 non sono stati eseguiti.
+
+## Verifica live del Worker Gate 1 ufficiale — 22 novembre 2026
+
+Il deployment ufficiale di verifica è bikerlink-website-gate1-staging, versione bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b, deployment 20e7a310-8bd4-427b-b1a4-bba51002a959. È pubblicato solo su workers.dev, usa l’origine Railway staging e il binding R2 bikerlink-website-assets; non ha hostname personalizzato o route sul dominio ufficiale.
+
+Il controllo live alle 16:33 UTC ha restituito HTTP 200 su /api/health sia dal Worker Gate 1 sia da Railway staging diretta, ma entrambi mostrano la stessa revisione 6ad354ff2af155929549c6d15ddc6c100f6a740b in stato DEGRADED. Le cause dichiarate dal backend sono un gap dello scheduler matching e una violazione alta di integrità del database; il circuito DB è CLOSED. La stessa revisione su Railway production è READY, degraded=false. Poiché il payload degradata è identico via Worker e direttamente dall’origine, non è una regressione introdotta dal proxy. Il backend e il database non sono stati modificati.
+
+Le richieste anonime a /api/auth/me, /api/auth/session-events e /api/chat/conversations hanno restituito 401 JSON come atteso. Il Worker ha servito /blog (200 HTML, 201.679 byte, noindex), /robots.txt (200) e l’immagine R2 hero-forest.webp (200 image/webp, 337.534 byte; SHA-256 8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659). La home ufficiale ha restituito 200, BikerTest 200 e BikerBlog 200. L’apice ha continuato a rispondere da Railway.
+
+Il preflight OPTIONS verso /api/auth/register con Origin https://biker-link.net è stato confrontato sulle tre origini. Worker Gate 1 e Railway staging diretta hanno restituito entrambi 200 senza Access-Control-Allow-Origin o altri header CORS; Railway production diretta ha restituito l’origine ufficiale, credenziali true, metodi e header attesi. La differenza è presente nell’ambiente backend staging, non è introdotta dal Worker; va considerata nella valutazione di test cross-origin. Le chiamate same-origin dell’apice non dipendono da questo preflight.
+
+La lettura Cloudflare del DNS conferma che biker-link.net resta CNAME DNS-only verso bikerlink-production.up.railway.app e che non esiste una route Worker sull’apice. Il Worker production non è presente nell’account; il Worker Gate 1, BikerTest e le route radio esistenti risultano separati e non modificati.
+
+Le richieste GET alle pagine pubbliche dell’apice e dello staging possono attivare i rispettivi middleware esistenti di conteggio visite. Non sono stati eseguiti comandi o query dirette al database; non è stata verificata la persistenza degli eventuali eventi analytics generati dai GET.
+
+**Decisione aggiornata:** Gate 1 resta BLOCKED. La suite autenticata post-deploy sul Worker Gate 1 ufficiale non è stata ripetuta perché la sessione disponibile in questo runtime autentica Cloudflare, non BikerLink. Inoltre la readiness staging è DEGRADED e segnala un problema di integrità DB preesistente rispetto al proxy. La prova Chat SSE isolata sul codice corrente è PASS, ma non sostituisce i controlli ufficiali staging. Gate 2 e Gate 3 non sono stati eseguiti. Non sono stati cambiati DNS production, Worker production, backend Railway, database o BikerTest.
+
+Evidenza completa sanitizzata: [API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json](docs/cloudflare-migration/API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json).

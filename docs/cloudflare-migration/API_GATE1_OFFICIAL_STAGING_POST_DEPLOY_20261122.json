@@ -1,0 +1,190 @@
+{
+  "captured_at": "2026-11-22T16:33:13.725Z",
+  "worker": {
+    "name": "bikerlink-website-gate1-staging",
+    "url": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+    "deployment_id": "20e7a310-8bd4-427b-b1a4-bba51002a959",
+    "version_id": "bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b",
+    "workers_dev": true,
+    "custom_domain_or_route": false,
+    "assets_files": 70,
+    "r2_binding": "bikerlink-website-assets",
+    "railway_origin": "https://bikerlink-staging-staging.up.railway.app"
+  },
+  "health": {
+    "gate1_worker": {
+      "http_status": 200,
+      "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+      "state": "DEGRADED",
+      "degraded": true,
+      "db_circuit": "CLOSED",
+      "reasons": [
+        "scheduler.run_gap_no_lock",
+        "db_integrity.high_violations",
+        "Scheduler matching last run 2973 minutes ago",
+        "1 high database integrity violation"
+      ]
+    },
+    "staging_railway_direct": {
+      "http_status": 200,
+      "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+      "state": "DEGRADED",
+      "degraded": true,
+      "db_circuit": "CLOSED",
+      "same_payload_as_worker": true
+    },
+    "production_railway_direct": {
+      "http_status": 200,
+      "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+      "state": "READY",
+      "degraded": false,
+      "db_circuit": "CLOSED"
+    }
+  },
+  "anonymous_checks": [
+    {
+      "target": "gate1_worker",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "target": "gate1_worker",
+      "method": "GET",
+      "path": "/api/auth/session-events",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "target": "gate1_worker",
+      "method": "GET",
+      "path": "/api/chat/conversations?limit=1&offset=0",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "expected": 401,
+      "pass": true
+    },
+    {
+      "target": "gate1_worker",
+      "method": "GET",
+      "path": "/assets/images/hero-forest.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "bytes": 337534,
+      "sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999aeb875c3bdf4659",
+      "pass": true
+    },
+    {
+      "target": "gate1_worker",
+      "method": "GET",
+      "path": "/blog",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 201679,
+      "noindex": true,
+      "pass": true
+    },
+    {
+      "target": "gate1_worker",
+      "method": "GET",
+      "path": "/robots.txt",
+      "status": 200,
+      "content_type": "text/plain",
+      "bytes": 202,
+      "pass": true
+    }
+  ],
+  "public_smoke": {
+    "captured_at_utc": "2026-11-22, immediately after the 16:33 UTC API probe",
+    "apex_home": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 254982
+    },
+    "apex_health": {
+      "status": 200,
+      "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+      "state": "READY",
+      "degraded": false
+    },
+    "gate1_home": {
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 254972
+    },
+    "bikertest_home": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 59037
+    },
+    "bikerblog_home": {
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 21573
+    }
+  },
+  "cors_preflight": {
+    "captured_at": "2026-11-22T16:33:13.725Z",
+    "path": "/api/auth/register",
+    "origin": "https://biker-link.net",
+    "gate1_worker": {
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "allow_origin": null,
+      "allow_credentials": null,
+      "pass": false
+    },
+    "staging_railway_direct": {
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "allow_origin": null,
+      "allow_credentials": null,
+      "pass": false
+    },
+    "production_railway_direct": {
+      "status": 200,
+      "allow_origin": "https://biker-link.net",
+      "allow_credentials": "true",
+      "allow_methods": "GET, POST, PUT, DELETE, OPTIONS",
+      "allow_headers": "Content-Type, Authorization",
+      "pass": true
+    },
+    "interpretation": "The official staging backend and Worker return the same missing CORS headers; production Railway returns the expected headers. This is an environment difference, not a Worker-only change."
+  },
+  "cloudflare_dns_and_workers": {
+    "zone": "biker-link.net",
+    "plan": "Free Website",
+    "apex": {
+      "type": "CNAME",
+      "target": "bikerlink-production.up.railway.app",
+      "proxied": false
+    },
+    "apex_worker_routes": [],
+    "production_worker_present": false,
+    "gate1_worker_present": true,
+    "biker_test_worker_present": true,
+    "unrelated_radio_routes_preserved": true
+  },
+  "side_effects": {
+    "database_or_backend_deploy_modified": false,
+    "note": "GET requests to public pages at the apex and staging may invoke the existing visitor-tracking middleware for each origin. No direct DB command or query was run, and persistence of any resulting analytics rows was not queried."
+  },
+  "gate_decision": {
+    "gate1": "BLOCKED",
+    "blockers": [
+      "Official staging backend health is DEGRADED from direct Railway as well as through the Worker; it reports one high database integrity violation and a scheduler gap.",
+      "An authenticated post-deploy suite on the official Gate 1 hostname was not rerun because this runtime has no BikerLink app session."
+    ],
+    "isolated_chat_sse_transport": "PASS (separate test backend; does not substitute for official staging post-deploy suite)",
+    "gate2": "NOT RUN",
+    "gate3": "NOT RUN",
+    "production_dns_or_worker_changed": false,
+    "railway_backend_or_database_changed": false,
+    "bikertest_changed": false
+  }
+}
