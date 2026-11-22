@@ -136,3 +136,19 @@ attesa di una correzione di trasporto Chat SSE verificata sul backend staging.
 Il blocco transport Chat SSE descritto sopra è stato superato nel backend Railway isolato e nel candidato Cloudflare workers.dev. Il backend ora risponde con Cache-Control: no-cache, no-transform; l’evento connected è arrivato via Worker in 97 ms (43 ms per la fetch upstream interna). Test completo isolato all_pass=true, incluso Session SSE e logout. Evidenza: [GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json](GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json).
 
 PR BikerLink [#468](https://github.com/Andreamasteri/Bikerlink/pull/468) è stata unita con c277eebb; Railway staging e production sono READY alla stessa revisione, con DB circuit CLOSED. Questo non equivale al rerun completo del Gate 1 sul Worker ufficiale. **Cutover non eseguito; Gate 1 post-deploy completo da riverificare; Gate 2 e Gate 3 NOT RUN.** Nessun Worker production o record DNS è stato pubblicato.
+
+## Aggiornamento — 22 novembre 2026
+
+Il controllo anonimo pre-cutover aggiornato ha restituito 38/38 PASS sia sull’apice sia sull’origine Railway (revision 6ad354ff2af155929549c6d15ddc6c100f6a740b, READY, degraded=false); dettagli in API_BEFORE_REPORT.md. Il risultato autenticato Chat SSE all_pass=true del 20 novembre è stato ottenuto su Worker e backend isolati con database di test separato; è conservato in GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json. Questa evidenza conferma il fix di trasporto e non equivale alla suite post-deploy sul Worker ufficiale bikerlink-website-gate1-staging.
+
+**Stato Gate 1:** ancora BLOCKED fino al deploy della versione candidata sul Worker Gate 1 ufficiale e alla ripetizione verificabile dei controlli autenticati e di routing. Il cutover DNS e il deploy del Worker production restano non eseguiti. Nessun cambio a backend o database è stato effettuato da BikerWeb.
+
+## Test di trasporto sul Worker corrente — 22 novembre 2026
+
+Il 22 novembre alle 15:57 UTC il sorgente Worker corrente è stato distribuito soltanto sul Worker isolato bikerlink-chat-sse-gate1-isolated-20261120. Il suo RAILWAY_ORIGIN punta al backend Railway di test dedicato, con DB separato da staging e production. Deployment 89c11dc7-3563-48f7-a4a8-d9e03d129ed6, versione 8c8931fd-66b8-4d63-9c52-aac0d1e75ff6.
+
+Risultati: registrazione 201 con cookie di sessione; /api/auth/me 200; elenco conversazioni 200 e vuoto; Chat SSE diretta 200 con evento connected (primo chunk 1.101 ms); Chat SSE via Worker 200 con evento connected (140 ms); session SSE diretta e via Worker 200 con connected (1.093 ms e 469 ms); logout 200. all_pass=true. Nessun cookie o token è registrato. Evidenza: GATE1_CHAT_SSE_TRANSPORT_RESULT_20261122.json.
+
+Il probe ha anche interrogato il solo endpoint diagnostico temporaneo /__diag/chat-sse, che ha risposto 404 perché non è incluso nell’entrypoint applicativo corrente. È un path diagnostico escluso dalla suite e non un endpoint BikerLink; i due stream SSE e tutte le verifiche richieste sono PASS.
+
+**Stato Gate 1 ufficiale:** ancora BLOCKED fino al deploy della versione candidata sul Worker bikerlink-website-gate1-staging e alla ripetizione della suite sul relativo hostname. Nessun deploy Cloudflare production o cambio DNS è stato eseguito.

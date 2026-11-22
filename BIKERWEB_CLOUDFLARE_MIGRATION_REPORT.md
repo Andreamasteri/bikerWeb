@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 20 novembre 2026, 22:57 UTC
-**Stato:** il sottogate di trasporto Chat SSE è PASS su Railway e Worker isolati. Il fix header è stato integrato in BikerLink PR #468 (commit c277eebb) e distribuito su Railway staging e production; entrambi gli health check sono 200 READY, degraded=false, DB circuit CLOSED. Il cutover Cloudflare/DNS non è stato eseguito: la suite Gate 1 completa non è stata ripetuta sul Worker ufficiale dopo il deploy e Gate 2/3 restano NOT RUN.
+**Aggiornato:** 22 novembre 2026, 15:57 UTC
+**Stato:** il proxy SSE trasparente è stato provato con l’entrypoint Worker corrente su un backend Railway isolato: registrazione 201, auth 200, zero conversazioni, Chat SSE 200/evento connected (primo chunk 140 ms via Worker), SSE sessione 200 e logout 200; all_pass=true. Il fix backend resta su Railway. La baseline API anonima pre-cutover è 38/38 su apice e origine. Gate 1 ufficiale va ora ripetuto sul Worker staging; production Worker, DNS, backend e BikerTest non sono stati modificati. Gate 2/3 NOT RUN.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -129,6 +129,17 @@ Verifiche del deployment 9 (storiche):
 - Il primo tentativo autenticato di deploy del Worker separato si era fermato sul controllo dei metadati R2. Dopo il nuovo login Device Authorization, il deploy è riuscito sul Worker dedicato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`. Il Worker BikerTest e il candidato Preview 9 non sono stati sovrascritti.
 - Nessun deployment production, custom domain o route apex è stato creato.
 
+## Verifiche aggiornate — 22 novembre 2026
+
+La baseline API_BEFORE.json è stata acquisita il 22 novembre alle 15:28:51 UTC prima di qualsiasi modifica a produzione: 38/38 controlli anonimi sull’apice pubblico e 38/38 sull’hostname Railway, entrambi sulla revision 6ad354ff2af155929549c6d15ddc6c100f6a740b, READY, degraded=false. Mediane rispettive: 72 ms e 1.099,5 ms. L’apice continua a risolvere direttamente a Railway con DNS-only; il confronto includeva solo GET, HEAD, OPTIONS e handshake WebSocket anonimi, senza login o scritture. Il runner ha segnalato differenze rispetto al baseline storico del 19 novembre (26 campi: revision backend, hash del body health e validator degli asset aggiornati); nessuno dei 76 controlli correnti è fallito. Il dettaglio è in docs/cloudflare-migration/API_BEFORE_REPORT.md.
+
+Il backup Forge /home/andrea/backups/bikerweb/bikerweb-pre-cloudflare-production-20261119.zip è stato verificato nuovamente: 8.598.088 byte, SHA-256 d129429c1161df1388816c5815f0cac2c219bd8bc454948a757da60ef7f31745; unzip -t, verifica SHA256SUMS, estrazione temporanea e lettura dell’archivio sorgente frontend sono PASS. Il pacchetto consente di ripristinare i sorgenti del frontend e documenta il ritorno DNS; non è un dump Railway né un backup database.
+
+La prova Chat SSE del 20 novembre è conservata in GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json. Il 22 novembre è stata ripetuta con l’entrypoint del Worker di produzione corrente, distribuito solo sul Worker isolato bikerlink-chat-sse-gate1-isolated-20261120 (deployment 89c11dc7-3563-48f7-a4a8-d9e03d129ed6, versione 8c8931fd-66b8-4d63-9c52-aac0d1e75ff6), collegato esclusivamente al backend Railway di test dedicato. Registrazione 201, auth/me 200, zero conversazioni e logout 200. Chat SSE diretta: 200, evento connected e primo chunk a 1.101 ms; via Worker: 200, evento connected e primo chunk a 140 ms. La SSE sessione passa in entrambi i percorsi (primo chunk via Worker 469 ms). all_pass=true. Evidenza normalizzata e senza cookie o credenziali: GATE1_CHAT_SSE_TRANSPORT_RESULT_20261122.json. Il probe ha interrogato anche /__diag/chat-sse, che ha restituito 404 atteso perché il Worker corrente usa l’entrypoint applicativo e non include quell’endpoint diagnostico temporaneo; questo path non fa parte delle API BikerLink e non è un fallimento dei test SSE.
+
+Questo supera il sottogate di trasporto isolato sul codice Worker corrente, non la suite autenticata completa sul Worker Gate 1 ufficiale. Il deploy staging e il test post-deploy sul Worker ufficiale sono il prossimo gate; fino ad allora restano non eseguiti cutover DNS, deploy production, Gate 2 e Gate 3.
+
+
 ## Decisione
 
 Il ripristino completo del sito è verificato sul Worker Preview isolato; la migrazione production **non è conclusa**. DNS, sito ufficiale, backend Railway e BikerTest sono rimasti operativi e non modificati da questa attività. Routing API, storage e altre prove autenticate passano, ma il gate completo resta bloccato dal test autenticato Chat SSE via Worker; evidenza e diagnosi corrente sono riportate nell’aggiornamento Gate 1 qui sotto. Nessun utente staging o production è stato creato e nessuna tabella o schema è stato modificato direttamente; il probe Node ha creato account usa e getta soltanto nel database del servizio Railway isolato. Il test `bl_vid` ha inviato un GET al middleware di visita staging; la persistenza della riga analytics non è stata interrogata. L’unico oggetto R2 di prova è stato eliminato e verificato assente. Nessun segreto è stato salvato. Non sono stati eseguiti il cutover DNS né Gate 2/3.
@@ -229,3 +240,5 @@ Deploy Railway verificati sul merge commit c277eebb:
 Il probe isolato autenticato ha superato registrazione 201, auth 200, preflight zero conversazioni, Chat SSE diretto Railway 200 (connected, primo chunk 1.081 ms), diagnostica upstream del Worker 200 (primo chunk 43 ms), Chat SSE via Worker 200 (connected, primo chunk 97 ms), Session SSE in entrambi i percorsi e logout 200; all_pass=true. Evidenza senza credenziali: [GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json](docs/cloudflare-migration/GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json) e [GATE1_ISOLATED_CHAT_SSE_NODE_PROBE.md](docs/cloudflare-migration/GATE1_ISOLATED_CHAT_SSE_NODE_PROBE.md).
 
 Questo supera il precedente blocco tecnico del buffering Chat SSE nell’ambiente isolato. La suite completa post-deploy sul Worker Gate 1 ufficiale resta da ripetere; non dichiaro il Gate 1 complessivo o il cutover conclusi. Nessun Worker Cloudflare production o record DNS è stato modificato; BikerTest resta invariato. Gate 2 e Gate 3 non sono stati eseguiti.
+
+Il cutover resta sospeso finché i controlli autenticati sul Worker Gate 1 aggiornato non sono ripetuti e PASS. Railway rimane il backend applicativo; nessun deploy backend, modifica DNS, Worker production o BikerTest è stato eseguito in questa fase. Il rollback resta basato su Railway attivo e sul ripristino del record apex DNS-only, come descritto nel backup. Gate 2 e Gate 3 non sono stati eseguiti.

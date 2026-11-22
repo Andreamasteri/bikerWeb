@@ -1,31 +1,21 @@
-# API_BEFORE — baseline corrente prima del cutover
+# API_BEFORE — baseline corrente pre-cutover
 
-- Acquisizione: `2026-11-20T12:00:19Z` UTC.
-- Revisione backend osservata su apex, Railway e Worker Preview: `579c84d85a436f3fde485625294560e6be977d8b`.
-- Evidenza completa: [`API_BEFORE.json`](API_BEFORE.json); probe ripetibile con [`api_probe.py`](../../scripts/cloudflare-migration/api_probe.py).
-- Preview isolato: <https://codex-bikerweb-visitor-tracking-pr-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev>, senza dominio custom o trigger apex.
-- 38 controlli anonimi per destinazione, solo GET, HEAD, OPTIONS e handshake WebSocket. Tutti i target hanno 38/38 PASS.
+- Acquisizione: 2026-11-22T15:28:51Z UTC.
+- Revisione backend: 6ad354ff2af155929549c6d15ddc6c100f6a740b sia sull’apice sia sull’origine Railway; /api/health è READY e degraded=false.
+- Il record apex è ancora DNS-only verso Railway. Questi risultati sono la baseline prima dell’attivazione del Worker production.
+- Evidenza completa: API_BEFORE.json. Probe: scripts/cloudflare-migration/api_probe.py.
 
 | Destinazione | PASS | FAIL | Mediana | Revisione |
 | --- | ---: | ---: | ---: | --- |
-| Dominio apex | 38/38 | 0 | 144,5 ms | `579c84d85a436f3fde485625294560e6be977d8b` |
-| Origine Railway | 38/38 | 0 | 180 ms | `579c84d85a436f3fde485625294560e6be977d8b` |
-| Worker Preview | 38/38 | 0 | 189,5 ms | `579c84d85a436f3fde485625294560e6be977d8b` |
+| https://biker-link.net | 38/38 | 0 | 72 ms | 6ad354ff2af155929549c6d15ddc6c100f6a740b |
+| https://bikerlink-production.up.railway.app | 38/38 | 0 | 1099.5 ms | 6ad354ff2af155929549c6d15ddc6c100f6a740b |
 
-## Copertura
+## Perimetro ed esito
 
-- Health e readiness; auth session, profilo, chat, notifiche, AI config, download/config app e statistiche community.
-- Pagina BikerBlog `GET /blog`, canonical e hostname Railway.
-- Sette CORS preflight (`register`, `login`, SOS, chat, telemetria, foto e upload media).
-- Undici HEAD su pagine, redirect e asset; redirect privacy, planner e APK; SSE anonimi e due handshake WebSocket anonimi.
-- Immagine R2: risposta 200 con SHA-256; `If-None-Match` e `If-Modified-Since` 304, Range 206 e `If-Range` obsoleto 200.
+Sono stati eseguiti 76 controlli in sola lettura: GET, HEAD, OPTIONS e handshake WebSocket anonimi. Comprendono health/readiness, sessione e profilo non autenticati, chat e Chat SSE anonime, session SSE anonima, notifiche, configurazione AI/app, community, redirect e pagine web, CORS preflight per endpoint critici, HEAD/range/validator delle immagini R2 e handshake WebSocket. I codici 401 sui percorsi autenticati sono attesi in assenza di sessione. Non sono stati inviati login, registrazioni, upload, messaggi, SOS, notifiche o callback.
 
-## Confronto e limiti
+Tutti i controlli correnti sono PASS: nessun 404/500 o risposta HTML al posto di JSON sulle API controllate. La latenza differisce perché l’apice e Railway sono stati sondati da Forge in condizioni diverse; i due target restituiscono la stessa revision e gli stessi contratti API. La pagina /blog mostra canonical coerente con il dominio richiesto sull’apice (https://biker-link.net/blog) e canonical Railway quando interrogata direttamente sull’hostname Railway; questa differenza host-specifica è attesa.
 
-Il confronto con la baseline immediatamente precedente al fix `bl_vid` ha rilevato cinque differenze limitate alle risposte statiche `/blog` e `/contact`: `text/html` senza il charset esplicito e le intestazioni cache Static Assets (`public, max-age=0, must-revalidate`). Tutti i 38 controlli hanno comunque status/schema attesi. Non sono emersi nuovi 404 o 500; l’API e i corpi delle risposte restano coerenti. Il confronto e i tempi sono registrati in [`API_PRECUTOVER_COMPARE_20261120.json`](API_PRECUTOVER_COMPARE_20261120.json); i risultati completi sono in `API_BEFORE.json`.
+Il confronto storico allegato in API_BEFORE.json usa API_BEFORE_20261119.json (revision aedfb278f487105a10567c9efa4c090705b3d801). Ha registrato 26 variazioni di campo: 2 sullo schema health (solo la revision), 20 sugli header, 2 sugli hash del body health e 2 sulla revision backend. Sono variazioni rispetto a quel rilascio precedente, incluse la revision/risposta health, i validator e gli ETag delle risorse R2 aggiornate e l’header Connection degli handshake; non sono errori dei 76 controlli attuali né regressioni introdotte dal cutover, che non è ancora avvenuto.
 
-Il preview usa `.workers.dev` e non imposta `bl_vid` né inoltra visite al backend production, così le richieste di verifica non scrivono dati analytics production. Il comportamento cookie e l’inoltro al middleware staging sono stati verificati separatamente sul Worker Gate 1: [`STATIC_VISITOR_TRACKING_STAGING.json`](STATIC_VISITOR_TRACKING_STAGING.json). La risposta pubblica apex, prima del cutover, continua a impostare il cookie come Railway.
-
-La suite anonima non sostituisce la prova autenticata. Le verifiche separate 19/19 del Worker staging, inclusi autenticazione, SSE session-events, WebSocket notifiche e POST invalidate, sono in [`API_GATE1_CURRENT_REPORT.md`](API_GATE1_CURRENT_REPORT.md). La Chat SSE autenticata non è stata aperta live perché il backend può inviare eventi di presenza; la route è verificata nel proxy/harness.
-
-La baseline storica del 19 novembre (`aedfb278f487105a10567c9efa4c090705b3d801`) è conservata in [`API_BEFORE_20261119.json`](API_BEFORE_20261119.json). Gate 2 e Gate 3 restano NOT RUN finché non avviene il cutover.
+La baseline è anonima. Non prova sessioni autenticate o Chat SSE autenticata sul Worker Gate 1 corrente: queste verifiche sono riportate separatamente in API_GATE1_CURRENT_REPORT.md e devono essere ripetute prima del cutover.
