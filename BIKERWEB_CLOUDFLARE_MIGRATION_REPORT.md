@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 22 novembre 2026, 15:42 UTC
-**Stato:** il fix della Chat SSE è stato distribuito su Railway e la prova isolata precedente è PASS; la baseline anonima pre-cutover appena acquisita è 38/38 sia sul dominio principale sia sull’origine Railway, revisione 6ad354ff2af155929549c6d15ddc6c100f6a740b. Il Worker production e il DNS ufficiale non sono stati modificati. Gate 1 completo è ancora in verifica sul Worker ufficiale; Gate 2 e Gate 3 restano NOT RUN.
+**Aggiornato:** 22 novembre 2026, 15:57 UTC
+**Stato:** il proxy SSE trasparente è stato provato con l’entrypoint Worker corrente su un backend Railway isolato: registrazione 201, auth 200, zero conversazioni, Chat SSE 200/evento connected (primo chunk 140 ms via Worker), SSE sessione 200 e logout 200; all_pass=true. Il fix backend resta su Railway. La baseline API anonima pre-cutover è 38/38 su apice e origine. Gate 1 ufficiale va ora ripetuto sul Worker staging; production Worker, DNS, backend e BikerTest non sono stati modificati. Gate 2/3 NOT RUN.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -135,7 +135,9 @@ La baseline API_BEFORE.json è stata acquisita il 22 novembre alle 15:28:51 UTC 
 
 Il backup Forge /home/andrea/backups/bikerweb/bikerweb-pre-cloudflare-production-20261119.zip è stato verificato nuovamente: 8.598.088 byte, SHA-256 d129429c1161df1388816c5815f0cac2c219bd8bc454948a757da60ef7f31745; unzip -t, verifica SHA256SUMS, estrazione temporanea e lettura dell’archivio sorgente frontend sono PASS. Il pacchetto consente di ripristinare i sorgenti del frontend e documenta il ritorno DNS; non è un dump Railway né un backup database.
 
-La prova Chat SSE isolata all_pass=true del 20 novembre, inclusi il primo evento via Worker e il test SSE di sessione, è conservata in docs/cloudflare-migration/GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json. È evidenza del sottogate isolato dopo il fix Railway; non sostituisce la ripetizione dei controlli sul Worker ufficiale Gate 1 con il candidato corrente. La suite routing locale è stata verificata 95/95 e i dry-run Wrangler staging e production sono passati. Il deploy staging aggiornato e il test autenticato completo devono ancora essere registrati prima del cutover.
+La prova Chat SSE del 20 novembre è conservata in GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json. Il 22 novembre è stata ripetuta con l’entrypoint del Worker di produzione corrente, distribuito solo sul Worker isolato bikerlink-chat-sse-gate1-isolated-20261120 (deployment 89c11dc7-3563-48f7-a4a8-d9e03d129ed6, versione 8c8931fd-66b8-4d63-9c52-aac0d1e75ff6), collegato esclusivamente al backend Railway di test dedicato. Registrazione 201, auth/me 200, zero conversazioni e logout 200. Chat SSE diretta: 200, evento connected e primo chunk a 1.101 ms; via Worker: 200, evento connected e primo chunk a 140 ms. La SSE sessione passa in entrambi i percorsi (primo chunk via Worker 469 ms). all_pass=true. Evidenza normalizzata e senza cookie o credenziali: GATE1_CHAT_SSE_TRANSPORT_RESULT_20261122.json. Il probe ha interrogato anche /__diag/chat-sse, che ha restituito 404 atteso perché il Worker corrente usa l’entrypoint applicativo e non include quell’endpoint diagnostico temporaneo; questo path non fa parte delle API BikerLink e non è un fallimento dei test SSE.
+
+Questo supera il sottogate di trasporto isolato sul codice Worker corrente, non la suite autenticata completa sul Worker Gate 1 ufficiale. Il deploy staging e il test post-deploy sul Worker ufficiale sono il prossimo gate; fino ad allora restano non eseguiti cutover DNS, deploy production, Gate 2 e Gate 3.
 
 
 ## Decisione

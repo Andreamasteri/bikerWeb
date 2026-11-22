@@ -1,0 +1,91 @@
+{
+  "captured_at_utc": "2026-11-22T15:57:32.865Z",
+  "target": "isolated Railway test backend and Cloudflare Worker; no production or staging database",
+  "registration_worker_url": "https://bikerlink-chat-sse-isolation-20261120.andreamasteri-nadir-radio.workers.dev",
+  "candidate_worker_url": "https://bikerlink-chat-sse-gate1-isolated-20261120.andreamasteri-nadir-radio.workers.dev",
+  "candidate_deployment_id": "89c11dc7-3563-48f7-a4a8-d9e03d129ed6",
+  "candidate_version_id": "8c8931fd-66b8-4d63-9c52-aac0d1e75ff6",
+  "registration": {
+    "status": 201,
+    "session_cookie": true,
+    "pass": true
+  },
+  "auth_me": {
+    "status": 200,
+    "pass": true
+  },
+  "conversations": {
+    "status": 200,
+    "count": 0,
+    "pass": true
+  },
+  "chat_sse": {
+    "direct_railway": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 1099,
+      "first_chunk_ms": 1101,
+      "first_event": "connected",
+      "connected_event": true,
+      "cache_control": "no-cache, no-transform",
+      "content_encoding": null,
+      "vary": null,
+      "pass": true
+    },
+    "via_worker": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 140,
+      "first_chunk_ms": 140,
+      "first_event": "connected",
+      "connected_event": true,
+      "cache_control": "no-cache, no-transform",
+      "content_encoding": null,
+      "vary": null,
+      "pass": true
+    },
+    "pass": true
+  },
+  "session_sse": {
+    "direct_railway": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 1092,
+      "first_chunk_ms": 1093,
+      "first_event": "connected",
+      "connected_event": true,
+      "cache_control": "no-store, no-transform",
+      "content_encoding": null,
+      "vary": null,
+      "pass": true
+    },
+    "via_worker": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "headers_ms": 468,
+      "first_chunk_ms": 469,
+      "first_event": "connected",
+      "connected_event": true,
+      "cache_control": "no-store, no-transform",
+      "content_encoding": null,
+      "vary": null,
+      "pass": true
+    },
+    "pass": true
+  },
+  "logout": {
+    "status": 200,
+    "pass": true
+  },
+  "optional_internal_diagnostic": {
+    "path": "/__diag/chat-sse",
+    "status": 404,
+    "expected": true,
+    "reason": "not part of the application API; omitted by the production Worker entrypoint"
+  },
+  "all_pass": true,
+  "notes": [
+    "A disposable account was registered only in the dedicated Railway test database, verified to have zero conversations, and logged out.",
+    "No production or official staging database was accessed or changed."
+  ]
+}
