@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
 **Aggiornato:** 22 novembre 2026, 16:33 UTC
-**Stato:** PR 20 è unita e il Worker Gate 1 ufficiale è stato pubblicato su workers.dev. Le verifiche live confermano home/API statiche e asset R2 funzionanti; il backend staging è però DEGRADED anche interrogato direttamente su Railway e manca la suite autenticata post-deploy sul Worker ufficiale. Gate 1 resta BLOCKED; nessun Worker production o DNS apex è stato attivato, Gate 2/3 NOT RUN.
+**Stato:** PR 20 è unita e il Worker Gate 1 ufficiale è stato pubblicato su workers.dev. Le verifiche live confermano homepage, route statiche e asset R2 funzionanti; le API anonime restituiscono i 401 JSON attesi; il backend staging è però DEGRADED anche interrogato direttamente su Railway e manca la suite autenticata post-deploy sul Worker ufficiale. Gate 1 resta BLOCKED; nessun Worker production o DNS apex è stato attivato, Gate 2/3 NOT RUN.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -247,7 +247,7 @@ Il cutover resta sospeso finché i controlli autenticati sul Worker Gate 1 aggio
 
 Il deployment ufficiale di verifica è bikerlink-website-gate1-staging, versione bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b, deployment 20e7a310-8bd4-427b-b1a4-bba51002a959. È pubblicato solo su workers.dev, usa l’origine Railway staging e il binding R2 bikerlink-website-assets; non ha hostname personalizzato o route sul dominio ufficiale.
 
-Il controllo live alle 16:33 UTC ha restituito HTTP 200 su /api/health sia dal Worker Gate 1 sia da Railway staging diretta, ma entrambi mostrano la stessa revisione 6ad354ff2af155929549c6d15ddc6c100f6a740b in stato DEGRADED. Le cause dichiarate dal backend sono un gap dello scheduler matching e una violazione alta di integrità del database; il circuito DB è CLOSED. La stessa revisione su Railway production è READY, degraded=false. Poiché il payload degradata è identico via Worker e direttamente dall’origine, non è una regressione introdotta dal proxy. Il backend e il database non sono stati modificati.
+Il controllo live alle 16:33 UTC ha restituito HTTP 200 su /api/health sia dal Worker Gate 1 sia da Railway staging diretta, ma entrambi mostrano la stessa revisione 6ad354ff2af155929549c6d15ddc6c100f6a740b in stato DEGRADED. Le cause dichiarate dal backend sono un gap dello scheduler matching e una violazione alta di integrità del database; il circuito DB è CLOSED. La stessa revisione su Railway production è READY, degraded=false. Poiché il payload degradato è identico via Worker e direttamente dall’origine, non è una regressione introdotta dal proxy. Non è stato eseguito alcun deploy backend o scrittura diretta al database.
 
 Le richieste anonime a /api/auth/me, /api/auth/session-events e /api/chat/conversations hanno restituito 401 JSON come atteso. Il Worker ha servito /blog (200 HTML, 201.679 byte, noindex), /robots.txt (200) e l’immagine R2 hero-forest.webp (200 image/webp, 337.534 byte; SHA-256 8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659). La home ufficiale ha restituito 200, BikerTest 200 e BikerBlog 200. L’apice ha continuato a rispondere da Railway.
 

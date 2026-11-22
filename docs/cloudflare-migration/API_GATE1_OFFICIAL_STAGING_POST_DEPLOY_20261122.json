@@ -171,8 +171,8 @@
     "unrelated_radio_routes_preserved": true
   },
   "side_effects": {
-    "database_or_backend_deploy_modified": false,
-    "note": "GET requests to public pages at the apex and staging may invoke the existing visitor-tracking middleware for each origin. No direct DB command or query was run, and persistence of any resulting analytics rows was not queried."
+    "note": "GET requests to public pages at the apex and staging may invoke the existing visitor-tracking middleware for each origin. No direct DB command or query was run, and persistence of any resulting analytics rows was not queried.",
+    "direct_database_or_backend_deploy_changes": false
   },
   "gate_decision": {
     "gate1": "BLOCKED",
