@@ -385,3 +385,25 @@ Cloudflare conferma alle 14:12:57Z che l’apice resta `CNAME bikerlink-producti
 - Gate 2 e Gate 3 sono NOT RUN; non esistono API_AFTER.json o API_AFTER_REPORT.md. Il smoke workers.dev non equivale al controllo post-cutover dell’hostname ufficiale.
 - Il desktop/browser condiviso non è avviabile in questo runtime (errore CUA: gaas-browser node_repl sandbox cannot be disabled). Non ho usato né estratto credenziali. Per eseguire Gate 2 dopo il cutover serve una sessione BikerLink autenticata nel browser, oppure l’operatore deve eseguire la probe read-only sanitizzata dal browser e restituire la sola riga JSON; non inviare password, cookie o token.
 - Rollback pronto: il record DNS-only originale è ancora presente e Railway production è online. Le istruzioni e il backup ripristinabile sono conservati in RESTORE.md.
+
+## Stato infrastrutturale verificato dopo il cutover — 23 novembre 2026
+
+Questa appendice registra le verifiche correnti e la disattivazione richiesta di BikerTest. Le sezioni precedenti restano la cronologia delle verifiche svolte in quei momenti; gli esiti storici “cutover non eseguito” descrivono lo stato precedente e sono superati da questa verifica.
+
+### Produzione
+
+- La route Cloudflare **biker-link.net/*** è associata al Worker **bikerlink-website-production** (route ID **ca3e4114a545455695000bb164fdf63a**).
+- Il record DNS apex resta CNAME verso **bikerlink-production.up.railway.app** con proxy Cloudflare attivo. Cloudflare resta il punto d’ingresso; il backend applicativo continua a essere Railway.
+- Verifica da Forge: **https://biker-link.net/** ha risposto HTTP 200 con **server: cloudflare**; **/api/health** ha risposto HTTP 200 JSON, **state=READY**, **degraded=false**, revisione backend **7c3ae1137dc56ec3110a6a755660f11f744882ff**.
+- Il probe autenticato read-only fornito dall’operatore il 23 novembre alle 17:02 UTC ha riportato **15/15 controlli PASS**, inclusi sessione SSE e WebSocket notifiche; nessuna scrittura applicativa.
+
+### BikerTest
+
+- Il custom domain **bikertest.biker-link.net** è stato staccato dal Worker **bikerlink-website-test**. La lista Cloudflare dei custom domain non contiene più quel nome e non rimangono record DNS per **bikertest.biker-link.net**.
+- La risoluzione DNS pubblica verificata da Forge fallisce per **bikertest.biker-link.net**.
+- Il sottodominio workers.dev del Worker di test e le preview risultano disabilitati. Il Worker e il suo script non sono stati eliminati, così l’ambiente può essere riattivato in futuro.
+- Il controllo pubblico successivo ha confermato che **biker-link.net/** e **/api/health** continuano a rispondere HTTP 200. Non sono stati modificati record DNS di produzione, Railway, database o servizi applicativi.
+
+### Ambito e limiti di questa verifica
+
+La suite Gate 2 read-only riportata sopra è PASS sulla base del risultato autenticato fornito dall’operatore. Questa appendice non registra nuovi test di scrittura, né attribuisce un esito a controlli funzionali non ripetuti dopo la disattivazione di BikerTest. La disattivazione ha riguardato solo il custom domain e il relativo record DNS.
