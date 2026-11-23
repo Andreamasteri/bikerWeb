@@ -1,0 +1,248 @@
+{
+  "captured_at_utc": "2026-11-23T03:00:13.701Z",
+  "purpose": "Read-only verification after the Gate 1 Worker deployment with the SSE proxy fix",
+  "repository": {
+    "full_name": "Andreamasteri/bikerWeb",
+    "main_commit": "a18fc2b42d05974b34b9cb3e6438a04b08732c06",
+    "prs_merged": [
+      {
+        "number": 23,
+        "merge_commit": "ba8e76663ae609b1f6f86a411f6a4ff56925883d",
+        "scope": "Gate 1 Smart Placement test configuration"
+      },
+      {
+        "number": 24,
+        "merge_commit": "a18fc2b42d05974b34b9cb3e6438a04b08732c06",
+        "scope": "SSE proxy streaming headers"
+      }
+    ]
+  },
+  "cloudflare": {
+    "worker": "bikerlink-website-gate1-staging",
+    "workers_dev_only": true,
+    "deployment_id": "a19c32d7-3797-4a09-b652-6316b2766b0f",
+    "version_id": "08eed416-93fa-4e55-b4b4-3588cacde1f4",
+    "version_percentage": 100,
+    "placement": {
+      "mode": "smart"
+    },
+    "backend_origin": "https://bikerlink-staging-staging.up.railway.app",
+    "r2_binding": {
+      "name": "SITE_ASSETS",
+      "bucket": "bikerlink-website-assets"
+    }
+  },
+  "backend": {
+    "status": 200,
+    "health": "ready",
+    "degraded": false,
+    "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+    "origin": "https://bikerlink-staging-staging.up.railway.app"
+  },
+  "health_samples": [
+    {
+      "sample": 1,
+      "worker": {
+        "status": 200,
+        "headers_ms": 383,
+        "total_ms": 394,
+        "sha256": "630d7b926ff0f7f2b99a56a721bb39f81fc3053a2f9f38b84ae498f0d69b24db",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      },
+      "railway": {
+        "status": 200,
+        "headers_ms": 1083,
+        "total_ms": 1084,
+        "sha256": "630d7b926ff0f7f2b99a56a721bb39f81fc3053a2f9f38b84ae498f0d69b24db",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      }
+    },
+    {
+      "sample": 2,
+      "worker": {
+        "status": 200,
+        "headers_ms": 157,
+        "total_ms": 158,
+        "sha256": "630d7b926ff0f7f2b99a56a721bb39f81fc3053a2f9f38b84ae498f0d69b24db",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      },
+      "railway": {
+        "status": 200,
+        "headers_ms": 1102,
+        "total_ms": 1103,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      }
+    },
+    {
+      "sample": 3,
+      "worker": {
+        "status": 200,
+        "headers_ms": 66,
+        "total_ms": 72,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      },
+      "railway": {
+        "status": 200,
+        "headers_ms": 45,
+        "total_ms": 46,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      }
+    },
+    {
+      "sample": 4,
+      "worker": {
+        "status": 200,
+        "headers_ms": 53,
+        "total_ms": 54,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      },
+      "railway": {
+        "status": 200,
+        "headers_ms": 38,
+        "total_ms": 39,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      }
+    },
+    {
+      "sample": 5,
+      "worker": {
+        "status": 200,
+        "headers_ms": 67,
+        "total_ms": 71,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      },
+      "railway": {
+        "status": 200,
+        "headers_ms": 41,
+        "total_ms": 42,
+        "sha256": "d02ae3fb66e4e53c910db077ecff7d55beee00ea40163108340bee24b890a975",
+        "health": "ready",
+        "degraded": false,
+        "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      }
+    }
+  ],
+  "anonymous_checks": {
+    "auth_me": {
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 45
+    },
+    "chat_sse": {
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "bytes": 45,
+      "note": "No authenticated stream opened"
+    }
+  },
+  "site_assets": {
+    "gate1_home": {
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 254972,
+      "sha256": "57eeb2152caffcc67e3243636c287a79971450437a2a338de341c2f18475e022",
+      "latency_ms": 56
+    },
+    "static_js": {
+      "path": "/web-session.js",
+      "status": 200,
+      "content_type": "text/javascript",
+      "bytes": 4827,
+      "sha256": "c27cca2e4d835b83f24e9e411a0a0a1493341c59ad00353b4b3145dab455520a",
+      "latency_ms": 90
+    },
+    "r2_image": {
+      "path": "/assets/images/hero-community.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "bytes": 470094,
+      "sha256": "9a78d12d5d949434695e8943e84967b6c0345854dbc1c1a3d449d45158ff69f2",
+      "cache_control": "public, max-age=31536000, immutable",
+      "etag": "\"6b924b0435176f8720ee3978c16e67a2\"",
+      "accept_ranges": "bytes",
+      "latency_ms": 577
+    }
+  },
+  "external_surfaces": {
+    "apex_dns": {
+      "type": "CNAME",
+      "target": "bikerlink-production.up.railway.app",
+      "proxied": false
+    },
+    "apex_http": {
+      "status": 200,
+      "server": "railway-hikari",
+      "cf_ray": null
+    },
+    "apex_health": {
+      "status": 200,
+      "health": "ready",
+      "degraded": false,
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "server": "railway-hikari",
+      "cf_ray": null
+    },
+    "bikertest": {
+      "status": 200,
+      "server": "cloudflare"
+    },
+    "bikerblog": {
+      "status": 200,
+      "server": "cloudflare"
+    }
+  },
+  "local_checks": {
+    "routing_harness": {
+      "checks": 96,
+      "status": "PASS",
+      "commit": "387e30578f03ad9367d95446cf55fea69e17ea75"
+    },
+    "wrangler_dry_run": {
+      "status": "PASS",
+      "config": "wrangler.gate1-staging.jsonc"
+    }
+  },
+  "isolated_chat_sse": {
+    "status": "PASS",
+    "all_pass": true,
+    "scope": "dedicated throwaway backend and workers.dev Worker only",
+    "report": "GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json",
+    "does_not_prove": "authenticated Chat SSE on the official Gate 1 Worker"
+  },
+  "gates": {
+    "gate1": "BLOCKED",
+    "gate1_blocker": "Authenticated post-deploy Chat SSE and the full authenticated suite were not repeated on the official Gate 1 Worker from this runtime.",
+    "gate2": "NOT_RUN",
+    "gate3": "NOT_RUN",
+    "production_cutover": false
+  },
+  "limitations": [
+    "Five health samples are a short observation, not a controlled before/after benchmark for Smart Placement.",
+    "The staging authenticated Chat SSE stream was not opened because no authorized isolated session without conversations was available in this runtime.",
+    "No production DNS, production Worker, Railway service, application database, or BikerTest change was made."
+  ]
+}

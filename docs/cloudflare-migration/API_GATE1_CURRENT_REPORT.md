@@ -165,3 +165,30 @@ Il health endpoint risponde 200 ma è DEGRADED sia passando dal Worker sia inter
 Il preflight dall’origine ufficiale restituisce 200 ma nessun header CORS sia dal Worker Gate 1 sia da Railway staging diretta. Railway production diretta restituisce ACAO https://biker-link.net e credenziali abilitate. È una differenza di configurazione staging; il Worker inoltra la risposta osservata.
 
 **Gate 1 post-deploy resta BLOCKED:** il health staging è degradato e la suite autenticata completa sul Worker ufficiale non è stata ripetuta, perché qui non è disponibile una sessione applicativa BikerLink. La prova Chat SSE del codice corrente su backend isolato resta PASS ma non sostituisce questo gate. Il risultato anonimo, i dettagli di health/CORS, DNS e host pubblici sono in [API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json](API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json). Non sono stati cambiati il DNS o il Worker production; Gate 2/3 non eseguiti.
+
+## Aggiornamento post-deploy Worker Gate 1 — 23 novembre 2026
+
+Questo aggiornamento sostituisce come stato corrente le osservazioni staging degradato del 22–23 novembre riportate sopra. Evidenza read-only: [API_GATE1_POST_DEPLOY_20261123.json](API_GATE1_POST_DEPLOY_20261123.json).
+
+- La PR [#23](https://github.com/Andreamasteri/bikerWeb/pull/23) ha attivato Smart Placement solo nella configurazione Gate 1; merge squash ba8e766.
+- La PR [#24](https://github.com/Andreamasteri/bikerWeb/pull/24) ha corretto gli header SSE del proxy Worker; merge squash a18fc2b.
+- Il checkout canonico è stato riallineato a main; commit a18fc2b42d05974b34b9cb3e6438a04b08732c06, clean e uguale a origin/main al momento del deploy.
+- Wrangler ha pubblicato bikerlink-website-gate1-staging al 100% su workers.dev: deployment a19c32d7-3797-4a09-b652-6316b2766b0f, versione 08eed416-93fa-4e55-b4b4-3588cacde1f4. La versione Cloudflare conferma placement.mode=smart, backend Railway staging e binding R2 bikerlink-website-assets.
+- Wrangler ha avvertito che Smart Placement insieme a run_worker_first può allungare i tempi degli asset statici. Dopo il deploy la home ha risposto in 56 ms e l’immagine R2 da 470 KB in 577 ms; non c’è una misura pre-placement equivalente, quindi non attribuisco né escludo una regressione degli asset.
+
+### Controlli live dopo il deploy
+
+- /api/health: 5/5 HTTP 200, READY, degraded=false, revision 1114ec588d19332e1393d7eba9d3bae89fb45a3d.
+- Latenze headers Gate 1: 53–383 ms, mediana 67 ms; Railway diretta: 38–1.102 ms, mediana 45 ms. Questi cinque campioni non sono un benchmark A/B controllato: non dimostrano da soli che Smart Placement abbia risolto gli outlier precedenti (18–30 s), ma in questa acquisizione non si sono ripetuti.
+- /api/auth/me anonimo e /api/chat/stream anonimo: entrambi 401 JSON, nessuna risposta HTML del frontend.
+- Homepage Gate 1: 200; /web-session.js: 200; immagine /assets/images/hero-community.webp dal binding R2: 200 image/webp, 470.094 byte, Cache-Control public, max-age=31536000, immutable, ETag e byte-range presenti.
+- BikerTest e BikerBlog: HTTP 200.
+- Il DNS apex è ancora CNAME DNS-only (proxied=false) verso bikerlink-production.up.railway.app. Homepage e /api/health ufficiali rispondono 200 da railway-hikari; nessun cf-ray. Non è avvenuto il cutover.
+
+### Diagnosi Chat SSE
+
+Il test autenticato isolato documentato in GATE1_CHAT_SSE_TRANSPORT_RESULT_20261120.json ha passato Chat SSE e session SSE attraverso un Worker e un backend usa e getta. La PR #24 applica gli header anti-compressione/anti-trasformazione solo alle richieste SSE, preservando il body streaming e gli header delle richieste non SSE; il test locale passa 96/96 e il dry-run Wrangler è PASS.
+
+La prova isolata non equivale alla suite autenticata sul Worker Gate 1 ufficiale. In questa sessione non è stato possibile usare una sessione BikerLink staging autorizzata senza conversazioni; quindi Chat SSE autenticata e copertura autenticata completa post-deploy sull’hostname Gate 1 restano da ripetere. Non sono stati creati account né scritti dati di staging.
+
+**Decisione:** Gate 1 complessivo resta **BLOCKED** fino alla suite autenticata ufficiale. Gate 2 e Gate 3 sono **NOT RUN**. Produzione, DNS, Worker production, Railway, database e BikerTest non sono stati modificati.
