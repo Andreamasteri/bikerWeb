@@ -95,5 +95,13 @@
     ],
     "evidence_source": "User confirmation and Android Chrome screenshots in this conversation",
     "scope_note": "Confirms mobile rendering and page loading; authenticated production API verification remains a separate Gate 2 check."
+  },
+  "post_gate3_api_recheck": {
+    "captured_at": "2026-11-23T17:02:58.970Z",
+    "evidence_file": "API_AFTER_AUTH_READONLY_20261123.json",
+    "pass_count": 15,
+    "fail_count": 0,
+    "backend_revision": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+    "all_pass": true
   }
 }
