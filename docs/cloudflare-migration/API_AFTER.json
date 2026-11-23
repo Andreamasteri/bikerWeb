@@ -215,5 +215,6 @@
   "authenticated_production_probe_files": [
     "GATE2_PRODUCTION_AUTH_READONLY_PROBE.md",
     "GATE2_PRODUCTION_AUTH_READONLY_PROBE.js"
-  ]
+  ],
+  "latest_live_recheck_file": "API_AFTER_LIVE_RECHECK_20261123.json"
 }

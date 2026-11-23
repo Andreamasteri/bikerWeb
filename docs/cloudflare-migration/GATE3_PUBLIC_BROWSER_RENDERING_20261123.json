@@ -5,18 +5,80 @@
   "worker_version": "105b9fa8-a12c-485d-ab8b-1947f174b2cd",
   "reason_for_workers_dev_target": "Same deployed production Worker and assets; workers.dev preview suppresses production visitor-count writes while allowing visual inspection.",
   "visual_checks": [
-    {"viewport":"desktop","width":1440,"height":1000,"status":"PASS","screenshot_captured":true},
-    {"viewport":"mobile iPhone emulation","width":390,"height":844,"status":"PASS","screenshot_captured":true},
-    {"viewport":"mobile Android emulation","width":412,"height":915,"status":"PASS","screenshot_captured":true},
-    {"viewport":"mobile Android emulation, menu opened by navBurger click","width":412,"height":915,"status":"PASS","menu_opened":true,"screenshot_captured":true}
+    {
+      "viewport": "desktop",
+      "width": 1440,
+      "height": 1000,
+      "status": "PASS",
+      "screenshot_captured": true
+    },
+    {
+      "viewport": "mobile iPhone emulation",
+      "width": 390,
+      "height": 844,
+      "status": "PASS",
+      "screenshot_captured": true
+    },
+    {
+      "viewport": "mobile Android emulation",
+      "width": 412,
+      "height": 915,
+      "status": "PASS",
+      "screenshot_captured": true
+    },
+    {
+      "viewport": "mobile Android emulation, menu opened by navBurger click",
+      "width": 412,
+      "height": 915,
+      "status": "PASS",
+      "menu_opened": true,
+      "screenshot_captured": true
+    }
   ],
-  "static_routes": {"tested":34,"passed":34,"failed":0},
-  "homepage_image_files": {"tested":22,"passed":22,"failed":0},
-  "bikerblog": {"status":200,"content_type":"text/html; charset=utf-8","pass":true},
+  "static_routes": {
+    "tested": 34,
+    "passed": 34,
+    "failed": 0
+  },
+  "homepage_image_files": {
+    "tested": 22,
+    "passed": 22,
+    "failed": 0
+  },
+  "bikerblog": {
+    "status": 200,
+    "content_type": "text/html; charset=utf-8",
+    "pass": true
+  },
   "remaining": [
     "No physical Android device was connected; mobile was checked with Android user-agent and viewport emulation.",
-    "Browser console error collection was not available from the quick screenshot endpoint.",
-    "The authenticated production session suite remains unrun."
+    "Authenticated production API replay is still pending; use GATE2_PRODUCTION_AUTH_READONLY_PROBE.md on an already signed-in browser session."
   ],
-  "gate3_status": "PARTIAL"
+  "gate3_status": "PARTIAL",
+  "console_capture": {
+    "captured_at": "2026-11-23T15:54:21.958Z",
+    "tool": "Cloudflare Browser Rendering dynamic script using Puppeteer",
+    "target": "https://bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/",
+    "desktop_status": 200,
+    "mobile_viewport": {
+      "width": 412,
+      "height": 915,
+      "menu_opened": true,
+      "aria_expanded": "true"
+    },
+    "console_error_count": 4,
+    "console_errors_all_from_expected_anonymous_auth_check": true,
+    "console_error_source": "/api/auth/me",
+    "unique_bad_responses": [
+      {
+        "method": "GET",
+        "status": 401,
+        "path": "/api/auth/me",
+        "content_type": "application/json; charset=utf-8"
+      }
+    ],
+    "page_error_count": 0,
+    "pass": true,
+    "interpretation": "Anonymous preview performs repeated authenticated-session checks; Railway-compatible JSON 401 is expected. No JavaScript page exceptions or other 4xx/5xx were observed."
+  }
 }
