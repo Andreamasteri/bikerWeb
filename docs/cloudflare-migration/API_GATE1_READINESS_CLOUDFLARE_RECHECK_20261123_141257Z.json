@@ -1,0 +1,107 @@
+{
+  "captured_at": "2026-11-23T14:12:57.757Z",
+  "gate1_authenticated_probe": {
+    "captured_at": "2026-11-23T13:33:45.601Z",
+    "target": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+    "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+    "pass_count": 19,
+    "fail_count": 0,
+    "all_pass": true,
+    "scope_note": "Includes auth/profile/matching/telemetry/chat reads, session SSE, validation-only POSTs, and authenticated notifications WSS; does not include /api/chat/stream."
+  },
+  "health": {
+    "captured_at": "2026-11-23T14:03:52.371Z",
+    "gate1_worker": {
+      "status": 200,
+      "state": "DEGRADED",
+      "degraded": true,
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "reasons": [
+        "[watchdog] scheduler.run_gap_no_lock",
+        "[watchdog] Scheduler matching: ultimo run 4264 min fa"
+      ],
+      "latency_ms": 783
+    },
+    "railway_staging": {
+      "status": 200,
+      "state": "DEGRADED",
+      "degraded": true,
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "reasons": [
+        "[watchdog] scheduler.run_gap_no_lock",
+        "[watchdog] Scheduler matching: ultimo run 4264 min fa"
+      ],
+      "latency_ms": 1121
+    },
+    "railway_production": {
+      "status": 200,
+      "state": "READY",
+      "degraded": false,
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "reasons": [],
+      "latency_ms": 1107
+    },
+    "production_preview": {
+      "status": 200,
+      "state": "READY",
+      "degraded": false,
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "reasons": [],
+      "latency_ms": 1670,
+      "x_robots_tag": "noindex"
+    },
+    "production_preview_root": {
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 252471,
+      "title": "BikerLink — App per motociclisti: GPS, Community, SOS",
+      "x_robots_tag": "noindex"
+    }
+  },
+  "cloudflare": {
+    "captured_at": "2026-11-23T14:12:57.757Z",
+    "zone": {
+      "name": "biker-link.net",
+      "status": "active"
+    },
+    "apex_records": [
+      {
+        "type": "CNAME",
+        "name": "biker-link.net",
+        "content": "bikerlink-production.up.railway.app",
+        "proxied": false,
+        "ttl": 1
+      }
+    ],
+    "worker_domains_for_apex": [],
+    "gate1_worker": {
+      "name": "bikerlink-website-gate1-staging",
+      "deployment_id": "a19c32d7-3797-4a09-b652-6316b2766b0f",
+      "version_id": "08eed416-93fa-4e55-b4b4-3588cacde1f4",
+      "percentage": 100
+    },
+    "production_worker": {
+      "name": "bikerlink-website-production",
+      "deployment_count": 0
+    },
+    "bikertest_worker": {
+      "name": "bikerlink-website-test",
+      "deployment_id": "1ad4855e-c80c-4f1b-9911-726b8b25a4fd",
+      "version_id": "bf2414b5-9ead-4012-a6cd-99afc5a4a4fd",
+      "percentage": 100
+    }
+  },
+  "isolated_chat_sse": {
+    "captured_at": "2026-11-23T12:28:34Z",
+    "source_commit": "8331329b6d89bba2bb7ae9e6f880204d9ee9a719",
+    "all_pass": true,
+    "limitation": "Verified on the isolated Worker/test database, not on the official Gate 1 staging hostname or a production account."
+  },
+  "decision": {
+    "production_cutover": "NOT RUN",
+    "gate2": "NOT RUN",
+    "gate3": "NOT RUN",
+    "reason": "Staging readiness remains DEGRADED upstream of the Worker, and authenticated Chat SSE has not been exercised on the official Gate 1 account. Production backend and its preview are READY. The staging scheduler issue was not modified because matching/telemetry are outside this migration scope.",
+    "bikertest": "unchanged"
+  }
+}

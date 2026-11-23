@@ -212,3 +212,14 @@ L’operatore ha eseguito `GATE1_BROWSER_PROBE.js` sul Worker ufficiale `bikerli
 Il probe 19/19 non chiama il flusso `/api/chat/stream`; il test SSE Chat sul Worker e backend isolati corrente resta PASS come documentato in [`API_GATE1_ISOLATED_SSE_RECHECK_20261123.json`](API_GATE1_ISOLATED_SSE_RECHECK_20261123.json). La readiness è stata ricontrollata subito dopo: Gate 1 e Railway staging restituiscono entrambi HTTP 200 ma `degraded=true` con identica revisione e payload (`scheduler.run_gap_no_lock`, query DB lenta, gap scheduler matching); Railway production è `READY` sulla stessa revisione. Evidenza: [`API_GATE1_POST_AUTH_READINESS_20261123.json`](API_GATE1_POST_AUTH_READINESS_20261123.json).
 
 La prova autenticata 19/19 supera il precedente blocco relativo alla sessione; **Gate 1 complessivo resta BLOCKED** dalla readiness staging degradata. Il probe non modifica questa condizione. La verifica autenticata della Chat SSE sullo specifico account ufficiale non è compresa; non è stata aperta una connessione potenzialmente notificante su conversazioni non preflightate. Nessuna modifica backend, database, matching, telemetry, DNS o Worker production. Gate 2 e Gate 3: **NOT RUN**.
+
+
+## Recheck pre-cutover — 23 novembre 2026, 14:12 UTC
+
+Il probe autenticato ufficiale del 13:33Z è **19/19 PASS** (revisione `1114ec588d19332e1393d7eba9d3bae89fb45a3d`); include session SSE e WebSocket notifiche, ma non `/api/chat/stream`. La Chat SSE passa sul Worker isolato corrente con account temporaneo e DB usa e getta; non è stata aperta sul profilo Gate 1 ufficiale.
+
+Il confronto anonimo Cloudflare production preview/Railway production del 14:10Z è PASS su 10 GET API: status, content type e SHA-256 coincidono. Health production `READY`, preflight CORS login HTTP 200 e identico, asset R2 e pagine preview HTTP 200; il preview è `noindex`. Consultare [API_PRODUCTION_PREVIEW_SAFE_SMOKE_20261123_141040Z.json](API_PRODUCTION_PREVIEW_SAFE_SMOKE_20261123_141040Z.json).
+
+Alle 14:03Z `/api/health` staging diretto e via Worker è `DEGRADED`, stesso payload e revisione, per `scheduler.run_gap_no_lock` e gap matching di 4.264 minuti; production e preview sono `READY`. L’anomalia è upstream e non è stata modificata. Cloudflare conferma che l’apice è ancora CNAME DNS-only verso Railway, nessun Worker production permanente/custom domain è attivo e BikerTest è invariato. Dettagli: [API_GATE1_READINESS_CLOUDFLARE_RECHECK_20261123_141257Z.json](API_GATE1_READINESS_CLOUDFLARE_RECHECK_20261123_141257Z.json).
+
+**Gate 1 completo resta BLOCKED** dalla readiness staging degradata e dal test autenticato Chat SSE non svolto sull’hostname Gate 1 ufficiale. Non ho cambiato DNS, Worker production, backend Railway, database, matching, telemetry o BikerTest. Gate 2 e Gate 3 sono NOT RUN.
