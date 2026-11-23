@@ -1,0 +1,59 @@
+{
+  "captured_at": "2026-11-23T12:43:25.285Z",
+  "checks": [
+    {
+      "target": "official Gate 1 Worker",
+      "url": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 831,
+      "application_status": "degraded",
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "degraded": true,
+      "degraded_reasons": ["[watchdog] scheduler.run_gap_no_lock", "[watchdog] Scheduler matching: ultimo run 4183 min fa"]
+    },
+    {
+      "target": "Railway staging origin",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 1309,
+      "application_status": "degraded",
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "degraded": true,
+      "degraded_reasons": ["[watchdog] scheduler.run_gap_no_lock", "[watchdog] Scheduler matching: ultimo run 4183 min fa"]
+    },
+    {
+      "target": "Railway production origin",
+      "url": "https://bikerlink-production.up.railway.app/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 1041,
+      "application_status": "ready",
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "degraded": false,
+      "degraded_reasons": []
+    }
+  ],
+  "railway_control_plane_snapshot": {
+    "staging_bikerlink_service": {"deployment_id": "e2da5e01-1d4d-4ff9-b8c6-f37605907bbb", "status": "SUCCESS"},
+    "staging_postgres_service": {"deployment_id": "afd0d670-8b3c-4d84-bcf1-f4c79455402c", "status": "SUCCESS"},
+    "production_bikerlink_service": {"deployment_id": "e226beb8-7282-40bf-b66c-7b63c60f1e68", "status": "SUCCESS"},
+    "staging_pending_patch": {
+      "count": 1,
+      "status": "STAGED",
+      "service": "Bikerlink-Audit-Staging",
+      "service_id": "cf102d84-078e-486d-9a3a-929fcaf2095f",
+      "latest_deployment_status": "FAILED",
+      "modified_by_this_task": false
+    }
+  },
+  "decision": "BLOCKED",
+  "blockers": [
+    "Staging and official Gate 1 share the same degraded health payload; the reported scheduler matching run gap is upstream of the Worker. Production is READY on the same backend revision.",
+    "The authenticated post-deploy API suite has not been executed on the official Gate 1 hostname. The passing isolated SSE test is not a substitute."
+  ],
+  "gate2": "NOT RUN",
+  "gate3": "NOT RUN",
+  "production_dns_or_worker_changed": false
+}

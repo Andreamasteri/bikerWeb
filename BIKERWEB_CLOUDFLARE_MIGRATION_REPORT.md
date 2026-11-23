@@ -311,3 +311,9 @@ La prova isolata non equivale alla suite autenticata sul Worker Gate 1 ufficiale
 Il test aggiornato sul Worker SSE isolato, collegato al solo backend e database Railway di test, è PASS: registrazione sintetica 201, autenticazione 200, zero conversazioni, Chat SSE e session SSE 200 con evento `connected` via Railway e via Worker, logout 200. Il Worker isolato esegue il sorgente `main` `8331329b6d89bba2bb7ae9e6f880204d9ee9a719`, versione Cloudflare `1af9566f-d96b-4ac8-bde7-619c5575b94a`. Il dettaglio è in [API_GATE1_ISOLATED_SSE_RECHECK_20261123.json](docs/cloudflare-migration/API_GATE1_ISOLATED_SSE_RECHECK_20261123.json).
 
 Questa prova chiude il sottogate del trasporto SSE sul fixture isolato, ma non la suite autenticata post-deploy sul Worker Gate 1 ufficiale. Gate 1 resta **BLOCKED**; Gate 2 e Gate 3 restano **NOT RUN**. Nessun cutover production o modifica al DNS è stato eseguito.
+
+## Readiness aggiornata — 23 novembre 2026, 12:43 UTC
+
+La verifica live più recente restituisce HTTP 200 ma `degraded=true` sul Worker Gate 1 e sull’origine Railway staging, con payload identico e revisione backend `1114ec588d19332e1393d7eba9d3bae89fb45a3d`; l’origine Railway production è `READY` alla stessa revisione. Il watchdog staging segnala `scheduler.run_gap_no_lock` e un gap matching di 4.183 minuti. La verifica è read-only e documentata in [API_GATE1_READINESS_RECHECK_20261123.json](docs/cloudflare-migration/API_GATE1_READINESS_RECHECK_20261123.json).
+
+Il control plane Railway conferma i deployment SUCCESS di Bikerlink-Staging, Postgres staging e Bikerlink production. Esiste una patch STAGED preesistente sul servizio indipendente Bikerlink-Audit-Staging, lasciata invariata. Gate 1 resta **BLOCKED** sia per la readiness degradata dello staging sia per il test autenticato post-deploy non eseguito sul Worker Gate 1 ufficiale. Non sono stati avviati cutover DNS, Gate 2 o Gate 3.
