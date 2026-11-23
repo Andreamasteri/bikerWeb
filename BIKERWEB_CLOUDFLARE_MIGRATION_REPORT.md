@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 23 novembre 2026, 01:57 UTC
-**Stato:** Recheck live del 23 novembre: Worker Gate 1 aggiornato e routing locale 95/95 PASS. Railway staging e Worker Gate 1 restituiscono entrambi HTTP 200 ma stato DEGRADED per un gap scheduler e una violazione DB high; l’apice production è READY sulla stessa revisione backend. Gate 1 resta BLOCKED in attesa di staging sano e suite autenticata post-deploy; nessun cutover production, Gate 2 o Gate 3.
+**Aggiornato:** 23 novembre 2026, 14:12 UTC
+**Stato:** il probe autenticato ufficiale Gate 1 è PASS (19/19) e il confronto anonimo production preview/Railway è PASS. Il cutover resta sospeso: Gate 1 non è completo finché staging segnala `DEGRADED` per il gap dello scheduler matching e Chat SSE autenticata non è stata verificata sull’hostname Gate 1 ufficiale. Railway production e preview sono `READY`; DNS apex, Worker production, Gate 2 e Gate 3 sono invariati/non eseguiti.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -323,3 +323,16 @@ Il control plane Railway conferma i deployment SUCCESS di Bikerlink-Staging, Pos
 Il probe browser autenticato sul Worker ufficiale ha completato **19/19 controlli PASS**, revisione backend `1114ec588d19332e1393d7eba9d3bae89fb45a3d`; include session SSE, WebSocket e POST di validazione senza persistenza. Il risultato senza credenziali è in [API_GATE1_AUTHENTICATED_BROWSER_20261123.json](docs/cloudflare-migration/API_GATE1_AUTHENTICATED_BROWSER_20261123.json). Il flusso Chat SSE è PASS sul Worker isolato corrente; non è stato aperto sull’account ufficiale senza verifica che non coinvolga partecipanti.
 
 Il controllo readiness immediatamente successivo mostra Gate 1 e origine staging entrambi HTTP 200 ma `degraded=true`, con identico payload per gap scheduler matching e query DB lenta; production è `READY` alla stessa revisione. Dettaglio: [API_GATE1_POST_AUTH_READINESS_20261123.json](docs/cloudflare-migration/API_GATE1_POST_AUTH_READINESS_20261123.json). **Il cutover resta fermo** fino al ripristino della readiness staging; Gate 2 e Gate 3 non sono stati eseguiti.
+
+
+## Recheck pre-cutover — 23 novembre 2026, 14:12 UTC
+
+L’operatore ha completato il probe autenticato sul Worker Gate 1 ufficiale alle 13:33:45Z: **19/19 PASS**, revisione backend `1114ec588d19332e1393d7eba9d3bae89fb45a3d`. Questo chiude il precedente blocco sulla suite autenticata, ma non include il flusso Chat SSE `/api/chat/stream`. Il test SSE corrente passa sul Worker isolato e database usa e getta, senza toccare staging o produzione.
+
+Il confronto anonimo alle 14:10Z tra il preview production Cloudflare e Railway production ha verificato 10 GET API: status, MIME e SHA-256 dei body sono identici. `/api/health` è `READY`, `degraded=false`; le API autenticate senza cookie restituiscono il medesimo `401 application/json` sulle due origini. Il preflight CORS di `/api/auth/login` con origine `https://biker-link.net` è identico: HTTP 200, ACAO corretto e credenziali abilitate. Homepage, `/features`, `robots.txt` e l’immagine R2 `hero-community.webp` rispondono 200; il preview invia `X-Robots-Tag: noindex`. Evidenza: [API_PRODUCTION_PREVIEW_SAFE_SMOKE_20261123_141040Z.json](docs/cloudflare-migration/API_PRODUCTION_PREVIEW_SAFE_SMOKE_20261123_141040Z.json).
+
+Il recheck health delle 14:03Z conferma che Railway staging e il Worker Gate 1 restituiscono lo stesso payload `DEGRADED`, revisione `1114ec588d19332e1393d7eba9d3bae89fb45a3d`, per `scheduler.run_gap_no_lock` e un ultimo run matching di 4.264 minuti fa. Railway production e il preview restano `READY`, `degraded=false`. Il difetto è quindi nell’ambiente staging a monte del Worker, non nel proxy; non ho modificato matching, telemetry, DB o backend.
+
+Cloudflare conferma alle 14:12:57Z che l’apice resta `CNAME bikerlink-production.up.railway.app`, DNS-only (`proxied=false`); non esiste un custom domain Worker per l’apice né un deployment permanente `bikerlink-website-production`. Il Worker BikerTest e il suo deployment sono invariati. Evidenza combinata: [API_GATE1_READINESS_CLOUDFLARE_RECHECK_20261123_141257Z.json](docs/cloudflare-migration/API_GATE1_READINESS_CLOUDFLARE_RECHECK_20261123_141257Z.json).
+
+**Decisione:** non ho eseguito il cutover DNS. Gate 1 resta bloccato finché staging non torna `READY` e il Chat SSE autenticato non è verificato in modo sicuro sul Gate 1 ufficiale. Gate 2 e Gate 3 restano NOT RUN. Non è stato effettuato alcun cambiamento production o a BikerTest.

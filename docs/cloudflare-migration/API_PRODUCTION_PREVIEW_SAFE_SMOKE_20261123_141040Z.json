@@ -1,0 +1,149 @@
+{
+  "captured_at": "2026-11-23T14:10:40.121Z",
+  "classification": "Safe anonymous GET and OPTIONS smoke; no cookies, credentials, writes, or database changes.",
+  "preview": "https://main-bikerlink-website-production.andreamasteri-nadir-radio.workers.dev",
+  "railway_origin": "https://bikerlink-production.up.railway.app",
+  "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+  "api_get_comparison": {
+    "comparison": "Direct production Railway versus Cloudflare production preview; status, content type, and response SHA-256 matched on all 10 requests.",
+    "all_transport_match": true,
+    "checks": [
+      {
+        "path": "/api/health",
+        "direct_status": 200,
+        "preview_status": 200,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "8596a1386c374230bf05116cd137a31e8d5a9ec10f1b5f7693def2ff27d5433d",
+        "state": "READY",
+        "degraded": false,
+        "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d"
+      },
+      {
+        "path": "/api/auth/me",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/users/me",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/match-preferences",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/chat/conversations?limit=1&offset=0",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/notifications",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/sos/my",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/ai/assistant/config?platform=web",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/auth/session-events",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      },
+      {
+        "path": "/api/chat/stream",
+        "direct_status": 401,
+        "preview_status": 401,
+        "content_type": "application/json; charset=utf-8",
+        "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3"
+      }
+    ],
+    "note": "The anonymous Chat SSE check stopped at the expected 401 before opening a stream; it does not validate authenticated Chat SSE."
+  },
+  "cors_login_preflight": {
+    "request": {
+      "method": "OPTIONS",
+      "path": "/api/auth/login",
+      "origin": "https://biker-link.net",
+      "access_control_request_method": "POST",
+      "access_control_request_headers": "content-type,authorization"
+    },
+    "direct": {
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "access_control_allow_origin": "https://biker-link.net",
+      "access_control_allow_credentials": "true",
+      "response_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    "preview": {
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "access_control_allow_origin": "https://biker-link.net",
+      "access_control_allow_credentials": "true",
+      "response_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3"
+    },
+    "pass": true
+  },
+  "frontend_preview": [
+    {
+      "path": "/",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 254972,
+      "sha256": "57eeb2152caffcc67e3243636c287a79971450437a2a338de341c2f18475e022"
+    },
+    {
+      "path": "/features",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 216650,
+      "sha256": "5b999a18349e1f9006a19e5e70866e96f8c7b52bada28cb5341b298d86b63724"
+    },
+    {
+      "path": "/robots.txt",
+      "status": 200,
+      "content_type": "text/plain",
+      "bytes": 202,
+      "sha256": "7a50f2196f5efeb0bbb0a45a4c9a2c01b8e8ba02a18602d5403f6b11cdf70131"
+    },
+    {
+      "method": "HEAD",
+      "path": "/assets/images/hero-community.webp",
+      "status": 200,
+      "content_type": "image/webp"
+    }
+  ],
+  "preview_indexing": {
+    "captured_at": "2026-11-23T14:03:52.371Z",
+    "root_x_robots_tag": "noindex",
+    "api_health_x_robots_tag": "noindex"
+  },
+  "limitations": [
+    "No authenticated production account was used.",
+    "This safe smoke does not replace authenticated Gate 1 or post-cutover Gate 2/3."
+  ]
+}
