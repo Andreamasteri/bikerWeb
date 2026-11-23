@@ -4,6 +4,7 @@
   "main": "src/worker.js",
   "account_id": "d116d3d97b133c543d02934be4bc98d2",
   "compatibility_date": "2026-11-19",
+  "placement": { "mode": "smart" },
   "workers_dev": true,
   "vars": {
     "RAILWAY_ORIGIN": "https://bikerlink-staging-staging.up.railway.app",
