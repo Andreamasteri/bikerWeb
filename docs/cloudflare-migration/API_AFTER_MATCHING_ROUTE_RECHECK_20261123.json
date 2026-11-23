@@ -1,0 +1,23 @@
+{
+  "captured_at": "2026-11-23T16:17:12Z",
+  "target": "https://biker-link.net/matching/come-funziona",
+  "comparison_target": "https://bikerlink-website-production.andreamasteri-nadir-radio.workers.dev/matching/come-funziona",
+  "method": "GET",
+  "apex": {
+    "status": 200,
+    "content_type": "text/html",
+    "cf_ray": true,
+    "bytes": 224875,
+    "sha256": "668f4e743ea76ad5364efe1b6adb068d1d166c2940411cf1ed907abfc5b08132"
+  },
+  "production_worker": {
+    "status": 200,
+    "content_type": "text/html",
+    "cf_ray": true,
+    "bytes": 224875,
+    "sha256": "668f4e743ea76ad5364efe1b6adb068d1d166c2940411cf1ed907abfc5b08132"
+  },
+  "identical_body": true,
+  "pass": true,
+  "conclusion": "The public matching explainer route is served by the current production Cloudflare Worker; its HTML is byte-identical to the Worker response."
+}
