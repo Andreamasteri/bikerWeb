@@ -1,0 +1,90 @@
+{
+  "captured_at": "2026-11-23T15:42:54.900Z",
+  "target": "https://biker-link.net",
+  "comparison_origin": "https://bikerlink-production.up.railway.app",
+  "backend_revision": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+  "scope": "Read-only live check after PR #31 merged; no credentials or writes.",
+  "checks": [
+    {
+      "id": "health",
+      "method": "GET",
+      "path": "/api/health",
+      "cloudflare_status": 200,
+      "railway_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "cloudflare_sha256": "eab4796c977daf3ab220fe421d54cbe114d477e7f513167361aa0928adb8de00",
+      "railway_sha256": "eab4796c977daf3ab220fe421d54cbe114d477e7f513167361aa0928adb8de00",
+      "backend_revision": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+      "state": "READY",
+      "degraded": false,
+      "pass": true
+    },
+    {
+      "id": "auth_me_anonymous",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "cloudflare_status": 401,
+      "railway_status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "cloudflare_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "railway_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "pass": true
+    },
+    {
+      "id": "chat_stream_anonymous",
+      "method": "GET",
+      "path": "/api/chat/stream",
+      "cloudflare_status": 401,
+      "railway_status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "cloudflare_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "railway_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "pass": true
+    },
+    {
+      "id": "apex_home",
+      "method": "HEAD",
+      "path": "/",
+      "status": 200,
+      "content_type": "text/html",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "pass": true
+    },
+    {
+      "id": "bikertest_home",
+      "method": "HEAD",
+      "target": "https://bikertest.biker-link.net/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "pass": true
+    },
+    {
+      "id": "bikerblog_home",
+      "method": "HEAD",
+      "target": "https://bikerblog.biker-link.net/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "pass": true
+    },
+    {
+      "id": "r2_image",
+      "method": "GET",
+      "path": "/assets/images/hero-forest.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "bytes": 337534,
+      "sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "pass": true
+    }
+  ],
+  "pass_count": 7,
+  "fail_count": 0,
+  "all_pass": true
+}
