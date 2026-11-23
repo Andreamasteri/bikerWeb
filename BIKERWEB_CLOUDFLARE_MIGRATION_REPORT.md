@@ -305,3 +305,9 @@ Il test autenticato isolato documentato in GATE1_CHAT_SSE_TRANSPORT_RESULT_20261
 La prova isolata non equivale alla suite autenticata sul Worker Gate 1 ufficiale. In questa sessione non è stato possibile usare una sessione BikerLink staging autorizzata senza conversazioni; quindi Chat SSE autenticata e copertura autenticata completa post-deploy sull’hostname Gate 1 restano da ripetere. Non sono stati creati account né scritti dati di staging.
 
 **Decisione:** Gate 1 complessivo resta **BLOCKED** fino alla suite autenticata ufficiale. Gate 2 e Gate 3 sono **NOT RUN**. Produzione, DNS, Worker production, Railway, database e BikerTest non sono stati modificati.
+
+## Verifica supplementare — 23 novembre 2026, 12:28 UTC
+
+Il test aggiornato sul Worker SSE isolato, collegato al solo backend e database Railway di test, è PASS: registrazione sintetica 201, autenticazione 200, zero conversazioni, Chat SSE e session SSE 200 con evento `connected` via Railway e via Worker, logout 200. Il Worker isolato esegue il sorgente `main` `8331329b6d89bba2bb7ae9e6f880204d9ee9a719`, versione Cloudflare `1af9566f-d96b-4ac8-bde7-619c5575b94a`. Il dettaglio è in [API_GATE1_ISOLATED_SSE_RECHECK_20261123.json](docs/cloudflare-migration/API_GATE1_ISOLATED_SSE_RECHECK_20261123.json).
+
+Questa prova chiude il sottogate del trasporto SSE sul fixture isolato, ma non la suite autenticata post-deploy sul Worker Gate 1 ufficiale. Gate 1 resta **BLOCKED**; Gate 2 e Gate 3 restano **NOT RUN**. Nessun cutover production o modifica al DNS è stato eseguito.
