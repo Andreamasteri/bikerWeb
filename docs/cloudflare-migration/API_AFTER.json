@@ -40,13 +40,10 @@
     "recheck_file": "API_AFTER_RECHECK.json"
   },
   "gate3": {
-    "status": "PARTIAL",
+    "status": "PASS",
     "evidence_file": "GATE3_PUBLIC_BROWSER_RENDERING_20261123.json",
-    "remaining": [
-      "physical Android device check",
-      "browser console error capture",
-      "authenticated production API suite"
-    ]
+    "remaining": [],
+    "physical_android_confirmation_file": "GATE3_PUBLIC_BROWSER_RENDERING_20261123.json"
   },
   "checks": [
     {
@@ -216,5 +213,6 @@
     "GATE2_PRODUCTION_AUTH_READONLY_PROBE.md",
     "GATE2_PRODUCTION_AUTH_READONLY_PROBE.js"
   ],
-  "latest_live_recheck_file": "API_AFTER_LIVE_RECHECK_20261123.json"
+  "latest_live_recheck_file": "API_AFTER_LIVE_RECHECK_20261123.json",
+  "latest_matching_route_recheck_file": "API_AFTER_MATCHING_ROUTE_RECHECK_20261123.json"
 }

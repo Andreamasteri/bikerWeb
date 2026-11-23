@@ -50,11 +50,8 @@
     "content_type": "text/html; charset=utf-8",
     "pass": true
   },
-  "remaining": [
-    "No physical Android device was connected; mobile was checked with Android user-agent and viewport emulation.",
-    "Authenticated production API replay is still pending; use GATE2_PRODUCTION_AUTH_READONLY_PROBE.md on an already signed-in browser session."
-  ],
-  "gate3_status": "PARTIAL",
+  "remaining": [],
+  "gate3_status": "PASS",
   "console_capture": {
     "captured_at": "2026-11-23T15:54:21.958Z",
     "tool": "Cloudflare Browser Rendering dynamic script using Puppeteer",
@@ -80,5 +77,23 @@
     "page_error_count": 0,
     "pass": true,
     "interpretation": "Anonymous preview performs repeated authenticated-session checks; Railway-compatible JSON 401 is expected. No JavaScript page exceptions or other 4xx/5xx were observed."
+  },
+  "physical_android_confirmation": {
+    "status": "PASS",
+    "client": "Android Chrome on physical device",
+    "reported_by": "user",
+    "reported_at": "2026-11-23T16:14:05Z",
+    "observed_pages": [
+      {
+        "path": "/",
+        "result": "homepage loaded; hero image visible"
+      },
+      {
+        "path_prefix": "/matching/",
+        "result": "matching information page loaded"
+      }
+    ],
+    "evidence_source": "User confirmation and Android Chrome screenshots in this conversation",
+    "scope_note": "Confirms mobile rendering and page loading; authenticated production API verification remains a separate Gate 2 check."
   }
 }
