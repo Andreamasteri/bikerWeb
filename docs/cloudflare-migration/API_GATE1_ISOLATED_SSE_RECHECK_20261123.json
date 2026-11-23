@@ -1,0 +1,77 @@
+{
+  "captured_at": "2026-11-23T12:28:34Z",
+  "classification": "isolated transport verification; not official Gate 1",
+  "candidate_worker": {
+    "name": "bikerlink-chat-sse-gate1-isolated-20261120",
+    "url": "https://bikerlink-chat-sse-isolation-20261120.andreamasteri-nadir-radio.workers.dev",
+    "version_id": "1af9566f-d96b-4ac8-bde7-619c5575b94a",
+    "source_commit": "8331329b6d89bba2bb7ae9e6f880204d9ee9a719"
+  },
+  "backend": {
+    "type": "dedicated Railway test backend and disposable test database",
+    "production_or_staging_touched": false
+  },
+  "checks": {
+    "synthetic_registration": {"status": 201, "pass": true, "session_cookie_present": true},
+    "authenticated_me": {"status": 200, "pass": true},
+    "empty_conversations_preflight": {"status": 200, "count": 0, "pass": true},
+    "chat_sse_direct_railway": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "connected_event": true,
+      "headers_ms": 1172,
+      "first_event_ms": 1173,
+      "content_encoding": null,
+      "cache_control": "no-cache, no-transform",
+      "x_accel_buffering": "no",
+      "pass": true
+    },
+    "chat_sse_worker_internal_fetch_diagnostic": {
+      "http_status": 200,
+      "authenticated": true,
+      "conversations_empty": true,
+      "stream_status": 200,
+      "content_type": "text/event-stream",
+      "content_encoding": null,
+      "cache_control": "no-cache, no-transform",
+      "headers_ms": 44,
+      "first_chunk_ms": 44,
+      "connected_event": true,
+      "pass": true
+    },
+    "chat_sse_via_candidate_worker": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "connected_event": true,
+      "headers_ms": 121,
+      "first_chunk_ms": 122,
+      "content_encoding": null,
+      "cache_control": "no-store, no-transform",
+      "server": "cloudflare",
+      "pass": true
+    },
+    "session_sse_direct_railway": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "connected_event": true,
+      "latency_ms": 1531,
+      "pass": true
+    },
+    "session_sse_via_candidate_worker": {
+      "status": 200,
+      "content_type": "text/event-stream",
+      "connected_event": true,
+      "latency_ms": 365,
+      "pass": true
+    },
+    "logout": {"status": 200, "pass": true}
+  },
+  "all_pass": true,
+  "scope_limitations": [
+    "The request used the dedicated isolated Railway test database, not the BikerLink staging database.",
+    "This proves the current Worker SSE transport code against the isolated backend only.",
+    "It does not replace authenticated post-deploy API coverage on bikerlink-website-gate1-staging.",
+    "The synthetic test account remains only in the dedicated disposable test database; its session was logged out.",
+    "No production DNS, production Worker, BikerTest, Railway staging, or production backend configuration was changed."
+  ]
+}
