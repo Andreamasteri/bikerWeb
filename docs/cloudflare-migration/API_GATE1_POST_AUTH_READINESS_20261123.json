@@ -1,0 +1,49 @@
+{
+  "captured_at": "2026-11-23T13:34:45Z",
+  "health_checks": [
+    {
+      "target": "Gate 1 Worker",
+      "url": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 643,
+      "application_status": "degraded",
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "degraded": true,
+      "degraded_reasons": [
+        "[watchdog] scheduler.run_gap_no_lock",
+        "[watchdog] Query DB osservata lenta: 947ms",
+        "[watchdog] Scheduler matching: ultimo run 4235 min fa"
+      ]
+    },
+    {
+      "target": "Railway staging origin",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 1076,
+      "application_status": "degraded",
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "degraded": true,
+      "degraded_reasons": [
+        "[watchdog] scheduler.run_gap_no_lock",
+        "[watchdog] Query DB osservata lenta: 947ms",
+        "[watchdog] Scheduler matching: ultimo run 4235 min fa"
+      ]
+    },
+    {
+      "target": "Railway production origin",
+      "url": "https://bikerlink-production.up.railway.app/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 1470,
+      "application_status": "ready",
+      "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "degraded": false,
+      "degraded_reasons": []
+    }
+  ],
+  "decision": "BLOCKED",
+  "reason": "Gate 1 Worker and its staging origin have the same degraded health payload; production is READY on the same revision.",
+  "no_backend_or_dns_changes": true
+}

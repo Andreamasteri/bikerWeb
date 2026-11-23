@@ -1,0 +1,31 @@
+{
+  "captured_at": "2026-11-23T13:33:45.601Z",
+  "target": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev",
+  "authenticated": true,
+  "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+  "checks": [
+    {"method":"GET","path":"/api/auth/me","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":682},
+    {"method":"GET","path":"/api/health","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":415},
+    {"method":"GET","path":"/api/users/me","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":961},
+    {"method":"GET","path":"/api/match-preferences","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":562},
+    {"method":"GET","path":"/api/match-preferences/gate","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":621},
+    {"method":"GET","path":"/api/proposals/matches/accepted","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":405},
+    {"method":"GET","path":"/api/telemetry/sensor-settings","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":1134},
+    {"method":"GET","path":"/api/telemetry/calibration","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":550},
+    {"method":"GET","path":"/api/telemetry/dr-correction","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":534},
+    {"method":"GET","path":"/api/chat/conversations?limit=1&offset=0","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":819},
+    {"method":"GET","path":"/api/notifications","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":544},
+    {"method":"GET","path":"/api/sos/my","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":534},
+    {"method":"GET","path":"/api/ai/assistant/config?platform=web","status":200,"expected":200,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":707},
+    {"method":"GET","path":"/api/auth/session-events","status":200,"expected":200,"content_type":"text/event-stream","connected_event_received":true,"pass":true,"latency_ms":402},
+    {"method":"POST","path":"/api/sos","status":400,"expected":400,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":413},
+    {"method":"POST","path":"/api/chat/conversations","status":400,"expected":400,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":378},
+    {"method":"POST","path":"/api/chat/conversations/00000000-0000-0000-0000-000000000000/messages","status":400,"expected":400,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":375},
+    {"method":"POST","path":"/api/ai/assistant/images","status":400,"expected":400,"content_type":"application/json; charset=utf-8","pass":true,"latency_ms":539},
+    {"method":"WSS","path":"/ws/admin/notifications","connected":true,"hello_received":true,"pass":true,"latency_ms":973}
+  ],
+  "pass_count": 19,
+  "fail_count": 0,
+  "all_pass": true,
+  "scope": "Authenticated browser API routing suite; no response body, cookie, token, or user data stored"
+}
