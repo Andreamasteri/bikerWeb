@@ -42,10 +42,11 @@ globalThis.fetch=async request=>{
   if (path.startsWith('/assets/images/')&&request.headers.has('if-range')) return new Response('fullimage',{status:200,headers:{'content-type':'image/webp','content-length':'9'}});
   return new Response('{"ok":true}',{status:200,headers:{'content-type':'application/json','set-cookie':'connect.sid=fixture; Path=/; HttpOnly; Secure; SameSite=Lax'}});
 };
-let res=await worker.fetch(new FakeRequest('https://biker-link.net/api/health?probe=1',{headers:{authorization:'Bearer fixture','x-trace-id':'trace-1',host:'spoof.example'}}),makeEnv());
+let res=await worker.fetch(new FakeRequest('https://biker-link.net/api/health?probe=1',{headers:{authorization:'Bearer fixture','x-trace-id':'trace-1','accept-encoding':'br, gzip','cache-control':'no-cache',host:'spoof.example'}}),makeEnv());
 check(res.status===200&&(await res.json()).ok,'API health response passed through');
 check(upstream.url==='https://bikerlink-production.up.railway.app/api/health?probe=1','API path and query preserved');
 check(upstream.headers.get('authorization')==='Bearer fixture'&&upstream.headers.get('x-trace-id')==='trace-1','authorization and caller headers preserved');
+check(upstream.headers.get('accept-encoding')==='br, gzip'&&upstream.headers.get('cache-control')==='no-cache','non-SSE request headers remain unchanged');
 check(upstream.headers.get('x-forwarded-host')==='biker-link.net'&&upstream.headers.get('x-forwarded-proto')==='https','public forwarded host and scheme preserved');
 check(upstream.headers.get('host')===null,'caller-supplied Host is removed and origin Host comes from Railway URL');
 check(res.headers.get('set-cookie')?.includes('connect.sid=fixture'),'Set-Cookie passed through');
@@ -67,9 +68,9 @@ check(upstream.headers.get('origin')==='https://attacker.example','cross-site Or
 const sseSignal=new AbortController().signal;
 res=await worker.fetch(new FakeRequest('https://biker-link.net/api/chat/stream?room=demo',{headers:{accept:'text/event-stream','accept-encoding':'br, gzip','cache-control':'no-cache'},signal:sseSignal}),makeEnv());
 check(upstream.url.endsWith('/api/chat/stream?room=demo'),'SSE route remains on Railway');
-check(upstream.headers.get('accept-encoding')==='br, gzip'&&upstream.headers.get('cache-control')==='no-cache','SSE request headers are not rewritten by the Worker');
+check(upstream.headers.get('accept-encoding')==='identity'&&upstream.headers.get('cache-control')==='no-transform','SSE upstream request disables compression and transformation');
 check(upstream.signal===sseSignal,'SSE client cancellation propagates to the Railway request');
-check(res.headers.get('content-type')==='text/event-stream; charset=utf-8'&&res.headers.get('cache-control')==='no-cache, no-transform'&&res.headers.get('vary')==='Origin','SSE response headers pass through unchanged');
+check(res.headers.get('content-type')==='text/event-stream; charset=utf-8'&&res.headers.get('cache-control')==='no-store, no-transform'&&res.headers.get('x-accel-buffering')==='no'&&res.headers.get('vary')==='Origin','SSE response remains streaming with safe intermediary headers');
 const sseReader=res.body.getReader();
 const sseFirst=await sseReader.read();
 check(!sseFirst.done&&new TextDecoder().decode(sseFirst.value).includes('event: connected'),'SSE event body is readable immediately');
