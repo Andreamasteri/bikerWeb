@@ -1,0 +1,151 @@
+{
+  "captured_at": "2026-11-23T17:02:58.970Z",
+  "target": "https://biker-link.net",
+  "authenticated": true,
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 114
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 98,
+      "backend_revision": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+      "state": "READY",
+      "degraded": false
+    },
+    {
+      "method": "GET",
+      "path": "/api/users/me",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 144
+    },
+    {
+      "method": "GET",
+      "path": "/api/match-preferences",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 118
+    },
+    {
+      "method": "GET",
+      "path": "/api/match-preferences/gate",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 109
+    },
+    {
+      "method": "GET",
+      "path": "/api/proposals/matches/accepted",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 97
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/sensor-settings",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 128
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/calibration",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 99
+    },
+    {
+      "method": "GET",
+      "path": "/api/telemetry/dr-correction",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 109
+    },
+    {
+      "method": "GET",
+      "path": "/api/chat/conversations?limit=1&offset=0",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 136
+    },
+    {
+      "method": "GET",
+      "path": "/api/notifications",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 101
+    },
+    {
+      "method": "GET",
+      "path": "/api/sos/my",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 102
+    },
+    {
+      "method": "GET",
+      "path": "/api/ai/assistant/config?platform=web",
+      "status": 200,
+      "expected": 200,
+      "content_type": "application/json; charset=utf-8",
+      "pass": true,
+      "latency_ms": 119
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/session-events",
+      "status": 200,
+      "expected": 200,
+      "content_type": "text/event-stream",
+      "connected_event_received": true,
+      "pass": true,
+      "latency_ms": 105
+    },
+    {
+      "method": "WSS",
+      "path": "/ws/admin/notifications",
+      "connected": true,
+      "hello_received": true,
+      "pass": true,
+      "latency_ms": 387
+    }
+  ],
+  "all_pass": true,
+  "backend_revision": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+  "pass_count": 15,
+  "fail_count": 0,
+  "scope": "same-origin authenticated GETs, session SSE, and notification WSS only; no POST or application-data writes",
+  "source": "User-provided browser probe result"
+}

@@ -26,9 +26,8 @@
     "http_smoke_status": "PASS",
     "http_smoke_pass_count": 13,
     "http_smoke_fail_count": 0,
-    "complete_authenticated_suite_status": "NOT_RUN",
-    "overall_status": "INCOMPLETE",
-    "reason": "The shared browser runtime is unavailable in this session; no authenticated production browser session was accessible. No cookies, tokens, or passwords were read or shared.",
+    "complete_authenticated_suite_status": "PASS",
+    "overall_status": "PASS",
     "concurrent_backend_deployment": {
       "deployment_id": "a6eb336a-41e4-402c-b6ed-38e3d420718a",
       "created_at": "2026-11-23T15:13:39.747Z",
@@ -37,7 +36,12 @@
       "message": "AI Selection: preserve historical GPU targets safely",
       "identified_as_concurrent": true
     },
-    "recheck_file": "API_AFTER_RECHECK.json"
+    "recheck_file": "API_AFTER_RECHECK.json",
+    "authenticated_pass_count": 15,
+    "authenticated_fail_count": 0,
+    "authenticated_probe_file": "API_AFTER_AUTH_READONLY_20261123.json",
+    "authenticated_captured_at": "2026-11-23T17:02:58.970Z",
+    "backend_revision": "7c3ae1137dc56ec3110a6a755660f11f744882ff"
   },
   "gate3": {
     "status": "PASS",
@@ -214,5 +218,6 @@
     "GATE2_PRODUCTION_AUTH_READONLY_PROBE.js"
   ],
   "latest_live_recheck_file": "API_AFTER_LIVE_RECHECK_20261123.json",
-  "latest_matching_route_recheck_file": "API_AFTER_MATCHING_ROUTE_RECHECK_20261123.json"
+  "latest_matching_route_recheck_file": "API_AFTER_MATCHING_ROUTE_RECHECK_20261123.json",
+  "latest_authenticated_production_recheck_file": "API_AFTER_AUTH_READONLY_20261123.json"
 }
