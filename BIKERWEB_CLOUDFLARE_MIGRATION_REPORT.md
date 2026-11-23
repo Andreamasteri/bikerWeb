@@ -1,9 +1,26 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 23 novembre 2026, 14:48 UTC
-**Stato corrente:** Worker production pubblicato e verificato solo su workers.dev; il dominio ufficiale continua a puntare a Railway. Gate 1 ha 19/19 controlli autenticati sull’hostname ufficiale e Chat SSE passa nel test isolato; non è stata ripetuta la Chat SSE con la stessa sessione sul Gate 1 ufficiale. La produzione Railway è READY; lo staging è DEGRADED per il watchdog del matching. Gate 2 e Gate 3 non eseguiti: il cutover DNS resta sospeso finché non è disponibile una sessione autenticata utilizzabile per i controlli post-cutover.
+**Aggiornato:** 23 novembre 2026, 15:34 UTC
+**Stato corrente:** Il cutover è live: `biker-link.net/*` passa dal Worker `bikerlink-website-production`; il CNAME apex mantiene Railway come destinazione con proxy Cloudflare attivo. Il backend Railway è `READY` alla revisione `7c3ae1137dc56ec3110a6a755660f11f744882ff`. Gate 1 autenticato sul Worker Gate 1 ufficiale: 19/19 PASS (prova fornita il 23 novembre); Chat SSE isolato PASS. Gate 2: smoke iniziale 13/13, recheck dopo deploy Railway indipendente 5/5 e ultimo recheck anonimo 8/8 il 23 novembre alle 15:33 UTC, confrontato direttamente con Railway. Gate 3: rendering desktop e viewport mobile emulati, menu, 34/34 pagine, 22/22 immagini e BikerBlog PASS. La migrazione resta **parziale rispetto ai criteri finali**: manca il replay autenticato sul dominio ufficiale dopo il cutover, un controllo su Android fisico e la raccolta degli errori console JavaScript. Non risultano regressioni nei controlli eseguiti.
 
 > Questo stato in testa è l’aggiornamento operativo più recente; le sezioni successive conservano la cronologia delle verifiche precedenti.
+
+
+## Cutover produzione — 23 novembre 2026, 15:12 UTC
+
+Il passaggio è stato eseguito dopo il Gate 1 autenticato 19/19 PASS fornito per il Worker Gate 1 ufficiale, il test isolato Chat SSE PASS, il Worker produzione su `workers.dev` verificato e la produzione Railway `READY`.
+
+- Worker: `bikerlink-website-production`, deployment `ac1d844e-74d1-4a0b-83e7-71df81065f99`, versione `105b9fa8-a12c-485d-ab8b-1947f174b2cd`, sorgente `ad5e9fe471dc92d3376279b6d18c18e3cc0bed6c`.
+- Route: `biker-link.net/*`, ID `ca3e4114a545455695000bb164fdf63a`.
+- DNS: il record CNAME `f4b67198cdea0c5f2f61d65e53ce6841` mantiene il target `bikerlink-production.up.railway.app`; è stato cambiato solo `proxied:false` → `proxied:true`.
+- TLS: certificato Cloudflare attivo per `biker-link.net` prima del passaggio.
+- Backend: Railway resta operativo, `READY`, revisione `1114ec588d19332e1393d7eba9d3bae89fb45a3d`.
+- Gate 2 HTTP smoke post-cutover: **13/13 PASS** alle 15:12Z. Dopo il deploy Railway concorrente PR #483 (15:13Z), il recheck core è **5/5 PASS** alle 15:25Z; il nuovo backend `7c3ae113…` è READY e il Worker restituisce lo stesso corpo della Railway diretta. Dati: [`API_AFTER.json`](docs/cloudflare-migration/API_AFTER.json), report: [`API_AFTER_REPORT.md`](docs/cloudflare-migration/API_AFTER_REPORT.md). Ultimo recheck read-only alle 15:33Z: **8/8 PASS** tra apex e Railway, inclusi health/body hash identico, 401 anonimi JSON identici, preflight CORS, homepage, BikerTest, BikerBlog e immagine R2. Evidenza: [`API_AFTER_FINAL_RECHECK.json`](docs/cloudflare-migration/API_AFTER_FINAL_RECHECK.json).
+- Gate 2 completo: **INCOMPLETO**; il set autenticato non è stato ripetuto sul dominio ufficiale dopo il cutover. Le prove anonime sono 13/13 iniziale, 5/5 dopo il deploy concorrente e 8/8 nell’ultimo confronto apex↔Railway alle 15:33Z; la revisione `7c3ae1137dc56ec3110a6a755660f11f744882ff` è `READY`. Evidenze: [`API_AFTER.json`](docs/cloudflare-migration/API_AFTER.json), [`API_AFTER_RECHECK.json`](docs/cloudflare-migration/API_AFTER_RECHECK.json), [`API_AFTER_FINAL_RECHECK.json`](docs/cloudflare-migration/API_AFTER_FINAL_RECHECK.json). Ho predisposto una verifica autenticata same-origin in sola lettura da eseguire nella scheda Chrome già autenticata: [`GATE2_PRODUCTION_AUTH_READONLY_PROBE.md`](docs/cloudflare-migration/GATE2_PRODUCTION_AUTH_READONLY_PROBE.md). Non legge né stampa cookie/token e non invia POST.
+- Gate 3: **PARZIALE**; Browser Rendering ha catturato desktop, viewport mobile iPhone e Android, menu aperto, 34/34 pagine statiche, 22/22 immagini homepage e BikerBlog HTTP 200. Restano da leggere gli errori della console e verificare su un dispositivo Android fisico. Evidenza: [`GATE3_PUBLIC_BROWSER_RENDERING_20261123.json`](docs/cloudflare-migration/GATE3_PUBLIC_BROWSER_RENDERING_20261123.json).
+- BikerTest continua a rispondere via Cloudflare e non è stato modificato. Non sono stati cambiati backend, database, matching, telemetria, R2, MX/TXT o altri host.
+
+Rollback pronto: eliminare solo la route `ca3e4114a545455695000bb164fdf63a`, riportare il record CNAME `f4b67198cdea0c5f2f61d65e53ce6841` a `proxied:false` e verificare che il traffico torni effettivamente a Railway. La procedura è anche in `RESTORE.md` e in [`API_AFTER_REPORT.md`](docs/cloudflare-migration/API_AFTER_REPORT.md).
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -11,7 +28,7 @@ La revisione richiesta dal proprietario ha rilevato che la homepage candidate av
 
 La modifica di contenuti è stata unita in `main` tramite [PR #4](https://github.com/Andreamasteri/bikerWeb/pull/4), merge commit `83bc454193abe18f678541b02e4e4c49a641c3ac`. Le 8 pagine applicative `/delete-account` e `/docs*` restano su Railway. API, DB, DNS ufficiale e Worker BikerTest non sono stati modificati. Dopo l’autenticazione Wrangler ho pubblicato la sorgente ripristinata sul Worker separato `bikerlink-website-content-preview`, versione `3f5a2d95-20e4-4c61-a3be-d676ea24dca2`; non ha trigger o hostname personalizzati.
 
-## Architettura e stato live
+## Architettura e stato live — snapshot precedente al cutover
 
 | Componente | Stato verificato |
 | --- | --- |
@@ -55,6 +72,8 @@ Backup pre-migrazione registrato e verificato nella fase precedente:
 Rollback documentato in `RESTORE.md`: mantenere Railway attivo, ripristinare il solo CNAME apex DNS-only verso Railway, rimuovere soltanto l’eventuale route/custom domain Worker apex aggiunto dal cutover e verificare propagazione, TLS, homepage e API finché tornano effettivamente al servizio precedente. Nessun rollback è stato eseguito perché non c’è stato cutover.
 
 ## API — Gate 1
+
+> La decisione in questa sezione e negli aggiornamenti datati successivi descrive lo stato **prima del cutover**; lo stato live è riassunto nella sezione iniziale e in “Cutover produzione”.
 
 Report dettagliati: [`API_BEFORE_REPORT.md`](docs/cloudflare-migration/API_BEFORE_REPORT.md), [`API_PREVIEW_REPORT.md`](docs/cloudflare-migration/API_PREVIEW_REPORT.md), [`API_GATE1_CURRENT_REPORT.md`](docs/cloudflare-migration/API_GATE1_CURRENT_REPORT.md), le acquisizioni anonime [`API_GATE1_ANON_CURRENT.json`](docs/cloudflare-migration/API_GATE1_ANON_CURRENT.json)/[`API_GATE1_ANON_RECHECK.json`](docs/cloudflare-migration/API_GATE1_ANON_RECHECK.json), lo staging anonimo [`API_GATE1_STAGING_READONLY.json`](docs/cloudflare-migration/API_GATE1_STAGING_READONLY.json), l’autenticazione admin [`API_AUTH_STAGING_REPORT.md`](docs/cloudflare-migration/API_AUTH_STAGING_REPORT.md)/[`API_AUTH_STAGING.json`](docs/cloudflare-migration/API_AUTH_STAGING.json) e il nuovo smoke autenticato minimizzato [`API_GATE1_AUTHENTICATED_READONLY.json`](docs/cloudflare-migration/API_GATE1_AUTHENTICATED_READONLY.json).
 

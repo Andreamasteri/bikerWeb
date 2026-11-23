@@ -1,0 +1,219 @@
+{
+  "captured_at": "2026-11-23T15:12:31.239Z",
+  "target": "https://biker-link.net",
+  "worker": {
+    "name": "bikerlink-website-production",
+    "version_id": "105b9fa8-a12c-485d-ab8b-1947f174b2cd",
+    "deployment_id": "ac1d844e-74d1-4a0b-83e7-71df81065f99",
+    "source_commit": "ad5e9fe471dc92d3376279b6d18c18e3cc0bed6c",
+    "route_id": "ca3e4114a545455695000bb164fdf63a"
+  },
+  "dns": {
+    "record_id": "f4b67198cdea0c5f2f61d65e53ce6841",
+    "type": "CNAME",
+    "name": "biker-link.net",
+    "target": "bikerlink-production.up.railway.app",
+    "proxied": true,
+    "ttl": 1
+  },
+  "backend": {
+    "origin": "https://bikerlink-production.up.railway.app",
+    "revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+    "health": "READY",
+    "degraded": false
+  },
+  "gate2": {
+    "http_smoke_status": "PASS",
+    "http_smoke_pass_count": 13,
+    "http_smoke_fail_count": 0,
+    "complete_authenticated_suite_status": "NOT_RUN",
+    "overall_status": "INCOMPLETE",
+    "reason": "The shared browser runtime is unavailable in this session; no authenticated production browser session was accessible. No cookies, tokens, or passwords were read or shared.",
+    "concurrent_backend_deployment": {
+      "deployment_id": "a6eb336a-41e4-402c-b6ed-38e3d420718a",
+      "created_at": "2026-11-23T15:13:39.747Z",
+      "commit": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+      "pull_request": 483,
+      "message": "AI Selection: preserve historical GPU targets safely",
+      "identified_as_concurrent": true
+    },
+    "recheck_file": "API_AFTER_RECHECK.json"
+  },
+  "gate3": {
+    "status": "PARTIAL",
+    "evidence_file": "GATE3_PUBLIC_BROWSER_RENDERING_20261123.json",
+    "remaining": [
+      "physical Android device check",
+      "browser console error capture",
+      "authenticated production API suite"
+    ]
+  },
+  "checks": [
+    {
+      "id": "health",
+      "method": "GET",
+      "path": "/api/health",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "expected": "same status/body as direct Railway; READY; revision 1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "worker_sha256": "8596a1386c374230bf05116cd137a31e8d5a9ec10f1b5f7693def2ff27d5433d",
+      "railway_sha256": "8596a1386c374230bf05116cd137a31e8d5a9ec10f1b5f7693def2ff27d5433d",
+      "latency_ms": 648,
+      "pass": true
+    },
+    {
+      "id": "auth_me_anonymous",
+      "method": "GET",
+      "path": "/api/auth/me",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "expected": "same anonymous response as direct Railway",
+      "worker_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "railway_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "latency_ms": 89,
+      "pass": true
+    },
+    {
+      "id": "chat_stream_anonymous",
+      "method": "GET",
+      "path": "/api/chat/stream",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "expected": "same anonymous response as direct Railway",
+      "worker_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "railway_sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "latency_ms": 102,
+      "pass": true
+    },
+    {
+      "id": "cors_login_preflight",
+      "method": "OPTIONS",
+      "path": "/api/auth/login",
+      "status": 200,
+      "expected": "same response and CORS headers as direct Railway",
+      "allow_origin": "https://biker-link.net",
+      "allow_credentials": "true",
+      "worker_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "railway_sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "pass": true
+    },
+    {
+      "id": "homepage_head",
+      "method": "HEAD",
+      "path": "/",
+      "status": 200,
+      "content_type": "text/html",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "x_robots_tag": null,
+      "latency_ms": 76,
+      "pass": true
+    },
+    {
+      "id": "features_head",
+      "method": "HEAD",
+      "path": "/features",
+      "status": 200,
+      "content_type": "text/html",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "x_robots_tag": null,
+      "latency_ms": 75,
+      "pass": true
+    },
+    {
+      "id": "login_head",
+      "method": "HEAD",
+      "path": "/accedi",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "latency_ms": 458,
+      "pass": true
+    },
+    {
+      "id": "user_area_head",
+      "method": "HEAD",
+      "path": "/area-utente",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "latency_ms": 446,
+      "pass": true
+    },
+    {
+      "id": "static_page",
+      "method": "GET",
+      "path": "/ecosistema",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 49955,
+      "sha256": "59508e03337c706a67450d0d172588e796fdd77f86dfa909448f4c788c55e2b7",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "latency_ms": 685,
+      "pass": true
+    },
+    {
+      "id": "robots",
+      "method": "GET",
+      "path": "/robots.txt",
+      "status": 200,
+      "content_type": "text/plain",
+      "bytes": 202,
+      "sha256": "7a50f2196f5efeb0bbb0a45a4c9a2c01b8e8ba02a18602d5403f6b11cdf70131",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "x_robots_tag": null,
+      "latency_ms": 408,
+      "pass": true
+    },
+    {
+      "id": "sitemap",
+      "method": "GET",
+      "path": "/sitemap.xml",
+      "status": 200,
+      "content_type": "application/xml",
+      "bytes": 3036,
+      "sha256": "449df6817b8115c0de4f4f622cdd627a46612b53deb6ce41fa995b955220e557",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "latency_ms": 92,
+      "pass": true
+    },
+    {
+      "id": "r2_image",
+      "method": "GET",
+      "path": "/assets/images/hero-forest.webp",
+      "status": 200,
+      "content_type": "image/webp",
+      "bytes": 337534,
+      "sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "pass": true
+    },
+    {
+      "id": "login_page",
+      "method": "GET",
+      "path": "/accedi",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "server": "cloudflare",
+      "cf_ray": true,
+      "location": null,
+      "railway_host_in_html": false,
+      "pass": true
+    }
+  ],
+  "pass_count": 13,
+  "fail_count": 0,
+  "all_http_smoke_pass": true,
+  "final_readonly_recheck_file": "API_AFTER_FINAL_RECHECK.json",
+  "authenticated_production_probe_files": [
+    "GATE2_PRODUCTION_AUTH_READONLY_PROBE.md",
+    "GATE2_PRODUCTION_AUTH_READONLY_PROBE.js"
+  ]
+}

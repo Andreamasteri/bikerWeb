@@ -1,0 +1,22 @@
+{
+  "captured_at": "2026-11-23T15:21:34.923Z",
+  "tool": "Cloudflare Browser Rendering",
+  "target": "https://bikerlink-website-production.andreamasteri-nadir-radio.workers.dev",
+  "worker_version": "105b9fa8-a12c-485d-ab8b-1947f174b2cd",
+  "reason_for_workers_dev_target": "Same deployed production Worker and assets; workers.dev preview suppresses production visitor-count writes while allowing visual inspection.",
+  "visual_checks": [
+    {"viewport":"desktop","width":1440,"height":1000,"status":"PASS","screenshot_captured":true},
+    {"viewport":"mobile iPhone emulation","width":390,"height":844,"status":"PASS","screenshot_captured":true},
+    {"viewport":"mobile Android emulation","width":412,"height":915,"status":"PASS","screenshot_captured":true},
+    {"viewport":"mobile Android emulation, menu opened by navBurger click","width":412,"height":915,"status":"PASS","menu_opened":true,"screenshot_captured":true}
+  ],
+  "static_routes": {"tested":34,"passed":34,"failed":0},
+  "homepage_image_files": {"tested":22,"passed":22,"failed":0},
+  "bikerblog": {"status":200,"content_type":"text/html; charset=utf-8","pass":true},
+  "remaining": [
+    "No physical Android device was connected; mobile was checked with Android user-agent and viewport emulation.",
+    "Browser console error collection was not available from the quick screenshot endpoint.",
+    "The authenticated production session suite remains unrun."
+  ],
+  "gate3_status": "PARTIAL"
+}

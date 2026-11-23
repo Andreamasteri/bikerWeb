@@ -1,0 +1,30 @@
+{
+  "captured_at": "2026-11-23T15:25:07.249Z",
+  "target": "https://biker-link.net",
+  "reason": "The Railway production service received a concurrent deployment after the initial post-cutover smoke; this verifies the Cloudflare route against the newly live origin revision.",
+  "concurrent_railway_deployment": {
+    "project": "Bikerlink",
+    "environment": "production",
+    "service": "Bikerlink",
+    "deployment_id": "a6eb336a-41e4-402c-b6ed-38e3d420718a",
+    "created_at": "2026-11-23T15:13:39.747Z",
+    "status": "SUCCESS",
+    "triggered_by": "andreamasteri81@gmail.com",
+    "branch": "main",
+    "commit": "7c3ae1137dc56ec3110a6a755660f11f744882ff",
+    "pull_request": 483,
+    "message": "AI Selection: preserve historical GPU targets safely"
+  },
+  "backend": {"origin":"https://bikerlink-production.up.railway.app","revision":"7c3ae1137dc56ec3110a6a755660f11f744882ff","health":"READY","degraded":false},
+  "checks": [
+    {"id":"health","method":"GET","path":"/api/health","worker_status":200,"railway_status":200,"content_type":"application/json; charset=utf-8","worker_sha256":"eab4796c977daf3ab220fe421d54cbe114d477e7f513167361aa0928adb8de00","railway_sha256":"eab4796c977daf3ab220fe421d54cbe114d477e7f513167361aa0928adb8de00","worker_latency_ms":627,"railway_latency_ms":1111,"state":"READY","degraded":false,"revision":"7c3ae1137dc56ec3110a6a755660f11f744882ff","pass":true},
+    {"id":"auth_me_anonymous","method":"GET","path":"/api/auth/me","worker_status":401,"railway_status":401,"content_type":"application/json; charset=utf-8","worker_sha256":"228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3","railway_sha256":"228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3","worker_latency_ms":124,"railway_latency_ms":1105,"pass":true},
+    {"id":"chat_stream_anonymous","method":"GET","path":"/api/chat/stream","worker_status":401,"railway_status":401,"content_type":"application/json; charset=utf-8","worker_sha256":"228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3","railway_sha256":"228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3","worker_latency_ms":95,"railway_latency_ms":38,"pass":true},
+    {"id":"cors_login_preflight","method":"OPTIONS","path":"/api/auth/login","worker_status":200,"railway_status":200,"worker_sha256":"565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3","railway_sha256":"565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3","allow_origin":"https://biker-link.net","allow_credentials":"true","pass":true},
+    {"id":"r2_image","method":"GET","path":"/assets/images/hero-forest.webp","status":200,"content_type":"image/webp","bytes":337534,"sha256":"8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659","pass":true}
+  ],
+  "pass_count": 5,
+  "fail_count": 0,
+  "all_pass": true,
+  "authenticated_production_checks": "NOT_RUN"
+}
