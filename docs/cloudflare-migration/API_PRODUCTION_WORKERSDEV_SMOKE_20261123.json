@@ -1,0 +1,210 @@
+{
+  "captured_at_utc": "2026-11-23T14:47:39.719Z",
+  "worker": {
+    "name": "bikerlink-website-production",
+    "url": "https://bikerlink-website-production.andreamasteri-nadir-radio.workers.dev",
+    "version_id": "105b9fa8-a12c-485d-ab8b-1947f174b2cd",
+    "deployment_id": "ac1d844e-74d1-4a0b-83e7-71df81065f99",
+    "source_commit": "ad5e9fe471dc92d3376279b6d18c18e3cc0bed6c",
+    "traffic_percent": 100,
+    "custom_domain_attached": false
+  },
+  "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+  "checks": [
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "target": "worker",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "8596a1386c374230bf05116cd137a31e8d5a9ec10f1b5f7693def2ff27d5433d",
+      "ready": true,
+      "degraded": false,
+      "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "latency_ms": 311,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/health",
+      "target": "railway",
+      "status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "8596a1386c374230bf05116cd137a31e8d5a9ec10f1b5f7693def2ff27d5433d",
+      "ready": true,
+      "degraded": false,
+      "backend_revision": "1114ec588d19332e1393d7eba9d3bae89fb45a3d",
+      "latency_ms": 1116,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "target": "worker",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "expected_status": 401,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/auth/me",
+      "target": "railway",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "expected_status": 401,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/chat/stream",
+      "target": "worker",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "expected_status": 401,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/api/chat/stream",
+      "target": "railway",
+      "status": 401,
+      "content_type": "application/json; charset=utf-8",
+      "sha256": "228d918c0945008681431078afc93521068e9a4f91b4c13b8916fc041155cdd3",
+      "expected_status": 401,
+      "pass": true
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/auth/login",
+      "target": "worker",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "cors_matches_railway": true,
+      "pass": true
+    },
+    {
+      "method": "OPTIONS",
+      "path": "/api/auth/login",
+      "target": "railway",
+      "status": 200,
+      "content_type": "text/plain; charset=utf-8",
+      "sha256": "565339bc4d33d72817b583024112eb7f5cdf3e5eef0252d6ec1b9c9a94e12bb3",
+      "cors_matches_worker": true,
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/",
+      "target": "worker",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 254972,
+      "sha256": "57eeb2152caffcc67e3243636c287a79971450437a2a338de341c2f18475e022",
+      "has_title": true,
+      "has_canonical": true,
+      "html_has_noindex": false,
+      "html_contains_railway_host": false,
+      "workers_dev_x_robots_tag": "noindex",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/features",
+      "target": "worker",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 216650,
+      "sha256": "5b999a1831ebd2f70fa52f85b27743450013cdeec948df9a9563d3e3fb52f27",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/faq",
+      "target": "worker",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 205608,
+      "sha256": "393e43b3881ebd2f70fa52f85b27743450013cdeec948df9a9563d3e3fb52f27",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/blog",
+      "target": "worker",
+      "status": 200,
+      "content_type": "text/html",
+      "bytes": 201679,
+      "sha256": "5651faed424975f102d32d8424e2854399753396b55bd6fb9faa586118989a49",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/robots.txt",
+      "target": "worker",
+      "status": 200,
+      "content_type": "text/plain",
+      "bytes": 202,
+      "sha256": "7a50f2196f5efeb0bbb0a45a4c9a2c01b8e8ba02a18602d5403f6b11cdf70131",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/sitemap.xml",
+      "target": "worker",
+      "status": 200,
+      "content_type": "application/xml",
+      "bytes": 3036,
+      "sha256": "449df6817b8115c0de4f4f622cdd627a46612b53deb6ce41fa995b955220e557",
+      "pass": true
+    },
+    {
+      "method": "GET",
+      "path": "/assets/images/hero-forest.webp",
+      "target": "worker_r2",
+      "status": 200,
+      "content_type": "image/webp",
+      "bytes": 337534,
+      "sha256": "8de037be4d1c61509a9001fad23fc32b726d793b56d642999ae8b75c3bdf4659",
+      "pass": true
+    }
+  ],
+  "comparison": {
+    "/api/health": {
+      "status_equal": true,
+      "content_type_equal": true,
+      "body_sha256_equal": true
+    },
+    "/api/auth/me": {
+      "status_equal": true,
+      "content_type_equal": true,
+      "body_sha256_equal": true
+    },
+    "/api/chat/stream": {
+      "status_equal": true,
+      "content_type_equal": true,
+      "body_sha256_equal": true
+    },
+    "OPTIONS /api/auth/login": {
+      "status_equal": true,
+      "acao_equal": true,
+      "allow_credentials_equal": true,
+      "body_sha256_equal": true
+    }
+  },
+  "dns_at_capture": {
+    "apex_cname": "bikerlink-production.up.railway.app",
+    "proxied": false,
+    "worker_custom_domain": false,
+    "apex_worker_routes": []
+  },
+  "limits": [
+    "Anonymous API smoke only; it does not validate authenticated production sessions.",
+    "This deployment is only on workers.dev and does not mean the biker-link.net DNS cutover occurred.",
+    "No visual desktop/mobile browser run was possible because the shared browser runtime failed to start."
+  ]
+}

@@ -1,7 +1,9 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 23 novembre 2026, 14:12 UTC
-**Stato:** il probe autenticato ufficiale Gate 1 è PASS (19/19) e il confronto anonimo production preview/Railway è PASS. Il cutover resta sospeso: Gate 1 non è completo finché staging segnala `DEGRADED` per il gap dello scheduler matching e Chat SSE autenticata non è stata verificata sull’hostname Gate 1 ufficiale. Railway production e preview sono `READY`; DNS apex, Worker production, Gate 2 e Gate 3 sono invariati/non eseguiti.
+**Aggiornato:** 23 novembre 2026, 14:48 UTC
+**Stato corrente:** Worker production pubblicato e verificato solo su workers.dev; il dominio ufficiale continua a puntare a Railway. Gate 1 ha 19/19 controlli autenticati sull’hostname ufficiale e Chat SSE passa nel test isolato; non è stata ripetuta la Chat SSE con la stessa sessione sul Gate 1 ufficiale. La produzione Railway è READY; lo staging è DEGRADED per il watchdog del matching. Gate 2 e Gate 3 non eseguiti: il cutover DNS resta sospeso finché non è disponibile una sessione autenticata utilizzabile per i controlli post-cutover.
+
+> Questo stato in testa è l’aggiornamento operativo più recente; le sezioni successive conservano la cronologia delle verifiche precedenti.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -336,3 +338,30 @@ Il recheck health delle 14:03Z conferma che Railway staging e il Worker Gate 1 r
 Cloudflare conferma alle 14:12:57Z che l’apice resta `CNAME bikerlink-production.up.railway.app`, DNS-only (`proxied=false`); non esiste un custom domain Worker per l’apice né un deployment permanente `bikerlink-website-production`. Il Worker BikerTest e il suo deployment sono invariati. Evidenza combinata: [API_GATE1_READINESS_CLOUDFLARE_RECHECK_20261123_141257Z.json](docs/cloudflare-migration/API_GATE1_READINESS_CLOUDFLARE_RECHECK_20261123_141257Z.json).
 
 **Decisione:** non ho eseguito il cutover DNS. Gate 1 resta bloccato finché staging non torna `READY` e il Chat SSE autenticato non è verificato in modo sicuro sul Gate 1 ufficiale. Gate 2 e Gate 3 restano NOT RUN. Non è stato effettuato alcun cambiamento production o a BikerTest.
+
+
+## Stato operativo e test Worker production — 23 novembre 2026, 14:48 UTC
+
+### Verifiche concluse
+
+- Il Worker è stato compilato e pubblicato dal checkout canonico Forge /home/andrea/src/BikerWeb, da main al commit ad5e9fe471dc92d3376279b6d18c18e3cc0bed6c, allineato a origin/main e pulito al momento del deploy. Nessuna modifica al backend o al database è stata fatta.
+- Backup Forge ricontrollato: /home/andrea/backups/bikerweb/bikerweb-pre-cloudflare-production-20261119.zip, 8.598.088 byte, SHA-256 d129429c1161df1388816c5815f0cac2c219bd8bc454948a757da60ef7f31745; unzip -t e file MANIFEST.json, RESTORE.md, SHA256SUMS presenti.
+- Wrangler 4.165.0 whoami riuscito. wrangler deploy --dry-run ha letto 70 file Static Assets e i binding ASSETS, SITE_ASSETS (R2 bikerlink-website-assets), RAILWAY_ORIGIN e PUBLIC_SITE_ORIGIN. Harness routing: 96/96 PASS.
+- Worker bikerlink-website-production distribuito al 100% solo su workers.dev, versione 105b9fa8-a12c-485d-ab8b-1947f174b2cd, deployment ac1d844e-74d1-4a0b-83e7-71df81065f99, dal commit ad5e9fe471dc92d3376279b6d18c18e3cc0bed6c.
+- Smoke live workers.dev: /api/health 200 READY, revisione 1114ec588d19332e1393d7eba9d3bae89fb45a3d, corpo/hash identici a Railway; /api/auth/me e /api/chat/stream anonimi 401 JSON identici all’origine; CORS preflight login 200 con ACAO/credentials identici; /, /features, /faq, /blog, robots.txt e sitemap.xml 200; immagine R2 /assets/images/hero-forest.webp 200 image/webp, 337.534 byte. Sull’hostname workers.dev la risposta include X-Robots-Tag: noindex; l’HTML non contiene direttive noindex e mantiene canonical biker-link.net. Evidenza: [API_PRODUCTION_WORKERSDEV_SMOKE_20261123.json](docs/cloudflare-migration/API_PRODUCTION_WORKERSDEV_SMOKE_20261123.json).
+- Cloudflare verificato dopo il deploy: DNS apex invariato (CNAME bikerlink-production.up.railway.app, proxied:false); nessun custom domain Worker per biker-link.net, nessuna route apex; BikerTest resta sul Worker bikerlink-website-test.
+
+### Gate 1 e diagnosi
+
+- Alle 13:33:45Z l’operatore ha eseguito la suite autenticata sul Worker Gate 1 ufficiale: 19/19 PASS, backend 1114ec588d19332e1393d7eba9d3bae89fb45a3d, incluse session SSE e WebSocket notifiche.
+- La Chat SSE autenticata passa nel fixture isolato con account a zero conversazioni e database usa-e-getta: HTTP 200, text/event-stream, evento connected, prima risposta in circa 122 ms; diretto Railway e attraverso Worker. Evidenza: [API_GATE1_ISOLATED_SSE_RECHECK_20261123.json](docs/cloudflare-migration/API_GATE1_ISOLATED_SSE_RECHECK_20261123.json).
+- Il fix backend no-transform è nel PR #468, merged; il commit e8a5f4f24256d9da017e4a3d211a79d5e5725a2b è antenato della revisione Railway 1114ec. La rotta server/routes/chat/stream.ts ha SHA identico a entrambe le revisioni. Il contenuto live del Worker Gate 1 include Accept-Encoding: identity, no-transform, risposta streaming e X-Accel-Buffering: no.
+- Non è stata riaperta la Chat SSE usando la sessione dell’admin Gate 1 perché l’account aveva conversazioni attive e lo stream può notificare presenza. La prova isolata è PASS; la singola ripetizione autenticata sull’hostname ufficiale non è stata eseguita.
+- La readiness staging risponde HTTP 200 ma DEGRADED per [watchdog] scheduler.run_gap_no_lock e ultima esecuzione matching vecchia di circa 4.291 minuti. La produzione è READY alla stessa revisione. Non ho modificato matching/telemetria. La patch preesistente staged su Bikerlink-Audit-Staging è rimasta intatta.
+
+### Stato cutover
+
+- Non è stato cambiato il DNS apex e il Worker production non è ancora collegato a un dominio personalizzato: il sito ufficiale rimane su Railway.
+- Gate 2 e Gate 3 sono NOT RUN; non esistono API_AFTER.json o API_AFTER_REPORT.md. Il smoke workers.dev non equivale al controllo post-cutover dell’hostname ufficiale.
+- Il desktop/browser condiviso non è avviabile in questo runtime (errore CUA: gaas-browser node_repl sandbox cannot be disabled). Non ho usato né estratto credenziali. Per eseguire Gate 2 dopo il cutover serve una sessione BikerLink autenticata nel browser, oppure l’operatore deve eseguire la probe read-only sanitizzata dal browser e restituire la sola riga JSON; non inviare password, cookie o token.
+- Rollback pronto: il record DNS-only originale è ancora presente e Railway production è online. Le istruzioni e il backup ripristinabile sono conservati in RESTORE.md.
