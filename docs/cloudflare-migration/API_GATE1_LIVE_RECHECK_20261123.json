@@ -1,0 +1,115 @@
+{
+  "schema_version": 1,
+  "captured_at": "2026-11-23T01:57:04.483991+00:00",
+  "method": "Unauthenticated GET /api/health from Forge; no cookies or credentials",
+  "repository": {
+    "name": "Andreamasteri/bikerWeb",
+    "commit": "d70c4792f6b94650be073f500d5e27d88c8aac5a"
+  },
+  "railway": {
+    "service": "Bikerlink-Staging",
+    "environment": "staging",
+    "deployment": "70e6e99e-7848-4917-9461-2b61123fa874",
+    "deployment_status": "SUCCESS",
+    "replicas": {
+      "running": 1,
+      "total": 1
+    },
+    "backend_revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b"
+  },
+  "cloudflare_worker": {
+    "name": "bikerlink-website-gate1-staging",
+    "deployment": "20e7a310-8bd4-427b-b1a4-bba51002a959",
+    "version": "bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b",
+    "created_on": "2026-11-22T16:12:14.903063Z",
+    "percentage": 100,
+    "message": "Gate 1 staging: transparent Railway SSE pass-through from merged main",
+    "hostname": "bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev"
+  },
+  "checks": [
+    {
+      "target": "staging_railway",
+      "url": "https://bikerlink-staging-staging.up.railway.app/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 1088,
+      "sha256_body": "fa39f84ef9ed17fb86570dac0b5d5eae48e9bfa647f3e6cdd3ced38b30e2075e",
+      "health": {
+        "status": "degraded",
+        "state": "DEGRADED",
+        "degraded": true,
+        "degraded_reasons": [
+          "[watchdog] scheduler.run_gap_no_lock",
+          "[watchdog] db_integrity.high_violations",
+          "[watchdog] Scheduler matching: ultimo run 3537 min fa",
+          "[db-integrity] 1 violazioni high di integrità DB"
+        ],
+        "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+        "db_circuit": "CLOSED",
+        "initializing": false
+      }
+    },
+    {
+      "target": "gate1_worker",
+      "url": "https://bikerlink-website-gate1-staging.andreamasteri-nadir-radio.workers.dev/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 15240,
+      "cf_ray": "a5ec90040dc6ee9b-MXP",
+      "sha256_body": "fa39f84ef9ed17fb86570dac0b5d5eae48e9bfa647f3e6cdd3ced38b30e2075e",
+      "health": {
+        "status": "degraded",
+        "state": "DEGRADED",
+        "degraded": true,
+        "degraded_reasons": [
+          "[watchdog] scheduler.run_gap_no_lock",
+          "[watchdog] db_integrity.high_violations",
+          "[watchdog] Scheduler matching: ultimo run 3537 min fa",
+          "[db-integrity] 1 violazioni high di integrità DB"
+        ],
+        "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+        "db_circuit": "CLOSED",
+        "initializing": false
+      }
+    },
+    {
+      "target": "production_apex",
+      "url": "https://biker-link.net/api/health",
+      "http_status": 200,
+      "content_type": "application/json; charset=utf-8",
+      "latency_ms": 928,
+      "sha256_body": "02029b819725ef0a97a9f52bd2e52c5795fbb2b4002facda7122acb96a26acb2",
+      "health": {
+        "status": "ready",
+        "state": "READY",
+        "degraded": false,
+        "degraded_reasons": [],
+        "revision": "6ad354ff2af155929549c6d15ddc6c100f6a740b",
+        "db_circuit": "CLOSED",
+        "initializing": false
+      },
+      "server": "railway-hikari",
+      "cf_ray": null
+    }
+  ],
+  "local_routing_test": {
+    "command": "npm run test:routing",
+    "working_directory": "workers/bikerlink-website-production",
+    "result": "PASS",
+    "checks": 95,
+    "commit": "d70c4792f6b94650be073f500d5e27d88c8aac5"
+  },
+  "authenticated_gate1_suite": {
+    "result": "NOT RUN",
+    "reason": "BikerLink browser session is unavailable in Codex web; no credential was read or used"
+  },
+  "decision": {
+    "gate1": "BLOCKED",
+    "gate2": "NOT RUN",
+    "gate3": "NOT RUN",
+    "production_dns_changed": false,
+    "production_worker_deployed": false,
+    "railway_database_modified": false,
+    "backend_deployed": false
+  }
+}

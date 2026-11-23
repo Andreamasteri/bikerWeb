@@ -1,7 +1,7 @@
 # Migrazione BikerWeb → Cloudflare — report operativo
 
-**Aggiornato:** 22 novembre 2026, 16:33 UTC
-**Stato:** PR 20 è unita e il Worker Gate 1 ufficiale è stato pubblicato su workers.dev. Le verifiche live confermano homepage, route statiche e asset R2 funzionanti; le API anonime restituiscono i 401 JSON attesi; il backend staging è però DEGRADED anche interrogato direttamente su Railway e manca la suite autenticata post-deploy sul Worker ufficiale. Gate 1 resta BLOCKED; nessun Worker production o DNS apex è stato attivato, Gate 2/3 NOT RUN.
+**Aggiornato:** 23 novembre 2026, 01:57 UTC
+**Stato:** Recheck live del 23 novembre: Worker Gate 1 aggiornato e routing locale 95/95 PASS. Railway staging e Worker Gate 1 restituiscono entrambi HTTP 200 ma stato DEGRADED per un gap scheduler e una violazione DB high; l’apice production è READY sulla stessa revisione backend. Gate 1 resta BLOCKED in attesa di staging sano e suite autenticata post-deploy; nessun cutover production, Gate 2 o Gate 3.
 
 ## Ripristino dei contenuti originali — aggiornamento
 
@@ -260,3 +260,21 @@ Le richieste GET alle pagine pubbliche dell’apice e dello staging possono atti
 **Decisione aggiornata:** Gate 1 resta BLOCKED. La suite autenticata post-deploy sul Worker Gate 1 ufficiale non è stata ripetuta perché la sessione disponibile in questo runtime autentica Cloudflare, non BikerLink. Inoltre la readiness staging è DEGRADED e segnala un problema di integrità DB preesistente rispetto al proxy. La prova Chat SSE isolata sul codice corrente è PASS, ma non sostituisce i controlli ufficiali staging. Gate 2 e Gate 3 non sono stati eseguiti. Non sono stati cambiati DNS production, Worker production, backend Railway, database o BikerTest.
 
 Evidenza completa sanitizzata: [API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json](docs/cloudflare-migration/API_GATE1_OFFICIAL_STAGING_POST_DEPLOY_20261122.json).
+
+## Verifica live Gate 1 — 23 novembre 2026
+
+La verifica read-only è stata acquisita da Forge alle **01:57 UTC**. Il Worker ufficiale di verifica è aggiornato: Cloudflare conferma deployment `20e7a310-8bd4-427b-b1a4-bba51002a959`, versione `bc67f2af-a8d4-4c6a-8ebf-ff877bbe749b`, al 100% sul solo hostname workers.dev. Railway conferma il deployment staging `70e6e99e-7848-4917-9461-2b61123fa874` in stato SUCCESS, con una replica attiva.
+
+| Endpoint | HTTP | Stato applicativo | Revisione | SHA-256 risposta |
+| --- | ---: | --- | --- | --- |
+| Railway staging `/api/health` | 200 | DEGRADED | `6ad354ff2af155929549c6d15ddc6c100f6a740b` | `fa39f84ef9ed17fb86570dac0b5d5eae48e9bfa647f3e6cdd3ced38b30e2075e` |
+| Worker Gate 1 `/api/health` | 200 | DEGRADED | `6ad354ff2af155929549c6d15ddc6c100f6a740b` | `fa39f84ef9ed17fb86570dac0b5d5eae48e9bfa647f3e6cdd3ced38b30e2075e` |
+| Apice production `/api/health` | 200 | READY | `6ad354ff2af155929549c6d15ddc6c100f6a740b` | `02029b819725ef0a97a9f52bd2e52c5795fbb2b4002facda7122acb96a26acb2` |
+
+Il corpo della risposta staging è identico attraverso Railway e Cloudflare: il degrado è nell’ambiente/dati staging, non introdotto dal Worker. Le cause correnti sono il gap del ciclo matching (3.537 minuti senza run completato) e una violazione alta di integrità DB. Il circuito DB è CLOSED. Lo stesso commit backend è READY sull’apice production, che continua a essere servito da Railway (`server: railway-hikari`, senza `cf-ray`). Non ho riavviato né ridistribuito servizi.
+
+Il test locale `npm run test:routing`, eseguito nella directory del Worker sul commit `d70c4792f6b94650be073f500d5e27d88c8aac5a`, passa **95/95**. La prima richiesta di prova dal runner con User-Agent Python ha ricevuto 403; la ripetizione con User-Agent browser e con curl ha restituito 200. Il 403 era specifico del User-Agent, non un errore persistente del Worker.
+
+Il controllo infrastrutturale read-only dei runner è PASS, ma non certifica la salute applicativa Railway. La suite autenticata post-deploy sul Worker Gate 1 non è stata ripetuta: il browser condiviso non è accessibile in questa sessione Codex web. Non ho recuperato né utilizzato password o cookie. Il test autenticato e la verifica del dettaglio della violazione DB restano non attestati.
+
+**Decisione:** Gate 1 resta **BLOCKED** per la salute degradata dello staging e l’assenza di una sessione BikerLink utilizzabile nel runner. Gate 2 e Gate 3 sono NOT RUN. L’apice DNS continua a puntare a Railway; nessun Worker production, deploy backend, modifica DB, variabili o DNS è stato eseguito. Evidenza sanitizzata: [API_GATE1_LIVE_RECHECK_20261123.json](docs/cloudflare-migration/API_GATE1_LIVE_RECHECK_20261123.json).
