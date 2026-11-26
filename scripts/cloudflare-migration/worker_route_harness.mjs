@@ -103,10 +103,10 @@ res=await worker.fetch(new FakeRequest('https://biker-link.net/web-session.js'),
 check(res.status===200&&res.headers.get('content-type')==='application/javascript'&&(await res.text()).startsWith('STATIC:/web-session.js'),'session bootstrap script is served as a static JavaScript asset');
 const productionVisitTasks=[];
 const productionVisitContext={waitUntil:task=>productionVisitTasks.push(task)};
-res=await worker.fetch(new FakeRequest('https://biker-link.net/blog',{headers:{accept:'text/html','user-agent':'fixture browser','accept-language':'it-IT'}}),makeEnv(),productionVisitContext);
-const blogStaticBody=await res.text();
-check(res.status===200&&blogStaticBody==='STATIC:/blog/index.html','legacy blog index is served from Workers Static Assets');
-check(upstream.url==='https://bikerlink-production.up.railway.app/blog','legacy blog content stays on Static Assets while visitor tracking reaches Railway');
+res=await worker.fetch(new FakeRequest('https://biker-link.net/features',{headers:{accept:'text/html','user-agent':'fixture browser','accept-language':'it-IT'}}),makeEnv(),productionVisitContext);
+const trackedStaticBody=await res.text();
+check(res.status===200&&trackedStaticBody==='STATIC:/features/index.html','feature hub is served from Workers Static Assets');
+check(upstream.url==='https://bikerlink-production.up.railway.app/features','feature hub content stays on Static Assets while visitor tracking reaches Railway');
 const visitorCookie=res.headers.get('set-cookie')||'';
 const visitorId=visitorCookie.match(/(?:^|;\s*)bl_vid=([a-f0-9]{32})(?:;|$)/i)?.[1];
 check(Boolean(visitorId)&&visitorCookie.includes('HttpOnly')&&visitorCookie.includes('SameSite=Lax')&&visitorCookie.includes('Secure'),'tracked static pages retain the secure bl_vid cookie contract');
@@ -114,20 +114,20 @@ await Promise.all(productionVisitTasks);
 check(upstream.headers.get('cookie')===`bl_vid=${visitorId}`&&upstream.headers.get('user-agent')==='fixture browser'&&upstream.headers.get('accept-language')==='it-IT','Railway visit tracking receives the visitor id and original visit metadata');
 const priorVisitor='0123456789abcdef0123456789abcdef';
 const repeatVisitTasks=[];
-res=await worker.fetch(new FakeRequest('https://biker-link.net/blog',{headers:{cookie:`bl_vid=${priorVisitor}; connect.sid=session-fixture`}}),makeEnv(),{waitUntil:task=>repeatVisitTasks.push(task)});
+res=await worker.fetch(new FakeRequest('https://biker-link.net/features',{headers:{cookie:`bl_vid=${priorVisitor}; connect.sid=session-fixture`}}),makeEnv(),{waitUntil:task=>repeatVisitTasks.push(task)});
 check(!res.headers.has('set-cookie'),'repeat visitor keeps the existing identifier without rotating the cookie');
 await Promise.all(repeatVisitTasks);
 check(upstream.headers.get('cookie')===`connect.sid=session-fixture; bl_vid=${priorVisitor}`,'repeat visitor id and other cookies reach Railway tracking');
 const lastTrackedUpstream=upstream;
 const previewVisitTasks=[];
-res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-preview.example.workers.dev/blog'),makeEnv(),{waitUntil:task=>previewVisitTasks.push(task)});
+res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-preview.example.workers.dev/features'),makeEnv(),{waitUntil:task=>previewVisitTasks.push(task)});
 await Promise.all(previewVisitTasks);
 check(upstream===lastTrackedUpstream&&!res.headers.has('set-cookie'),'production-backed workers.dev previews do not write production visitor records');
 const stagingVisitTasks=[];
-const gate1BlogCookie='abcdef0123456789abcdef0123456789';
-res=await worker.fetch(new FakeRequest(`${gate1Host}/blog`,{headers:{cookie:`bl_vid=${gate1BlogCookie}; connect.sid=staging-session`}}),gate1Env,{waitUntil:task=>stagingVisitTasks.push(task)});
+const gate1VisitorCookie='abcdef0123456789abcdef0123456789';
+res=await worker.fetch(new FakeRequest(`${gate1Host}/features`,{headers:{cookie:`bl_vid=${gate1VisitorCookie}; connect.sid=staging-session`}}),gate1Env,{waitUntil:task=>stagingVisitTasks.push(task)});
 await Promise.all(stagingVisitTasks);
-check(upstream.url==='https://bikerlink-staging-staging.up.railway.app/blog'&&upstream.headers.get('cookie')===`connect.sid=staging-session; bl_vid=${gate1BlogCookie}`,'Gate 1 visitor tracking is constrained to the staging Railway origin');
+check(upstream.url==='https://bikerlink-staging-staging.up.railway.app/features'&&upstream.headers.get('cookie')===`connect.sid=staging-session; bl_vid=${gate1VisitorCookie}`,'Gate 1 visitor tracking is constrained to the staging Railway origin');
 res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-preview.example.workers.dev/'),makeEnv());
 check(res.status===200&&res.headers.get('x-robots-tag')==='noindex','workers.dev preview pages are excluded from indexing');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/'),makeEnv());
@@ -145,11 +145,35 @@ check(res.status===200&&accountHtml.includes('Delete account')&&accountHtml.incl
 check(upstream.headers.get('accept-encoding')==='identity'&&!res.headers.has('etag')&&res.headers.get('content-length')===String(new TextEncoder().encode(accountHtml).byteLength),'rewritten account HTML has correct encoding and entity headers');
 res=await worker.fetch(new FakeRequest('https://bikerlink-website-content-preview.example.workers.dev/delete-account',{headers:{accept:'text/html'}}),makeEnv());
 check(res.headers.get('x-robots-tag')==='noindex','Railway HTML previews are excluded from indexing');
-res=await worker.fetch(new FakeRequest('https://biker-link.net/blog/new-article'),makeEnv());
-check(upstream.url==='https://bikerlink-production.up.railway.app/blog/new-article','unlisted blog routes retain the existing Railway handling');
+const lastBeforeBlog=upstream;
+const blogEnv=makeEnv();
+blogEnv.ASSETS.fetch=()=>{throw Error('legacy blog must not use assets');};
+for (const method of ['GET','HEAD']) {
+  for (const path of ['/blog','/blog/','/blog/index.html']) {
+    res=await worker.fetch(new FakeRequest('https://biker-link.net'+path+'?utm_source=fixture',{method}),blogEnv);
+    check(res.status===301&&res.headers.get('location')==='https://bikerblog.biker-link.net/?utm_source=fixture',method+' '+path+' redirects permanently to BikerBlog, preserving the query');
+    check(!res.headers.has('set-cookie'),'legacy blog redirect has no visitor cookie');
+  }
+  for (const slug of ['perche-esiste-bikerlink','un-giro-comincia-prima-di-partire','sos-biker-una-rete-che-risponde']) {
+    for (const suffix of ['','/','/index.html']) {
+      res=await worker.fetch(new FakeRequest('https://biker-link.net/blog/'+slug+suffix,{method}),blogEnv);
+      check(res.status===410&&!res.headers.has('location'),'retired post '+slug+suffix+' is gone without redirect');
+    }
+  }
+}
+res=await worker.fetch(new FakeRequest('https://biker-link.net/blog/new-article'),blogEnv);
+check(res.status===404&&upstream===lastBeforeBlog,'unknown blog routes do not redirect or fall back to Railway');
+res=await worker.fetch(new FakeRequest('https://biker-link.net/blog',{method:'POST'}),blogEnv);
+check(res.status===404&&upstream===lastBeforeBlog,'legacy blog never proxies or forwards write requests');
+const publicRoot=new URL('../../workers/bikerlink-website-production/public/',import.meta.url);
+const sitemap=await fs.readFile(new URL('sitemap.xml',publicRoot),'utf8');
+check(!sitemap.includes('https://biker-link.net/blog'),'main sitemap omits all legacy blog pages');
+const home=await fs.readFile(new URL('index.html',publicRoot),'utf8');
+check(!home.includes('href="/blog"')&&home.includes('href="https://bikerblog.biker-link.net/"'),'homepage points straight to BikerBlog');
 res=await worker.fetch(new FakeRequest('https://biker-link.net/docs'),makeEnv());
 check(upstream.url==='https://bikerlink-production.up.railway.app/docs','protected documentation remains on Railway');
 for (const page of contentManifest.pages) {
+  if (page.path === "/blog" || page.path.startsWith("/blog/")) continue; // Historical cutover manifest; retired later.
   const assetPath=page.path==='/'?'/index.html':`${page.path}/index.html`;
   res=await worker.fetch(new FakeRequest(`https://biker-link.net${page.path}`),makeEnv());
   check(res.status===200&&(await res.text())===`STATIC:${assetPath}`,`legacy page ${page.path} maps to its preserved static copy`);
