@@ -18,7 +18,8 @@ Static marketing and legal routes:
 
 - Home and feature hub: `/`, `/features`
 - Riding and safety: `/matching`, `/matching/come-funziona`, `/matching/tipi-di-match`, `/matching/come-impara`, `/matching/intelligenza-artificiale`, `/matching/privacy`, `/matching/per-investitori`, `/sos`, `/motoclub`, `/community`
-- Editorial and company: `/blog`, `/blog/perche-esiste-bikerlink`, `/blog/un-giro-comincia-prima-di-partire`, `/blog/sos-biker-una-rete-che-risponde`, `/about`, `/contact`, `/faq`, `/download`
+- Archived editorial routes: /blog permanently redirects to https://bikerblog.biker-link.net/; the three old articles without replacements return 410. No /blog routes proxy to Railway.
+- Company: `/about`, `/contact`, `/faq`, `/download`
 - Legal: `/privacy`, `/terms`
 - Existing BikerTest additions retained: `/raduni`, `/horus`, `/ecosistema`, `/en` and the eight `/en/*` pages.
 

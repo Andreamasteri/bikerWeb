@@ -17,10 +17,6 @@ const STATIC_PAGES = new Map([
   ["/about", "/about/index.html"],
   ["/faq", "/faq/index.html"],
   ["/contact", "/contact/index.html"],
-  ["/blog", "/blog/index.html"],
-  ["/blog/perche-esiste-bikerlink", "/blog/perche-esiste-bikerlink/index.html"],
-  ["/blog/un-giro-comincia-prima-di-partire", "/blog/un-giro-comincia-prima-di-partire/index.html"],
-  ["/blog/sos-biker-una-rete-che-risponde", "/blog/sos-biker-una-rete-che-risponde/index.html"],
   ["/privacy", "/privacy/index.html"],
   ["/terms", "/terms/index.html"],
   ["/ecosistema", "/ecosistema/index.html"],
@@ -33,6 +29,13 @@ const STATIC_PAGES = new Map([
   ["/en/privacy", "/en/privacy/index.html"],
   ["/en/ecosistema", "/en/ecosistema/index.html"],
   ["/en/download", "/en/download/index.html"],
+]);
+
+const BIKERBLOG_ORIGIN = "https://bikerblog.biker-link.net/";
+const RETIRED_BLOG_POSTS = new Set([
+  "/blog/perche-esiste-bikerlink",
+  "/blog/un-giro-comincia-prima-di-partire",
+  "/blog/sos-biker-una-rete-che-risponde",
 ]);
 
 const STATIC_FILES = new Set(["/robots.txt", "/sitemap.xml", "/web-session.js"]);
@@ -50,7 +53,6 @@ const TRACKED_STATIC_PAGES = new Set([
   "/about",
   "/faq",
   "/contact",
-  "/blog",
   "/matching",
   "/matching/come-funziona",
   "/matching/tipi-di-match",
@@ -107,7 +109,6 @@ function isBackendPage(pathname) {
   return (
     BACKEND_PAGES.has(pathname) ||
     pathname.startsWith("/docs/") ||
-    pathname.startsWith("/blog/") ||
     pathname.startsWith("/matching/") ||
     pathname.startsWith("/uploads/") ||
     pathname.startsWith("/music/") ||
@@ -124,7 +125,7 @@ function isWebSocketPath(pathname) {
 }
 
 function trackedStaticPage(pathname) {
-  return TRACKED_STATIC_PAGES.has(pathname) || pathname.startsWith("/blog/");
+  return TRACKED_STATIC_PAGES.has(pathname);
 }
 
 function visitorCookieId(request) {
@@ -523,6 +524,23 @@ export default {
       (expoPlatform === "ios" || expoPlatform === "android")
     ) {
       return proxyToRailway(request, env);
+    }
+
+    // BikerBlog has a single public host. Retire old articles without an
+    // equivalent instead of redirecting them to unrelated content.
+    if (method === "GET" || method === "HEAD") {
+      const oldBlogPath = pathname.replace(/\/index\.html$/, "");
+      if (oldBlogPath === "/blog") {
+        const destination = new URL(BIKERBLOG_ORIGIN);
+        destination.search = url.search;
+        return withSecurityHeaders(Response.redirect(destination, 301));
+      }
+      if (RETIRED_BLOG_POSTS.has(oldBlogPath)) {
+        return withSecurityHeaders(new Response(method === "HEAD" ? null : "Gone", {
+          status: 410,
+          headers: { "content-type": "text/plain; charset=utf-8" },
+        }));
+      }
     }
 
     // Public marketing, editorial, and legal pages are served from Workers

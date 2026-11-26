@@ -41,6 +41,7 @@ HEADS=[("blog","/blog",200,None),("contact","/contact",200,None),("web_login","/
  ("leaflet_html","/leaflet-map.html",200,None),("roadmap_json","/roadmap.json",200,None)]
 WEBSOCKETS=[("ws_admin_notifications","/ws/admin/notifications"),("ws_diagnostic","/ws/diagnostic")]
 HTML_GETS=[("blog_page","/blog",200)]
+BIKERBLOG_ORIGIN="https://bikerblog.biker-link.net/"
 parser=argparse.ArgumentParser()
 parser.add_argument('--output',default='API_BEFORE.json',help='JSON evidence output path')
 parser.add_argument('--compare',help='Compare results with an earlier probe JSON and fail on response regressions')
@@ -142,7 +143,10 @@ for name,base in TARGETS.items():
   row=req(base,"GET",path,{"Accept":"text/html,application/xhtml+xml"},timeout=12,capture_body=True)
   expected_origin="https://biker-link.net" if name in ("public_apex","preview_candidate") else base.rstrip("/")
   expected_canonical=expected_origin+path
-  row.update({"test":label,"expected_status":expected,"expected_canonical_url":expected_canonical,"pass":row.get("status")==expected and row.get("canonical_url")==expected_canonical and (name=="railway_origin" or not row.get("contains_railway_origin",False))})
+  if name in ("public_apex","preview_candidate") and path=="/blog":
+   row.update({"test":label,"expected_status":301,"expected_location":BIKERBLOG_ORIGIN,"pass":row.get("status")==301 and row.get("location")==BIKERBLOG_ORIGIN})
+  else:
+   row.update({"test":label,"expected_status":expected,"expected_canonical_url":expected_canonical,"pass":row.get("status")==expected and row.get("canonical_url")==expected_canonical and (name=="railway_origin" or not row.get("contains_railway_origin",False))})
   items.append(row)
  image=req(base,"GET","/assets/images/hero-forest.webp",timeout=12,capture_body=True)
  image.update({"test":"plain_image","expected_status":200,"pass":image.get("status")==200 and image.get("content_type")=="image/webp" and image.get("headers",{}).get("Cache-Control")=="public, max-age=31536000, immutable"})
@@ -154,6 +158,8 @@ for name,base in TARGETS.items():
   row.update({"test":"cors_"+label,"expected_status":200,"pass":row.get("status")==200 and (row.get("headers") or {}).get("Access-Control-Allow-Origin")=="https://biker-link.net" and (row.get("headers") or {}).get("Access-Control-Allow-Credentials")=="true" and "post" in allow_methods.lower() and "content-type" in allow_headers and "authorization" in allow_headers})
   items.append(row)
  for label,path,expected,location in HEADS:
+  if name in ("public_apex","preview_candidate") and path=="/blog":
+   expected,location=301,BIKERBLOG_ORIGIN
   row=req(base,"HEAD",path,{},timeout=8)
   row.update({"test":"head_"+label,"expected_status":expected,"expected_location":location,"pass":row.get("status")==expected and (location is None or row.get("location")==location)})
   items.append(row)
@@ -205,6 +211,9 @@ if args.compare:
    if not prior:
     rows.append({"target":target,"test":current_row['test'],"regression":"missing_from_before"})
     continue
+   if (target in ("public_apex","preview_candidate") and current_row["test"] in ("blog_page","head_blog")
+       and prior.get("status")==200 and current_row.get("status")==301 and current_row.get("location")==BIKERBLOG_ORIGIN):
+    continue  # Intentional retirement of the apex copy; compare all other paths normally.
    for field in compared_fields:
     old_value=prior.get(field)
     new_value=current_row.get(field)
